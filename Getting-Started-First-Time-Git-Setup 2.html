@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-49925874-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-49925874-3');
+  </script>
+
+  <meta charset='utf-8'>
+  <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
+
+  <title>Git - First-Time Git Setup</title>
+
+  <link href='/favicon.ico' rel='shortcut icon' type='image/x-icon'>
+
+  <link rel="stylesheet" media="screen" href="/assets/application-5d2c8cbd740f023e85e568ce5b6004dfc124d998f32bbd82cc445d84763db9fa.css" />
+  <script src="/assets/modernize-91eb7473bfa18e104376c623be884766692c7cf93c8769aea544ad57e3ea2292.js"></script>
+  <!--[if (gte IE 6)&(lte IE 8)]>
+  <script src="/javascripts/selectivizr-min.js"></script>
+  <![endif]-->
+
+</head>
+
+<body id="documentation">
+
+  <div class="inner">
+    <header>
+
+  <a href="/"><img src="/images/logo@2x.png" width="110" height="46" alt="Git" /></a>
+  <span id="tagline"></span>
+  <script type="text/javascript">
+    var taglines = ["fast-version-control","everything-is-local","distributed-even-if-your-workflow-isnt","local-branching-on-the-cheap","distributed-is-the-new-centralized"];
+    var tagline = taglines[Math.floor(Math.random() * taglines.length)];
+    document.getElementById('tagline').innerHTML = '--' + tagline;
+  </script>
+  <form id="search" action="/search/results">
+    <input id="search-text" name="search" placeholder="Search entire site..." autocomplete="off" type="text" />
+  </form>
+  <div id="search-results"></div>
+
+</header>
+
+  </div> <!-- .inner -->
+
+    <div class="inner">
+      <div id="content-wrapper">
+        <aside class="sidebar">
+  <nav>
+    <ul>
+      <li>
+        <a href="/about">About</a>
+        <ul class="">
+          <li>
+            <a href="/about">Branching and Merging</a>
+          </li>
+          <li>
+            <a href="/about/small-and-fast">Small and Fast</a>
+          </li>
+          <li>
+            <a href="/about/distributed">Distributed</a>
+          </li>
+          <li>
+            <a href="/about/info-assurance">Data Assurance</a>
+          </li>
+          <li>
+            <a href="/about/staging-area">Staging Area</a>
+          </li>
+          <li>
+            <a href="/about/free-and-open-source">Free and Open Source</a>
+          </li>
+          <li>
+            <a href="/about/trademark">Trademark</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a class="active" href="/doc">Documentation</a>
+        <ul class="expanded">
+          <li>
+            <a href="/docs">Reference</a>
+          </li>
+          <li>
+            <a class="active" href="/book">Book</a>
+          </li>
+          <li>
+            <a href="/videos">Videos</a>
+          </li>
+          <li>
+            <a href="/doc/ext">External Links</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="/downloads">Downloads</a>
+        <ul class="">
+          <li>
+            <a href="/downloads/guis">GUI Clients</a>
+          </li>
+          <li>
+            <a href="/downloads/logos">Logos</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="/community">Community</a>
+      </li>
+    </ul>
+      <hr class="sidebar">
+        <p>
+This book is available in
+  <a href="/book/en">English</a>.
+</p>
+<p>
+  Full translation available in
+  <table>
+    <tr><td><a href="/book/bg">български език</a>,</td></tr>
+    <tr><td><a href="/book/es">Español</a>,</td></tr>
+    <tr><td><a href="/book/fr">Français</a>,</td></tr>
+    <tr><td><a href="/book/gr">Ελληνικά</a>,</td></tr>
+    <tr><td><a href="/book/ja">日本語</a>,</td></tr>
+    <tr><td><a href="/book/ko">한국어</a>,</td></tr>
+    <tr><td><a href="/book/nl">Nederlands</a>,</td></tr>
+    <tr><td><a href="/book/ru">Русский</a>,</td></tr>
+    <tr><td><a href="/book/sl">Slovenščina</a>,</td></tr>
+    <tr><td><a href="/book/tl">Tagalog</a>,</td></tr>
+    <tr><td><a href="/book/uk">Українська</a></td></tr>
+    <tr><td><a href="/book/zh">简体中文</a>,</td></tr>
+  </table>
+</p>
+<p>
+  Partial translations available in
+  <table>
+    <tr><td><a href="/book/cs">Čeština</a>,</td></tr>
+    <tr><td><a href="/book/de">Deutsch</a>,</td></tr>
+    <tr><td><a href="/book/mk">Македонски</a>,</td></tr>
+    <tr><td><a href="/book/pl">Polski</a>,</td></tr>
+    <tr><td><a href="/book/sr">Српски</a>,</td></tr>
+    <tr><td><a href="/book/uz">Ўзбекча</a>,</td></tr>
+    <tr><td><a href="/book/zh-tw">繁體中文</a>,</td></tr>
+  </table>
+</p>
+<p>
+  Translations started for
+  <table>
+    <tr><td><a href="/book/az">azərbaycan dili</a>,</td></tr>
+    <tr><td><a href="/book/be">Беларуская</a>,</td></tr>
+    <tr><td><a href="/book/fa" dir="rtl">فارسی</a>,</td></tr>
+    <tr><td><a href="/book/id">Indonesian</a>,</td></tr>
+    <tr><td><a href="/book/it">Italiano</a>,</td></tr>
+    <tr><td><a href="/book/ms">Bahasa Melayu</a>,</td></tr>
+    <tr><td><a href="/book/pt-br">Português (Brasil)</a>,</td></tr>
+    <tr><td><a href="/book/pt-pt">Português (Portugal)</a>,</td></tr>
+    <tr><td><a href="/book/sv">Svenska</a>,</td></tr>
+    <tr><td><a href="/book/tr">Türkçe</a>.</td></tr>
+  </table>
+</p>
+<hr class="sidebar"/>
+<p>
+The source of this book is <a href="https://github.com/progit/progit2">hosted on GitHub.</a></br>
+Patches, suggestions and comments are welcome.
+</p>
+
+
+  </nav>
+</aside>
+
+        <div id="content">
+          
+
+<div id='book-chapters'>
+  <a class="dropdown-trigger" id="book-chapters-trigger" data-panel-id="chapters-dropdown" href="#">Chapters ▾</a>
+<div class='dropdown-panel' id='chapters-dropdown'>
+  <div class="three-column">
+    <div class='column-left'>
+      <ol class='book-toc'>
+  <li class='chapter'>
+  <h2>1. <a href="/book/en/v2/Getting-Started-About-Version-Control">Getting Started</a></h2>
+    <ol>
+          <li>
+            1.1
+            <a href="/book/en/v2/Getting-Started-About-Version-Control" >About Version Control</a>
+          </li>
+          <li>
+            1.2
+            <a href="/book/en/v2/Getting-Started-A-Short-History-of-Git" >A Short History of Git</a>
+          </li>
+          <li>
+            1.3
+            <a href="/book/en/v2/Getting-Started-What-is-Git%3F" >What is Git?</a>
+          </li>
+          <li>
+            1.4
+            <a href="/book/en/v2/Getting-Started-The-Command-Line" >The Command Line</a>
+          </li>
+          <li>
+            1.5
+            <a href="/book/en/v2/Getting-Started-Installing-Git" >Installing Git</a>
+          </li>
+          <li>
+            1.6
+            <a href="/book/en/v2/Getting-Started-First-Time-Git-Setup" class=active>First-Time Git Setup</a>
+          </li>
+          <li>
+            1.7
+            <a href="/book/en/v2/Getting-Started-Getting-Help" >Getting Help</a>
+          </li>
+          <li>
+            1.8
+            <a href="/book/en/v2/Getting-Started-Summary" >Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>2. <a href="/book/en/v2/Git-Basics-Getting-a-Git-Repository">Git Basics</a></h2>
+    <ol>
+          <li>
+            2.1
+            <a href="/book/en/v2/Git-Basics-Getting-a-Git-Repository" >Getting a Git Repository</a>
+          </li>
+          <li>
+            2.2
+            <a href="/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository" >Recording Changes to the Repository</a>
+          </li>
+          <li>
+            2.3
+            <a href="/book/en/v2/Git-Basics-Viewing-the-Commit-History" >Viewing the Commit History</a>
+          </li>
+          <li>
+            2.4
+            <a href="/book/en/v2/Git-Basics-Undoing-Things" >Undoing Things</a>
+          </li>
+          <li>
+            2.5
+            <a href="/book/en/v2/Git-Basics-Working-with-Remotes" >Working with Remotes</a>
+          </li>
+          <li>
+            2.6
+            <a href="/book/en/v2/Git-Basics-Tagging" >Tagging</a>
+          </li>
+          <li>
+            2.7
+            <a href="/book/en/v2/Git-Basics-Git-Aliases" >Git Aliases</a>
+          </li>
+          <li>
+            2.8
+            <a href="/book/en/v2/Git-Basics-Summary" >Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>3. <a href="/book/en/v2/Git-Branching-Branches-in-a-Nutshell">Git Branching</a></h2>
+    <ol>
+          <li>
+            3.1
+            <a href="/book/en/v2/Git-Branching-Branches-in-a-Nutshell" >Branches in a Nutshell</a>
+          </li>
+          <li>
+            3.2
+            <a href="/book/en/v2/Git-Branching-Basic-Branching-and-Merging" >Basic Branching and Merging</a>
+          </li>
+          <li>
+            3.3
+            <a href="/book/en/v2/Git-Branching-Branch-Management" >Branch Management</a>
+          </li>
+          <li>
+            3.4
+            <a href="/book/en/v2/Git-Branching-Branching-Workflows" >Branching Workflows</a>
+          </li>
+          <li>
+            3.5
+            <a href="/book/en/v2/Git-Branching-Remote-Branches" >Remote Branches</a>
+          </li>
+          <li>
+            3.6
+            <a href="/book/en/v2/Git-Branching-Rebasing" >Rebasing</a>
+          </li>
+          <li>
+            3.7
+            <a href="/book/en/v2/Git-Branching-Summary" >Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>4. <a href="/book/en/v2/Git-on-the-Server-The-Protocols">Git on the Server</a></h2>
+    <ol>
+          <li>
+            4.1
+            <a href="/book/en/v2/Git-on-the-Server-The-Protocols" >The Protocols</a>
+          </li>
+          <li>
+            4.2
+            <a href="/book/en/v2/Git-on-the-Server-Getting-Git-on-a-Server" >Getting Git on a Server</a>
+          </li>
+          <li>
+            4.3
+            <a href="/book/en/v2/Git-on-the-Server-Generating-Your-SSH-Public-Key" >Generating Your SSH Public Key</a>
+          </li>
+          <li>
+            4.4
+            <a href="/book/en/v2/Git-on-the-Server-Setting-Up-the-Server" >Setting Up the Server</a>
+          </li>
+          <li>
+            4.5
+            <a href="/book/en/v2/Git-on-the-Server-Git-Daemon" >Git Daemon</a>
+          </li>
+          <li>
+            4.6
+            <a href="/book/en/v2/Git-on-the-Server-Smart-HTTP" >Smart HTTP</a>
+          </li>
+          <li>
+            4.7
+            <a href="/book/en/v2/Git-on-the-Server-GitWeb" >GitWeb</a>
+          </li>
+          <li>
+            4.8
+            <a href="/book/en/v2/Git-on-the-Server-GitLab" >GitLab</a>
+          </li>
+          <li>
+            4.9
+            <a href="/book/en/v2/Git-on-the-Server-Third-Party-Hosted-Options" >Third Party Hosted Options</a>
+          </li>
+          <li>
+            4.10
+            <a href="/book/en/v2/Git-on-the-Server-Summary" >Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>5. <a href="/book/en/v2/Distributed-Git-Distributed-Workflows">Distributed Git</a></h2>
+    <ol>
+          <li>
+            5.1
+            <a href="/book/en/v2/Distributed-Git-Distributed-Workflows" >Distributed Workflows</a>
+          </li>
+          <li>
+            5.2
+            <a href="/book/en/v2/Distributed-Git-Contributing-to-a-Project" >Contributing to a Project</a>
+          </li>
+          <li>
+            5.3
+            <a href="/book/en/v2/Distributed-Git-Maintaining-a-Project" >Maintaining a Project</a>
+          </li>
+          <li>
+            5.4
+            <a href="/book/en/v2/Distributed-Git-Summary" >Summary</a>
+          </li>
+    </ol>
+  </li>
+</ol>
+
+    </div>
+    <div class='column-middle'>
+      <ol class='book-toc'>
+  <li class='chapter'>
+  <h2>6. <a href="/book/en/v2/GitHub-Account-Setup-and-Configuration">GitHub</a></h2>
+    <ol>
+          <li>
+            6.1
+            <a href="/book/en/v2/GitHub-Account-Setup-and-Configuration" >Account Setup and Configuration</a>
+          </li>
+          <li>
+            6.2
+            <a href="/book/en/v2/GitHub-Contributing-to-a-Project" >Contributing to a Project</a>
+          </li>
+          <li>
+            6.3
+            <a href="/book/en/v2/GitHub-Maintaining-a-Project" >Maintaining a Project</a>
+          </li>
+          <li>
+            6.4
+            <a href="/book/en/v2/GitHub-Managing-an-organization" >Managing an organization</a>
+          </li>
+          <li>
+            6.5
+            <a href="/book/en/v2/GitHub-Scripting-GitHub" >Scripting GitHub</a>
+          </li>
+          <li>
+            6.6
+            <a href="/book/en/v2/GitHub-Summary" >Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>7. <a href="/book/en/v2/Git-Tools-Revision-Selection">Git Tools</a></h2>
+    <ol>
+          <li>
+            7.1
+            <a href="/book/en/v2/Git-Tools-Revision-Selection" >Revision Selection</a>
+          </li>
+          <li>
+            7.2
+            <a href="/book/en/v2/Git-Tools-Interactive-Staging" >Interactive Staging</a>
+          </li>
+          <li>
+            7.3
+            <a href="/book/en/v2/Git-Tools-Stashing-and-Cleaning" >Stashing and Cleaning</a>
+          </li>
+          <li>
+            7.4
+            <a href="/book/en/v2/Git-Tools-Signing-Your-Work" >Signing Your Work</a>
+          </li>
+          <li>
+            7.5
+            <a href="/book/en/v2/Git-Tools-Searching" >Searching</a>
+          </li>
+          <li>
+            7.6
+            <a href="/book/en/v2/Git-Tools-Rewriting-History" >Rewriting History</a>
+          </li>
+          <li>
+            7.7
+            <a href="/book/en/v2/Git-Tools-Reset-Demystified" >Reset Demystified</a>
+          </li>
+          <li>
+            7.8
+            <a href="/book/en/v2/Git-Tools-Advanced-Merging" >Advanced Merging</a>
+          </li>
+          <li>
+            7.9
+            <a href="/book/en/v2/Git-Tools-Rerere" >Rerere</a>
+          </li>
+          <li>
+            7.10
+            <a href="/book/en/v2/Git-Tools-Debugging-with-Git" >Debugging with Git</a>
+          </li>
+          <li>
+            7.11
+            <a href="/book/en/v2/Git-Tools-Submodules" >Submodules</a>
+          </li>
+          <li>
+            7.12
+            <a href="/book/en/v2/Git-Tools-Bundling" >Bundling</a>
+          </li>
+          <li>
+            7.13
+            <a href="/book/en/v2/Git-Tools-Replace" >Replace</a>
+          </li>
+          <li>
+            7.14
+            <a href="/book/en/v2/Git-Tools-Credential-Storage" >Credential Storage</a>
+          </li>
+          <li>
+            7.15
+            <a href="/book/en/v2/Git-Tools-Summary" >Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>8. <a href="/book/en/v2/Customizing-Git-Git-Configuration">Customizing Git</a></h2>
+    <ol>
+          <li>
+            8.1
+            <a href="/book/en/v2/Customizing-Git-Git-Configuration" >Git Configuration</a>
+          </li>
+          <li>
+            8.2
+            <a href="/book/en/v2/Customizing-Git-Git-Attributes" >Git Attributes</a>
+          </li>
+          <li>
+            8.3
+            <a href="/book/en/v2/Customizing-Git-Git-Hooks" >Git Hooks</a>
+          </li>
+          <li>
+            8.4
+            <a href="/book/en/v2/Customizing-Git-An-Example-Git-Enforced-Policy" >An Example Git-Enforced Policy</a>
+          </li>
+          <li>
+            8.5
+            <a href="/book/en/v2/Customizing-Git-Summary" >Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>9. <a href="/book/en/v2/Git-and-Other-Systems-Git-as-a-Client">Git and Other Systems</a></h2>
+    <ol>
+          <li>
+            9.1
+            <a href="/book/en/v2/Git-and-Other-Systems-Git-as-a-Client" >Git as a Client</a>
+          </li>
+          <li>
+            9.2
+            <a href="/book/en/v2/Git-and-Other-Systems-Migrating-to-Git" >Migrating to Git</a>
+          </li>
+          <li>
+            9.3
+            <a href="/book/en/v2/Git-and-Other-Systems-Summary" >Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>10. <a href="/book/en/v2/Git-Internals-Plumbing-and-Porcelain">Git Internals</a></h2>
+    <ol>
+          <li>
+            10.1
+            <a href="/book/en/v2/Git-Internals-Plumbing-and-Porcelain" >Plumbing and Porcelain</a>
+          </li>
+          <li>
+            10.2
+            <a href="/book/en/v2/Git-Internals-Git-Objects" >Git Objects</a>
+          </li>
+          <li>
+            10.3
+            <a href="/book/en/v2/Git-Internals-Git-References" >Git References</a>
+          </li>
+          <li>
+            10.4
+            <a href="/book/en/v2/Git-Internals-Packfiles" >Packfiles</a>
+          </li>
+          <li>
+            10.5
+            <a href="/book/en/v2/Git-Internals-The-Refspec" >The Refspec</a>
+          </li>
+          <li>
+            10.6
+            <a href="/book/en/v2/Git-Internals-Transfer-Protocols" >Transfer Protocols</a>
+          </li>
+          <li>
+            10.7
+            <a href="/book/en/v2/Git-Internals-Maintenance-and-Data-Recovery" >Maintenance and Data Recovery</a>
+          </li>
+          <li>
+            10.8
+            <a href="/book/en/v2/Git-Internals-Environment-Variables" >Environment Variables</a>
+          </li>
+          <li>
+            10.9
+            <a href="/book/en/v2/Git-Internals-Summary" >Summary</a>
+          </li>
+    </ol>
+  </li>
+</ol>
+
+    </div>
+    <div class='column-right'>
+      <ol class='book-toc'>
+  <li class='chapter'>
+  <h2>A1. <a href="/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Graphical-Interfaces">Appendix A: Git in Other Environments</a></h2>
+    <ol>
+          <li>
+            A1.1
+            <a href="/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Graphical-Interfaces" >Graphical Interfaces</a>
+          </li>
+          <li>
+            A1.2
+            <a href="/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Git-in-Visual-Studio" >Git in Visual Studio</a>
+          </li>
+          <li>
+            A1.3
+            <a href="/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Git-in-Visual-Studio-Code" >Git in Visual Studio Code</a>
+          </li>
+          <li>
+            A1.4
+            <a href="/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Git-in-Eclipse" >Git in Eclipse</a>
+          </li>
+          <li>
+            A1.5
+            <a href="/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Git-in-IntelliJ-%2F-PyCharm-%2F-WebStorm-%2F-PhpStorm-%2F-RubyMine" >Git in IntelliJ / PyCharm / WebStorm / PhpStorm / RubyMine</a>
+          </li>
+          <li>
+            A1.6
+            <a href="/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Git-in-Sublime-Text" >Git in Sublime Text</a>
+          </li>
+          <li>
+            A1.7
+            <a href="/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Git-in-Bash" >Git in Bash</a>
+          </li>
+          <li>
+            A1.8
+            <a href="/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Git-in-Zsh" >Git in Zsh</a>
+          </li>
+          <li>
+            A1.9
+            <a href="/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Git-in-PowerShell" >Git in PowerShell</a>
+          </li>
+          <li>
+            A1.10
+            <a href="/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Summary" >Summary</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>A2. <a href="/book/en/v2/Appendix-B%3A-Embedding-Git-in-your-Applications-Command-line-Git">Appendix B: Embedding Git in your Applications</a></h2>
+    <ol>
+          <li>
+            A2.1
+            <a href="/book/en/v2/Appendix-B%3A-Embedding-Git-in-your-Applications-Command-line-Git" >Command-line Git</a>
+          </li>
+          <li>
+            A2.2
+            <a href="/book/en/v2/Appendix-B%3A-Embedding-Git-in-your-Applications-Libgit2" >Libgit2</a>
+          </li>
+          <li>
+            A2.3
+            <a href="/book/en/v2/Appendix-B%3A-Embedding-Git-in-your-Applications-JGit" >JGit</a>
+          </li>
+          <li>
+            A2.4
+            <a href="/book/en/v2/Appendix-B%3A-Embedding-Git-in-your-Applications-go-git" >go-git</a>
+          </li>
+          <li>
+            A2.5
+            <a href="/book/en/v2/Appendix-B%3A-Embedding-Git-in-your-Applications-Dulwich" >Dulwich</a>
+          </li>
+    </ol>
+  </li>
+  <li class='chapter'>
+  <h2>A3. <a href="/book/en/v2/Appendix-C%3A-Git-Commands-Setup-and-Config">Appendix C: Git Commands</a></h2>
+    <ol>
+          <li>
+            A3.1
+            <a href="/book/en/v2/Appendix-C%3A-Git-Commands-Setup-and-Config" >Setup and Config</a>
+          </li>
+          <li>
+            A3.2
+            <a href="/book/en/v2/Appendix-C%3A-Git-Commands-Getting-and-Creating-Projects" >Getting and Creating Projects</a>
+          </li>
+          <li>
+            A3.3
+            <a href="/book/en/v2/Appendix-C%3A-Git-Commands-Basic-Snapshotting" >Basic Snapshotting</a>
+          </li>
+          <li>
+            A3.4
+            <a href="/book/en/v2/Appendix-C%3A-Git-Commands-Branching-and-Merging" >Branching and Merging</a>
+          </li>
+          <li>
+            A3.5
+            <a href="/book/en/v2/Appendix-C%3A-Git-Commands-Sharing-and-Updating-Projects" >Sharing and Updating Projects</a>
+          </li>
+          <li>
+            A3.6
+            <a href="/book/en/v2/Appendix-C%3A-Git-Commands-Inspection-and-Comparison" >Inspection and Comparison</a>
+          </li>
+          <li>
+            A3.7
+            <a href="/book/en/v2/Appendix-C%3A-Git-Commands-Debugging" >Debugging</a>
+          </li>
+          <li>
+            A3.8
+            <a href="/book/en/v2/Appendix-C%3A-Git-Commands-Patching" >Patching</a>
+          </li>
+          <li>
+            A3.9
+            <a href="/book/en/v2/Appendix-C%3A-Git-Commands-Email" >Email</a>
+          </li>
+          <li>
+            A3.10
+            <a href="/book/en/v2/Appendix-C%3A-Git-Commands-External-Systems" >External Systems</a>
+          </li>
+          <li>
+            A3.11
+            <a href="/book/en/v2/Appendix-C%3A-Git-Commands-Administration" >Administration</a>
+          </li>
+          <li>
+            A3.12
+            <a href="/book/en/v2/Appendix-C%3A-Git-Commands-Plumbing-Commands" >Plumbing Commands</a>
+          </li>
+    </ol>
+  </li>
+</ol>
+
+    </div>
+  </div>
+ </div>
+
+    <span class="light" id="edition">
+      2nd Edition
+    </span>
+</div>
+
+<div id='main' class="book edition2">
+    <h1>1.6 Getting Started - First-Time Git Setup</h1>
+  <div>
+<h2 id="_first_time">First-Time Git Setup</h2>
+<div class="paragraph">
+<p>Now that you have Git on your system, you’ll want to do a few things to customize your Git environment.
+You should have to do these things only once on any given computer; they’ll stick around between upgrades.
+You can also change them at any time by running through the commands again.</p>
+</div>
+<div class="paragraph">
+<p>Git comes with a tool called <code>git config</code> that lets you get and set configuration variables that control all aspects of how Git looks and operates.
+These variables can be stored in three different places:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>/etc/gitconfig</code> file: Contains values applied to every user on the system and all their repositories.
+If you pass the option <code>--system</code> to <code>git config</code>, it reads and writes from this file specifically.
+(Because this is a system configuration file, you would need administrative or superuser privilege to make changes to it.)</p>
+</li>
+<li>
+<p><code>~/.gitconfig</code> or <code>~/.config/git/config</code> file: Values specific personally to you, the user.
+You can make Git read and write to this file specifically by passing the <code>--global</code> option, and this affects <em>all</em> of the repositories you work with on your system.</p>
+</li>
+<li>
+<p><code>config</code> file in the Git directory (that is, <code>.git/config</code>) of whatever repository you’re currently using: Specific to that single repository.
+You can force Git to read from and write to this file with the <code>--local</code> option, but that is in fact the default.
+(Unsurprisingly, you need to be located somewhere in a Git repository for this option to work properly.)</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Each level overrides values in the previous level, so values in <code>.git/config</code> trump those in <code>/etc/gitconfig</code>.</p>
+</div>
+<div class="paragraph">
+<p>On Windows systems, Git looks for the <code>.gitconfig</code> file in the <code>$HOME</code> directory (<code>C:\Users\$USER</code> for most people).
+It also still looks for <code>/etc/gitconfig</code>, although it’s relative to the MSys root, which is wherever you decide to install Git on your Windows system when you run the installer.
+If you are using version 2.x or later of Git for Windows, there is also a system-level config file at
+<code>C:\Documents and Settings\All Users\Application Data\Git\config</code> on Windows XP, and in <code>C:\ProgramData\Git\config</code> on Windows Vista and newer.
+This config file can only be changed by <code>git config -f &lt;file&gt;</code> as an admin.</p>
+</div>
+<div class="paragraph">
+<p>You can view all of your settings and where they are coming from using:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git config --list --show-origin</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h3 id="_your_identity">Your Identity</h3>
+<div class="paragraph">
+<p>The first thing you should do when you install Git is to set your user name and email address.
+This is important because every Git commit uses this information, and it’s immutably baked into the commits you start creating:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git config --global user.name "John Doe"
+$ git config --global user.email johndoe@example.com</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Again, you need to do this only once if you pass the <code>--global</code> option, because then Git will always use that information for anything you do on that system.
+If you want to override this with a different name or email address for specific projects, you can run the command without the <code>--global</code> option when you’re in that project.</p>
+</div>
+<div class="paragraph">
+<p>Many of the GUI tools will help you do this when you first run them.</p>
+</div>
+</div>
+<div class="sect3">
+<h3 id="_editor">Your Editor</h3>
+<div class="paragraph">
+<p>Now that your identity is set up, you can configure the default text editor that will be used when Git needs you to type in a message.
+If not configured, Git uses your system’s default editor.</p>
+</div>
+<div class="paragraph">
+<p>If you want to use a different text editor, such as Emacs, you can do the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git config --global core.editor emacs</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>On a Windows system, if you want to use a different text editor, you must specify the full path to its executable file.
+This can be different depending on how your editor is packaged.</p>
+</div>
+<div class="paragraph">
+<p>In the case of Notepad++, a popular programming editor, you are likely to want to use the 32-bit version, since at the time of writing the 64-bit version doesn’t support all plug-ins.
+If you are on a 32-bit Windows system, or you have a 64-bit editor on a 64-bit system, you’ll type something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git config --global core.editor "'C:/Program Files/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin"</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Vim, Emacs and Notepad++ are popular text editors often used by developers on Unix-based systems like Linux and macOS or a Windows system.
+If you are using another editor, or a 32-bit version, please find specific instructions for how to set up your favorite editor with Git in <a href="ch00/_core_editor">git config core.editor commands</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Warning</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You may find, if you don’t setup your editor like this, you get into a really confusing state when Git attempts to launch it.
+An example on a Windows system may include a prematurely terminated Git operation during a Git initiated edit.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h3 id="_checking_your_settings">Checking Your Settings</h3>
+<div class="paragraph">
+<p>If you want to check your configuration settings, you can use the <code>git config --list</code> command to list all the settings Git can find at that point:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git config --list
+user.name=John Doe
+user.email=johndoe@example.com
+color.status=auto
+color.branch=auto
+color.interactive=auto
+color.diff=auto
+...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You may see keys more than once, because Git reads the same key from different files (<code>/etc/gitconfig</code> and <code>~/.gitconfig</code>, for example).
+In this case, Git uses the last value for each unique key it sees.</p>
+</div>
+<div class="paragraph">
+<p>You can also check what Git thinks a specific key’s value is by typing <code>git config &lt;key&gt;</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git config user.name
+John Doe</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Since Git might read the same configuration variable value from more than one file, it’s possible that you have an unexpected value for one of these values and you don’t know why.
+In cases like that, you can query Git as to the <em>origin</em> for that value, and it will tell you which configuration file had the final say in setting that value:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-console" data-lang="console">$ git config --show-origin rerere.autoUpdate
+file:/home/johndoe/.gitconfig	false</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div id="nav"><a href="/book/en/v2/Getting-Started-Installing-Git">prev</a> | <a href="/book/en/v2/Getting-Started-Getting-Help">next</a></div></div>
+</div>
+
+        </div>
+      </div>
+      <footer>
+  <div class="site-source">
+    <a href="/site">About this site</a><br>
+    Patches, suggestions, and comments are welcome.
+  </div>
+  <div class="sfc-member">
+    Git is a member of <a href="/sfc">Software Freedom Conservancy</a>
+  </div>
+</footer>
+
+<script src="/assets/application-84db8b4799905f9f7cc62292e1a97e206056e492088736595af9c2fe3ee50c4b.js"></script>
+
+    </div>
+
+</body>
+</html>

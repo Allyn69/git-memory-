@@ -1,0 +1,456 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<title>OneNote Web Clipper Installation</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+			<meta http-equiv="X-UA-Compatible" content="IE=10" />
+	<meta name="application-name" content="OneNote Web Clipper Installation" />
+	<meta name="msapplication-TileColor" content="#7719AA" />
+	<link rel="image_src" type="image/jpeg" href="https://site-cdn.onenote.net/161300731550_Images/onenoteicon-256.png" />
+
+	<script type="text/javascript" src="https://uhf.microsoft.com/mscc/statics/mscc-0.4.2.min.js"></script><link rel="stylesheet" type="text/css" href="https://uhf.microsoft.com/mscc/statics/mscc-0.4.2.min.css">
+
+		<meta name="description" content="Quickly capture any webpage to OneNote where you can easily edit, annotate, or share it. Clip the full page, or clip only the article, recipe, or product information you really need." />
+
+		<link rel="shortcut icon" href="https://site-cdn.onenote.net/161300731550_Images/FavIcon_OneNote.ico" />
+
+
+		<link type="text/css" rel="stylesheet" href="https://site-cdn.onenote.net/161300731550_Styles/en-US/SharedHeader.css" />
+<style>.UnifiedHeaderUIFont { font-size: 14px; font-family: 'Segoe UI','Segoe UI Web','Segoe UI Web Regular','Segoe UI Symbol','Helvetica Neue','BBAlpha Sans','S60 Sans',Arial,sans-serif; }.FooterUIFont { font-size: 9pt; font-family: 'Segoe UI Semi Light','Segoe UI Light','Segoe UI Web Light','Segoe UI','Segoe UI Web',Arial,Verdana,sans-serif }</style><style>.AppTileUIFont { font-size: 9pt; font-family: 'Segoe UI','Segoe UI Web','Segoe UI Web Regular','Segoe UI Symbol','Helvetica Neue','BBAlpha Sans','S60 Sans',Arial,sans-serif; }</style><style>.swLoadingText, .swLoadingErrorText{  font-family: 'Segoe UI Light','Segoe UI Web Light','Segoe UI','Segoe UI Web',Arial,Verdana,sans-serif; }</style>		<link type="text/css" rel="stylesheet" href="https://site-cdn.onenote.net/161300731550_Styles/en-US/OfficeBrowserFeedback.css" />
+	<link type="text/css" rel="stylesheet" href="https://site-cdn.onenote.net/161300731550_Styles/en-US/ondchome_cluster.css" />
+	<link type="text/css" rel="stylesheet" href="https://site-cdn.onenote.net/161300731550_Styles/en-US/SiteIntl.css" />
+	<link type="text/css" rel="stylesheet" href="https://site-cdn.onenote.net/161300731550_Styles/en-US/Shared.css" />
+	<!--[if lte IE 8]> <link type="text/css" rel="stylesheet" href="https://site-cdn.onenote.net/161300731550_Styles/en-US/SharedIE8AndBelow.css" /><![endif]-->
+	<!--[if gte IE 9]
+		<style type="text/css">
+			.gradient
+			{
+				filter: none;
+			}
+		</style>
+	<![endif]-->
+	<style>
+			.bodyContainer
+			{
+				position: relative;
+			}
+
+			.bodyContent
+			{
+				padding-bottom: 113px;
+			}
+
+			.SocialBar > a {
+				color: white;
+			}
+
+			.SocialBar
+			{
+				position: absolute;
+				bottom: 40px;
+				width: 100%;
+				min-width: 320px;
+			}
+
+			@media all and (max-width: 540px)
+			{
+				.SocialBar
+				{
+					bottom: 70px;
+				}
+
+				.bodyContent
+				{
+					padding-bottom: 143px;
+				}
+			}
+
+			@media all and (max-width: 509px)
+			{
+				.bodyContent
+				{
+					padding-bottom: 127px;
+				}
+			}
+	</style>
+
+
+	
+	<link type="text/css" rel="stylesheet" href="//ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css" />
+	<link type="text/css" rel="stylesheet" href="https://site-cdn.onenote.net/161300731550_Styles/en-US/ClipperSitePages.css" />
+
+
+	<script>
+		var BrowserIsIe8Below = Boolean(false);
+		var BrowserIsIe11WithDragAndDropBug = Boolean(false);
+		var ShowFavoritesBarKeyboardInstructionString = "1) To open your Bookmarks bar: Press Ctrl + Shift + B";
+		var DontClickString = "2) Don't click, just drag &#9786";
+		var DragToFavoriteString = "2) Install by dragging this button with your mouse to your Bookmarks bar";
+		var RightClickInstallInstructionString = "2) Right-click the button below -> Add to favorites -> Yes -> select Favorites bar from drop-down -> click Add";
+		var RightClickInstallInstructionIe11String = "2) Right-click the button below -> Add to favorites -> select Favorites Bar from drop-down -> Add";
+		var TouchInstallInstructionString = "2) Tap and hold the button below -> tap Add to Favorites -> select Favorites bar from drop-down -> tap Add";
+		var ShowFavoritesBarIeTouchInstructionString = "1) On touch? Tap and hold the title bar and then tap Favorites bar.";
+		var ShowFavoritesBarKeyboardInstructionString = "1) To open your Bookmarks bar: Press Ctrl + Shift + B";
+		var IsEdgeExtension = Boolean(false);
+		var IsChromeExtension = Boolean(false);
+		var IsSafariExtension = Boolean(false);
+		var IsFirefoxExtensionInstall = Boolean(false);
+		var EdgeExtensionUrl = "https://aka.ms/msedge-onenote-store";
+		var ChromeExtensionUrl = "https://chrome.google.com/webstore/detail/gojbdfnpnhogfdgjbigejoaolejmgdhk";
+		var IsInstalled = Boolean(false);
+	</script>
+
+
+	<script>
+		var SessionId = "19ca1c22-b7ef-4447-9517-cc9599636fdc";
+		var CorrelationId = "b2fb4ec9-b396-4a10-9b6b-4a44b4e9a68d";
+	</script>
+
+	
+
+		<script type="text/javascript">
+			function calculatePageLoadTime() {
+				// Do nothing
+			}
+		</script>
+</head>
+
+
+<body onload="calculatePageLoadTime()" class="iPhone  OneNoteBackgroundColor ClipperSitePages">
+	<link type="text/css" rel="stylesheet" href="https://site-cdn.onenote.net/161300731550_Styles/en-US/SharedHeaderOverrides.css" />
+<style>.headBar a:hover {background-color:#975D93;}.headLogo, .UnifiedHeader .headTLC {background-color:#7719AA;}.headChevLink {background-color:#7719AA;}.headBar .headChevLink:hover {background-color:#975D93;}</style>
+<div id='h_bar' class='headBar UnifiedHeaderUIFont UnifiedHeader ' style='min-width:320px;position:fixed' role='navigation'>
+	
+	<div class='headTLC' style=''>
+		<a onclick='ExpandHeader()' onkeydown='OnSwitcherLauncherKeyDown(event)' id='h_logoChev' class='headChevLink' href='#' style='' title='List of Microsoft Services' aria-label='List of Microsoft Services' role='button'>
+				<img src='https://site-cdn.onenote.net/161300731550_Images/en-US/App_Switcher_Waffle.50x50x32.png?b=1601300210000' style='width:50px;height:50px;' role='presentation'/>
+		</a><span class='headLogoPipe' style='' role='presentation' aria-hidden='true'>&#160;</span><a href = https://www.onenote.com/ class='headLogo' id='h_logoLink' role='presentation' aria-label='OneNote'>
+				<span><img id='h_logo' src='https://site-cdn.onenote.net/161300731550_Images/en-US/odc_onenoteheaderlogo.135x40x32.png?b=1601300210000' style='width:124px;height:50px;' role='presentation' /></span>
+			</a>
+		<span class='headXContent'>	<div class="headLogoOverride" id='h_logoLinkOverride' aria-label='OneNote' style="height: 50px;" role="button">
+			<a href="https://www.onenote.com/" role="button" style="height: 50px;">
+					<span>
+		<p id="h_logoOverride" role="presentation">OneNote</p>
+	</span>
+
+			</a>
+	</div>
+	<div class="headLogoIconOverride" id='h_logoIconLinkOverride' aria-label='OneNote' style="width: 50px; height: 50px;">
+			<a href="https://www.onenote.com/" role="button" style="height: 50px;">
+				<span><img id="h_logoIconOverride" src="https://site-cdn.onenote.net/161300731550_Images/OneNoteLogoMobile2.22x22.png?" style="width: 50px; height: 50px;" role="presentation"></span>
+			</a>
+	</div>
+</span>
+	</div>
+	<div class='headTRC'>
+	
+		<div class='headXLinks'></div><span class='headXContent'>
+			
+			<div class='SharedHeaderFeedback'>
+				<a id='SharedHeaderFeedbackLink' href="javascript:Feedback.ShowTool('OneNoteClipperInstall', 1033)" aria-label="Feedback"><img class='SharedHeaderFeedbackIcon' role='presentation' src='https://site-cdn.onenote.net/161300731550_Images/feedback.png'/> <span class='SharedHeaderFeedbackText'>Feedback</span></a>
+			</div></span><span class='headMeContainer' style='display:none;'></span>
+	</div>
+	<div class='headerMenusContainer'>
+		
+	</div>
+</div><div id='sw_bar' class='swBar  UnifiedHeader' style='display:none;top:30px;' onclick='CollapseHeader()'>
+	<ul id='sw_tileList' class='swTileList'>
+		<li class='swTile '>
+	<a class='swTileLink' id='sw_Outlook' href='https://office.live.com/start/Outlook.aspx?ui=en%2DUS&amp;rs=US' style='background-color:#0072c6;border-color:#0072c6;' target='_blank'>
+		<span class='clip110x110 ci '><img src='https://site-cdn.onenote.net/161300731550_Images/en-US/wapsw.png?b=1601300210000' class='wapsw_ODC_TileOutlook_110x110x32' role='presentation' title=''></span>
+		<span class='swTileText AppTileUIFont'>Outlook.com</span>
+	</a>
+</li><li class='swTile '>
+	<a class='swTileLink' id='sw_People' href='https://office.live.com/start/People.aspx?ui=en%2DUS&amp;rs=US' style='background-color:#d24726;border-color:#d24726;' target='_blank'>
+		<span class='clip110x110 ci '><img src='https://site-cdn.onenote.net/161300731550_Images/en-US/wapsw.png?b=1601300210000' class='wapsw_ODC_TilePeople_110x110x32' role='presentation' title=''></span>
+		<span class='swTileText AppTileUIFont'>People</span>
+	</a>
+</li><li class='swTile '>
+	<a class='swTileLink' id='sw_Calendar' href='https://office.live.com/start/Calendar.aspx?ui=en%2DUS&amp;rs=US' style='background-color:#5133ab;border-color:#5133ab;' target='_blank'>
+		<span class='clip110x110 ci '><img src='https://site-cdn.onenote.net/161300731550_Images/en-US/wapsw.png?b=1601300210000' class='wapsw_ODC_TileCalendar_110x110x32' role='presentation' title=''></span>
+		<span class='swTileText AppTileUIFont'>Calendar</span>
+	</a>
+</li><li class='swTile '>
+	<a class='swTileLink' id='sw_PartnerLink' href='https://office.live.com/start/OneDrive.aspx?ui=en%2DUS&amp;rs=US' style='background-color:#094ab2;border-color:#094ab2;' target='_blank'>
+		<span class='clip110x110 ci '><img src='https://site-cdn.onenote.net/161300731550_Images/en-US/wapsw.png?b=1601300210000' class='wapsw_ODC_TileCloudLogo_110x110x32' role='presentation' title=''></span>
+		<span class='swTileText AppTileUIFont'>OneDrive</span>
+	</a>
+</li><li class='swTile '>
+	<a class='swTileLink' id='sw_Word' href='https://office.live.com/start/Word.aspx?ui=en%2DUS&amp;rs=US' style='background-color:#2b579a;border-color:#2b579a;' target='_blank'>
+		<span class='clip110x110 ci '><img src='https://site-cdn.onenote.net/161300731550_Images/en-US/wapsw.png?b=1601300210000' class='wapsw_ODC_TileWord_110x110x32' role='presentation' title=''></span>
+		<span class='swTileText AppTileUIFont'>Word</span>
+	</a>
+</li><li class='swTile '>
+	<a class='swTileLink' id='sw_Excel' href='https://office.live.com/start/Excel.aspx?ui=en%2DUS&amp;rs=US' style='background-color:#217346;border-color:#217346;' target='_blank'>
+		<span class='clip110x110 ci '><img src='https://site-cdn.onenote.net/161300731550_Images/en-US/wapsw.png?b=1601300210000' class='wapsw_ODC_TileExcel_110x110x32' role='presentation' title=''></span>
+		<span class='swTileText AppTileUIFont'>Excel</span>
+	</a>
+</li><li class='swTile '>
+	<a class='swTileLink' id='sw_PowerPoint' href='https://office.live.com/start/PowerPoint.aspx?ui=en%2DUS&amp;rs=US' style='background-color:#d24726;border-color:#d24726;' target='_blank'>
+		<span class='clip110x110 ci '><img src='https://site-cdn.onenote.net/161300731550_Images/en-US/wapsw.png?b=1601300210000' class='wapsw_ODC_TilePowerPoint_110x110x32' role='presentation' title=''></span>
+		<span class='swTileText AppTileUIFont'>PowerPoint</span>
+	</a>
+</li><li class='swTile '>
+	<a class='swTileLink' id='sw_OneNote' href='https://www.onenote.com/notebooks?ui=en%2DUS&amp;rs=US' style='background-color:#7719aa;border-color:#7719aa;' target='_blank'>
+		<span class='clip110x110 ci '><img src='https://site-cdn.onenote.net/161300731550_Images/en-US/wapsw.png?b=1601300210000' class='wapsw_ODC_TileOneNote_110x110x32' role='presentation' title=''></span>
+		<span class='swTileText AppTileUIFont'>OneNote</span>
+	</a>
+</li><li class='swTile '>
+	<a class='swTileLink' id='sw_Sway' href='https://sway.com?ui=en%2DUS&amp;rs=US' style='background-color:#008272;border-color:#008272;' target='_blank'>
+		<span class='clip110x110 ci '><img src='https://site-cdn.onenote.net/161300731550_Images/en-US/wapsw.png?b=1601300210000' class='wapsw_ODC_TileSway_110x110x32' role='presentation' title=''></span>
+		<span class='swTileText AppTileUIFont'>Sway</span>
+	</a>
+</li><li class='swTile '>
+	<a class='swTileLink' id='sw_Skype' href='https://web.skype.com/?source=wac&amp;ui=en%2DUS&amp;rs=US' style='background-color:#0095cc;border-color:#0095cc;' target='_blank'>
+		<span class='clip110x110 ci '><img src='https://site-cdn.onenote.net/161300731550_Images/en-US/wapsw.png?b=1601300210000' class='wapsw_ODC_TileSkype_110x110x32' role='presentation' title=''></span>
+		<span class='swTileText AppTileUIFont'>Skype</span>
+	</a>
+</li><li class='swTile '>
+	<a class='swTileLink' id='sw_OfficeDotCom' href='https://www.office.com?ui=en%2DUS&amp;rs=US' style='background-color:#E83F24;border-color:#E83F24;' target='_blank'>
+		<span class='clip110x110 ci '><img src='https://site-cdn.onenote.net/161300731550_Images/en-US/wapsw.png?b=1601300210000' class='wapsw_ODC_TileOfficeOnline_110x110x32' role='presentation' title=''></span>
+		<span class='swTileText AppTileUIFont'>Office</span>
+	</a>
+</li><li class='swTile '>
+	<a class='swTileLink' id='sw_Flow' href='https://flow.microsoft.com/manage/?utm_source=consumer_office&amp;utm_medium=app_launcher&amp;utm_campaign=consumer_referrals&amp;ui=en%2DUS&amp;rs=US' style='background-color:#0077FF;border-color:#0077FF;' target='_blank'>
+		<span class='clip110x110 ci '><img src='https://site-cdn.onenote.net/161300731550_Images/en-US/wapsw.png?b=1601300210000' class='wapsw_ODC_TileFlow_110x110x32' role='presentation' title=''></span>
+		<span class='swTileText AppTileUIFont'>Flow</span>
+	</a>
+</li>
+	</ul>
+	<span class='border-arrow arrow'></span>
+	<span class='arrow'></span>
+</div>
+<div id='sw_barBG' class='headerBarBG' onclick='CollapseHeader()'></div><div class='bodyContainer'><div class='bodyContent ResizableBodyContent' id='b_content'>
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<section id="MarketingContainerSection">
+		<div id="MarketingContainer" class="container">
+			<div class="row">
+				<div class="col-lg-5">
+					<div class="row">
+						<div class="col-xs-11 col-sm-11 col-md-6 col-lg-11">
+							<h2 id="CallOutTitle">Save anything on the web to OneNote in one click</h2>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-10 col-sm-10 col-md-6 col-lg-10" id="CallOutSubtitle">
+							<p>Add the OneNote Web Clipper to your web browser so you can save, annotate, and organize anything from the web.</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12" id="ButtonContainer">
+									<div id="OneNoteClipperShowInstallInstructionsContainer">
+	<button id="ShowInstallInstructionsModal" type="button" data-toggle="modal" data-target="#install-modal" title="Get OneNote Web Clipper">
+		Get OneNote Web Clipper
+	</button>
+		</div>
+
+						</div>
+					</div>
+				</div>
+				<figure id="HeroFigure">
+					<img id="HeroImg" src="https://site-cdn.onenote.net/161300731550_Images/ClipperSitePages/ClipperInstall/hero_image.png" alt="Clip any webpage" />
+				</figure>
+				<div class="col-lg-7 oneNoteClipperCss" id="HeroImageContainer">
+					<img id="HeroImgSmall" src="https://site-cdn.onenote.net/161300731550_Images/ClipperSitePages/ClipperInstall/hero_image.png" alt="Clip any webpage" class="img-responsive center-block" />
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="HighlightContainerSection">
+		<div id="HighlightContainer" class="container">
+			<div class="row">
+				<div class="col-sm-4 col-lg-4">
+					<img class="HighlightSectionImg" src="https://site-cdn.onenote.net/161300731550_Images/ClipperSitePages/ClipperInstall/capture_the_web_icon.png" alt="Generic placeholder image">
+					<p class="HighlightSectionTitle">Capture the web</p>
+					<div class="HighlightSectionDetail">
+						<p>Quickly capture any webpage to OneNote, where you can easily edit, annotate, or share it.</p>
+					</div>
+				</div>
+				<div class="col-sm-4 col-lg-4">
+					<img class="HighlightSectionImg" src="https://site-cdn.onenote.net/161300731550_Images/ClipperSitePages/ClipperInstall/remove_the_clutter_icon.png" alt="Generic placeholder image">
+					<p class="HighlightSectionTitle">Remove the clutter</p>
+					<div class="HighlightSectionDetail">
+						<p>Reduce the clutter and clip only the article, recipe, or product information you really need</p>
+					</div>
+				</div>
+				<div class="col-sm-4 col-lg-4">
+					<img class="HighlightSectionImg" src="https://site-cdn.onenote.net/161300731550_Images/ClipperSitePages/ClipperInstall/access_anywhere_icon.png" alt="Generic placeholder image">
+					<p class="HighlightSectionTitle">Access anywhere</p>
+					<div class="HighlightSectionDetail">
+						<p>Access your clipped webpages on any computer, tablet, or phone - even when you&#39;re offline.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+	<div class="modal fade" id="install-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content" id="iPhoneInstallPopover">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">
+							<img src="https://site-cdn.onenote.net/161300731550_Images/ClipperSitePages/close_8x8.png" id="close-button" class="img-responsive" />
+						</span>
+					</button>
+					<h6 class="share-widget-text">
+First make sure <a href=https://www.onenote.com/get>OneNote</a> is installed.Then do the following:
+			</h6>
+				</div>
+				<div class="modal-body">
+					<div>
+				<ol>
+					<li>
+						<p class="share-widget-text">Open a browser, and tap the Share menu.</p>
+						<img src="https://site-cdn.onenote.net/161300731550_Images/ClipperSitePages/ClipperInstall/clipper_ios_step_1.png" class="img-responsive share-widget-step" />
+					</li>
+					<li>
+						<p class="share-widget-text">Swipe left on the apps and tap More.</p>
+						<img src="https://site-cdn.onenote.net/161300731550_Images/ClipperSitePages/ClipperInstall/clipper_ios_step_2.png" class="img-responsive share-widget-step" />
+					</li>
+					<li>
+						<p class="share-widget-text">Turn on OneNote and tap Done.</p>
+						<img src="https://site-cdn.onenote.net/161300731550_Images/ClipperSitePages/ClipperInstall/clipper_ios_step_3.png" class="img-responsive share-widget-step" />
+					</li>
+					<li>
+						<p class="share-widget-text">From any webpage, tap the OneNote icon to save!</p>
+						<img src="https://site-cdn.onenote.net/161300731550_Images/ClipperSitePages/ClipperInstall/clipper_ios_step_4.png" class="img-responsive share-widget-step" />
+					</li>
+				</ol>
+			</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+		<div id="SocialBarLinks" class="SocialBar">
+				<a class="SocialLink" id="FacebookLink" href="https://officeredir.microsoft.com/r/rlidOneNoteFacebook/?clid=1033" aria-label="Facebook">
+		<img src="https://site-cdn.onenote.net/161300731550_Images/facebook.png" role="presentation" />
+		<span class="SocialLinkLabel" role="presentation">Facebook</span>
+	</a>
+
+				<a class="SocialLink" id="TwitterLink" href="https://officeredir.microsoft.com/r/rlidOneNoteTwitter/?clid=1033" aria-label="Twitter">
+		<img src="https://site-cdn.onenote.net/161300731550_Images/twitter.png" role="presentation" />
+		<span class="SocialLinkLabel" role="presentation">Twitter</span>
+	</a>
+
+				<a class="SocialLink" id="BlogLink" href="https://officeredir.microsoft.com/r/rlidOneNoteBlog/?clid=1033" aria-label="Blog">
+		<img src="https://site-cdn.onenote.net/161300731550_Images/blog.png" role="presentation" />
+		<span class="SocialLinkLabel" role="presentation">Blog</span>
+	</a>
+
+				<a class="SocialLink" id="DeveloperLink" href="https://dev.onenote.com/" aria-label="Dev Center">
+		<img src="https://site-cdn.onenote.net/161300731550_Images/developer.png" role="presentation" />
+		<span class="SocialLinkLabel" role="presentation">Dev Center</span>
+	</a>
+
+		</div>
+</div></div>
+
+		<div id="footer" class="footerContainer FooterUIFont DarkColorPalette ResizableFooterContainer">
+			<div class="footerBLC">
+				<a id="f_ww" href="//store.office.com/worldwide.aspx?rs=en%2DUS&amp;returnURL=https%3A%2F%2Fwww%2Eonenote%2Ecom%2Fclipper&amp;cmapid=5" title=Change Language>
+					<img class="footerGlobe" src="https://site-cdn.onenote.net/161300731550_Images/en-US/Globe_Light.20x20x32.png" role="presentation">
+					<span>Change Language</span>
+				</a>
+			</div>
+		<div class="footerBRC">
+			<div class="footerBRCoutercell">
+				<div class="footerBRCinnerrow">
+					<a id="f_link0" href="//go.microsoft.com/fwlink/p/?LinkId=316968" title="">Privacy &amp; Cookies</a>
+					<a id="f_link1" href="//go.microsoft.com/fwlink/p/?LinkId=316967" title="">Legal</a>
+						<a id="f_link2" href="//go.microsoft.com/fwlink/p/?LinkId=316970" title="">Trademarks</a>
+											<span class=" " role="menuitem">&copy; 2020 Microsoft.com</span>
+									</div>
+			</div>
+		</div>
+	</div>
+
+
+			<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.0.min.js"></script>
+	<script src="https://site-cdn.onenote.net/161300731550_Scripts/CommonDiagnostics.js"></script>
+		<script>
+			var OrigRefCookieName = "OrigRef";
+			var OrigRefCookieValue = "Uri=https%3a%2f%2fwww.onenote.com%2fclipper; path=/";
+		</script>
+	<script src="https://site-cdn.onenote.net/161300731550_Scripts/DefaultSignIn.min.js" type="text/javascript"></script>
+	<script src="https://site-cdn.onenote.net/161300731550_Scripts/home.js" type="text/javascript"></script>
+	<script type="text/javascript"> RegisterHRDListener(); </script>
+	<script type="text/javascript">
+		// Feedback Tool localized strings:
+		var Feedback;
+		(function (Feedback) {
+			(function (Constants) {
+				(function (Urls) {
+					Urls.ImageRoot = "https://site-cdn.onenote.net/161300731550_Images/";
+				})(Constants.Urls || (Constants.Urls = {}));
+				var Urls = Constants.Urls;
+				(function (Strings) {
+					Strings.CommentPlaceholder = "Please type in your comment";
+					Strings.DontLike = "I don&#39;t like something";
+					Strings.FeedbackOverall = "What kind of feedback do you have?";
+					Strings.FeedbackTitle = "Feedback";
+					Strings.IncludeScreenshot = "Include screenshot";
+					Strings.Like = "I like something";
+					Strings.PrivacyStatement = "Privacy Statement";
+					Strings.Submit = "Submit";
+					Strings.Suggestion = "I have a suggestion";
+					Strings.WhatLike = "What did you like?";
+					Strings.WhatDontLike = "What did you not like?";
+					Strings.WhatSuggest = "What do you suggest?";
+				})(Constants.Strings || (Constants.Strings = {}));
+				var Strings = Constants.Urls;
+			})(Feedback.Constants || (Feedback.Constants = {}));
+			var Constants = Feedback.Constants;
+		})(Feedback || (Feedback = {}));
+	</script>
+
+	<script src="//ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/bootstrap.min.js"></script>
+	<script src="https://site-cdn.onenote.net/161300731550_Scripts/ClipperInstall.js"></script>
+	<script type="text/javascript">
+		// Set the uls category string from the value set in the view bag.
+		// This value is declared and consumed in BrowserUls.ts.
+		ulsCategoryStringSetInCshtml = "OneNoteClipperInstall";
+	</script>
+
+	<script type="text/javascript">var CookieBanner = "<div id='msccBanner' dir='ltr' data-site-name='OneNote' data-mscc-version='0.4.2' data-nver='aspnet-2.0.6' data-sver='0.1.2' class='cc-banner' role='alert' aria-labelledby='msccMessage'><div class='cc-container'><svg class='cc-icon cc-v-center' x='0px' y='0px' viewBox='0 0 44 44' height='30px' fill='none' stroke='currentColor'><circle cx='22' cy='22' r='20' stroke-width='2'></circle><line x1='22' x2='22' y1='18' y2='33' stroke-width='3'></line><line x1='22' x2='22' y1='12' y2='15' stroke-width='3'></line></svg> <span id='msccMessage' class='cc-v-center cc-text' tabindex='0'>This site uses cookies for analytics, personalized content and ads. By continuing to browse this site, you agree to this use.</span> <a href='https://go.microsoft.com/fwlink/?linkid=845480' target='_top' aria-label='Learn more about Microsoft&#39;s Cookie Policy' id='msccLearnMore' class='cc-link cc-v-center cc-float-right' data-mscc-ic='false'>Learn more</a></div></div>"</script> <script type="text/javascript" src="https://site-cdn.onenote.net/161300731550_Scripts/cookiecompliance.js"></script>
+
+	
+</body>
+</html>

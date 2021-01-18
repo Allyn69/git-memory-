@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>iSH</title>
+        <link rel="stylesheet" href="style.css" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="shortcut icon" type="image/png" href="assets/icon.png"/>
+
+        <meta name="description" content="iSH is a project to get a Linux shell environment running locally on your iOS device, using a usermode x86 emulator.">
+        <meta property="og:image" content="/assets/icon.png" />
+        <meta property="og:url" content="https://ish.app" />
+        <meta property="og:title" content="iSH" />
+        <meta property="og:description" content="iSH is a project to get a Linux shell environment running locally on your iOS device, using a usermode x86 emulator." />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="en_GB" />
+        <meta name="theme-color" content="#17192d">
+
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu:400&display=swap" rel="stylesheet">
+        <script defer src="https://code.jquery.com/jquery-3.5.1.min.js"
+              integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+              crossorigin="anonymous"></script>
+        <script defer src="site.js"></script>
+        <noscript>
+            <style>
+            header {
+                background-color: #262626;
+                box-shadow: 0 0 4px black;
+            }
+            </style>
+        </noscript>
+    </head>
+    <body>
+        <header class="hhidden" id="headr">
+            <div class=flexdivider></div>
+            <nav>
+                <a class="whidden" href="#home">Home</a>
+                <div class="whidden divider"></div>
+                <a href="#get">Get iSH</a>
+            </nav>
+        </header>
+        <div id="home" class="home">
+    <div class="front-container">
+        <img src="assets/icon.png" alt="iSH icon" class="icon" />
+        <div class="fronttext">
+            <h1>iSH</h1>
+            <h2>The Linux shell on iOS.</h2>
+            <div class="icons">
+                <a href="https://testflight.apple.com/join/97i7KM8O">
+                    <div class="thetestflightbutton">
+                        <img src="assets/testflight.png" style="height: 40px; width: auto" alt="Get iSH beta" />
+                        <div class="tftext">Get iSH beta</div>
+                    </div>
+                </a>
+                <a href="https://github.com/ish-app/ish" aria-label="iSH on GitHub"><svg version="1.1" viewBox="0 0 16 16"><title>GitHub</title><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+
+</a>
+                <a href="https://discord.gg/HFAXj44" target="_blank" rel="noopener" aria-label="iSH on Discord"><svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 245 240"><style>.st0{fill:#FFFFFF;}</style><path class="st0" d="M104.4 103.9c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1.1-6.1-4.5-11.1-10.2-11.1zM140.9 103.9c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1s-4.5-11.1-10.2-11.1z"/><path class="st0" d="M189.5 20h-134C44.2 20 35 29.2 35 40.6v135.2c0 11.4 9.2 20.6 20.5 20.6h113.4l-5.3-18.5 12.8 11.9 12.1 11.2 21.5 19V40.6c0-11.4-9.2-20.6-20.5-20.6zm-38.6 130.6s-3.6-4.3-6.6-8.1c13.1-3.7 18.1-11.9 18.1-11.9-4.1 2.7-8 4.6-11.5 5.9-5 2.1-9.8 3.5-14.5 4.3-9.6 1.8-18.4 1.3-25.9-.1-5.7-1.1-10.6-2.7-14.7-4.3-2.3-.9-4.8-2-7.3-3.4-.3-.2-.6-.3-.9-.5-.2-.1-.3-.2-.4-.3-1.8-1-2.8-1.7-2.8-1.7s4.8 8 17.5 11.8c-3 3.8-6.7 8.3-6.7 8.3-22.1-.7-30.5-15.2-30.5-15.2 0-32.2 14.4-58.3 14.4-58.3 14.4-10.8 28.1-10.5 28.1-10.5l1 1.2c-18 5.2-26.3 13.1-26.3 13.1s2.2-1.2 5.9-2.9c10.7-4.7 19.2-6 22.7-6.3.6-.1 1.1-.2 1.7-.2 6.1-.8 13-1 20.2-.2 9.5 1.1 19.7 3.9 30.1 9.6 0 0-7.9-7.5-24.9-12.7l1.4-1.6s13.7-.3 28.1 10.5c0 0 14.4 26.1 14.4 58.3 0 0-8.5 14.5-30.6 15.2z"/></svg></a>
+            </div>
+        </div>
+        <picture>
+            <source type="image/webp" srcset="assets/front-iphone.webp">
+            <source type="image/png" srcset="assets/front-iphone.png">
+            <img class="iphone whidden" src="assets/front-iphone.png" alt="iSH running on an iPhone">
+        </picture>
+    </div>
+    <div class="anidiv">
+        <i class="material-icons">
+            <a href="#info" class="downarrow">keyboard_arrow_down</a>
+        </i>
+    </div>
+</div>
+
+<section id="info" class="lightsec">
+    <h1>Wait, what's iSH?</h1>
+    <hr />
+    <p class="meds">
+        iSH is a project to get a Linux shell environment running locally on your iOS device, using a usermode x86 emulator.<br />
+    </p>
+    <div class="expl">
+        <div>
+            <picture>
+                <source type="image/webp" srcset="assets/front-ipad.webp">
+                <source type="image/png" srcset="assets/front-ipad.png">
+                <img class="ipad" src="assets/front-ipad.png" alt="iSH running on an iPad">
+            </picture>
+            <p>iSH gives you the ability to run Linux applications and programs on iOS.</p>
+        </div>
+        <div class="info">
+            <div class="infobox">
+                <p class="meds">Alpine</p>
+                <p>
+                    You have access to the Alpine package manager in iSH.
+                    <br />
+                    You can install programs with <code>apk add &#60;name&#62;</code>.
+                </p>
+                <picture>
+                    <source type="image/webp" srcset="assets/iphone-alpine.webp">
+                    <source type="image/png" srcset="assets/iphone-alpine.png">
+                    <img class="boxpict" src="assets/iphone-alpine.png" alt="apk installing Bash on an iPhone">
+                </picture>
+                <a href="https://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management">Alpine command guide</a></p>
+                <!-- link package list instead? -->
+            </div>
+            <div class="infobox">
+                <p class="meds">The Keyboard</p>
+                <p>
+                    iSH's keyboard addition makes navigation easier.
+                    <br />
+                    Here's what the buttons do:
+                </p>
+                <picture>
+                    <source type="image/webp" srcset="assets/iphone-keyboard.webp">
+                    <source type="image/png" srcset="assets/iphone-keyboard.png">
+                    <img class="boxpict" src="assets/iphone-keyboard.png" alt="The iSH keyboard addition on an iPhone">
+                </picture>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="get">
+    <h1>So, how do I get iSH?</h1>
+    <hr />
+    <div class="options">
+        <div class="left block">
+            <p class="meds">Join the TestFlight beta!</p>
+            <p>You can get iSH by joining the <a href="https://testflight.apple.com/join/97i7KM8O">TestFlight beta</a>.</p>
+            <a href="https://testflight.apple.com/join/97i7KM8O">
+                <img src="assets/testflight.png" class="hoverscale" alt="Get iSH on TestFlight">
+            </a>
+        </div>
+        <div class="midline whidden"></div>
+        <div class="right block">
+            <p class="meds">Get iSH on AltStore</p>
+            <p>Alternatively, get <a href="https://altstore.io">AltStore</a> and add <a href="https://ish.app/altstore.json">this source</a>!</p>
+            <a href="https://ish.app/altstore.json">
+                <picture>
+                    <source type="image/webp" srcset="assets/altstore.webp">
+                    <source type="image/png" srcset="assets/altstore.png">
+                    <img class="hoverscale" src="assets/altstore.png" alt="Get iSH on AltStore">
+                </picture>
+            </a>
+        </div>
+    </div>
+    <div class="tempextraoptions"> <!-- Have other design ideas for later :) -->
+        <div class="block outsideblock">
+            <svg version="1.1" viewBox="0 0 16 16"><title>GitHub</title><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+
+<a href="https://github.com/ish-app/ish"><div class="tftext">Build from source</div></a>
+        </div>
+    </div>
+    <div class="bottomtext">
+        <p class="margin">Join our <a href="https://discord.gg/HFAXj44">Discord server</a> if you have any questions or concerns, or you just want to chat!<br />
+            There's also a <a href="https://ish.reddit.com">subreddit</a> for discussions and a <a href="https://twitter.com/iSH_app">Twitter</a>.</p>
+        <p class="margin">You can also become a <a href="https://patreon.com/tbodt">patron</a> if you would like support iSH.<br />Donations are very much appreciated, but will never be required; the app will always be completely free.</p>
+    </div>
+</section>
+
+        <div class="footer"> <!-- Footer -->
+            <hr />
+            <!-- Todo: Add icons in footer for different contact methods (email/twitter/github/whatever) -->
+            <p class="meds footertext">iSH, &copy; 2017–2020 | <a href="mailto:tbodt@ish.app">tbodt@ish.app</a></p>
+        </div>
+    <script data-goatcounter="https://ish-dot-app.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></body>
+</html>

@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html class="" lang="en">
+<head prefix="og: http://ogp.me/ns#">
+<meta charset="utf-8">
+<link href="https://assets.gitlab-static.net" rel="dns-prefetch">
+<link crossorigin="" href="https://assets.gitlab-static.net" rel="preconnect">
+<link as="style" crossorigin="anonymous" href="https://assets.gitlab-static.net/assets/application-dc6aa5e5f390807e0561788a5e4cf2f39f49e546288524114265a4610f79c579.css" rel="preload">
+<link as="style" crossorigin="anonymous" href="https://assets.gitlab-static.net/assets/highlight/themes/white-b3993639b265e6a0de95d667365bc0dc4a707b70202945298c5715dc0d1f6159.css" rel="preload">
+<link crossorigin="" href="snowplow.trx.gitlab.net" rel="preconnect">
+
+<meta content="IE=edge" http-equiv="X-UA-Compatible">
+
+<meta content="object" property="og:type">
+<meta content="GitLab" property="og:site_name">
+<meta content="Kali Linux" property="og:title">
+<meta content="Offensive Security&#39;s Most Advanced Penetration Testing Distribution, Ever." property="og:description">
+<meta content="https://assets.gitlab-static.net/uploads/-/system/group/avatar/5034914/kali-logo.jpeg" property="og:image">
+<meta content="64" property="og:image:width">
+<meta content="64" property="og:image:height">
+<meta content="https://gitlab.com/kalilinux" property="og:url">
+<meta content="summary" property="twitter:card">
+<meta content="Kali Linux" property="twitter:title">
+<meta content="Offensive Security&#39;s Most Advanced Penetration Testing Distribution, Ever." property="twitter:description">
+<meta content="https://assets.gitlab-static.net/uploads/-/system/group/avatar/5034914/kali-logo.jpeg" property="twitter:image">
+
+<title>Kali Linux · GitLab</title>
+<meta content="Offensive Security&#39;s Most Advanced Penetration Testing Distribution, Ever." name="description">
+<link rel="shortcut icon" type="image/png" href="https://gitlab.com/assets/favicon-7901bd695fb93edb07975966062049829afb56cf11511236e61bcf425070e36e.png" id="favicon" data-original-href="https://gitlab.com/assets/favicon-7901bd695fb93edb07975966062049829afb56cf11511236e61bcf425070e36e.png" />
+<style type="text/css">
+@keyframes blinking-dot{0%{opacity:1}25%{opacity:0.4}75%{opacity:0.4}100%{opacity:1}}@keyframes blinking-scroll-button{0%{opacity:0.2}50%{opacity:1}100%{opacity:0.2}}@keyframes gl-spinner-rotate{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}body.ui-indigo .navbar-gitlab{background-color:#292961}body.ui-indigo .navbar-gitlab .navbar-collapse{color:#d1d1f0}body.ui-indigo .navbar-gitlab .container-fluid .navbar-toggler{border-left:1px solid #6868b9}body.ui-indigo .navbar-gitlab .container-fluid .navbar-toggler svg{fill:#d1d1f0}body.ui-indigo .navbar-gitlab .navbar-sub-nav>li>a:hover,body.ui-indigo .navbar-gitlab .navbar-sub-nav>li>a:focus,body.ui-indigo .navbar-gitlab .navbar-sub-nav>li>button:hover,body.ui-indigo .navbar-gitlab .navbar-sub-nav>li>button:focus,body.ui-indigo .navbar-gitlab .navbar-nav>li>a:hover,body.ui-indigo .navbar-gitlab .navbar-nav>li>a:focus,body.ui-indigo .navbar-gitlab .navbar-nav>li>button:hover,body.ui-indigo .navbar-gitlab .navbar-nav>li>button:focus{background-color:rgba(209,209,240,0.2)}body.ui-indigo .navbar-gitlab .navbar-sub-nav>li.active>a,body.ui-indigo .navbar-gitlab .navbar-sub-nav>li.active>button,body.ui-indigo .navbar-gitlab .navbar-sub-nav>li.dropdown.show>a,body.ui-indigo .navbar-gitlab .navbar-sub-nav>li.dropdown.show>button,body.ui-indigo .navbar-gitlab .navbar-nav>li.active>a,body.ui-indigo .navbar-gitlab .navbar-nav>li.active>button,body.ui-indigo .navbar-gitlab .navbar-nav>li.dropdown.show>a,body.ui-indigo .navbar-gitlab .navbar-nav>li.dropdown.show>button{color:#292961;background-color:#fff}body.ui-indigo .navbar-gitlab .navbar-sub-nav>li.line-separator,body.ui-indigo .navbar-gitlab .navbar-nav>li.line-separator{border-left:1px solid rgba(209,209,240,0.2)}body.ui-indigo .navbar-gitlab .navbar-sub-nav{color:#d1d1f0}body.ui-indigo .navbar-gitlab .nav>li{color:#d1d1f0}body.ui-indigo .navbar-gitlab .nav>li>a .notification-dot{border:2px solid #292961}body.ui-indigo .navbar-gitlab .nav>li>a.header-help-dropdown-toggle .notification-dot{background-color:#d1d1f0}body.ui-indigo .navbar-gitlab .nav>li>a.header-user-dropdown-toggle .header-user-avatar{border-color:#d1d1f0}@media (min-width: 576px){body.ui-indigo .navbar-gitlab .nav>li>a:hover,body.ui-indigo .navbar-gitlab .nav>li>a:focus{background-color:rgba(209,209,240,0.2)}}body.ui-indigo .navbar-gitlab .nav>li>a:hover svg,body.ui-indigo .navbar-gitlab .nav>li>a:focus svg{fill:currentColor}body.ui-indigo .navbar-gitlab .nav>li>a:hover .notification-dot,body.ui-indigo .navbar-gitlab .nav>li>a:focus .notification-dot{will-change:border-color, background-color;border-color:#4a4a82}body.ui-indigo .navbar-gitlab .nav>li>a:hover.header-help-dropdown-toggle .notification-dot,body.ui-indigo .navbar-gitlab .nav>li>a:focus.header-help-dropdown-toggle .notification-dot{background-color:#fff}body.ui-indigo .navbar-gitlab .nav>li.active>a,body.ui-indigo .navbar-gitlab .nav>li.dropdown.show>a{color:#292961;background-color:#fff}body.ui-indigo .navbar-gitlab .nav>li.active>a:hover svg,body.ui-indigo .navbar-gitlab .nav>li.dropdown.show>a:hover svg{fill:#292961}body.ui-indigo .navbar-gitlab .nav>li.active>a .notification-dot,body.ui-indigo .navbar-gitlab .nav>li.dropdown.show>a .notification-dot{border-color:#fff}body.ui-indigo .navbar-gitlab .nav>li.active>a.header-help-dropdown-toggle .notification-dot,body.ui-indigo .navbar-gitlab .nav>li.dropdown.show>a.header-help-dropdown-toggle .notification-dot{background-color:#292961}body.ui-indigo .navbar-gitlab .nav>li .impersonated-user svg,body.ui-indigo .navbar-gitlab .nav>li .impersonated-user:hover svg{fill:#292961}body.ui-indigo .navbar .title>a:hover,body.ui-indigo .navbar .title>a:focus{background-color:rgba(209,209,240,0.2)}body.ui-indigo .search form{background-color:rgba(209,209,240,0.2)}body.ui-indigo .search form:hover{background-color:rgba(209,209,240,0.3)}body.ui-indigo .search .search-input::placeholder{color:rgba(209,209,240,0.8)}body.ui-indigo .search .search-input-wrap .search-icon,body.ui-indigo .search .search-input-wrap .clear-icon{fill:rgba(209,209,240,0.8)}body.ui-indigo .search.search-active form{background-color:#fff}body.ui-indigo .search.search-active .search-input-wrap .search-icon{fill:rgba(209,209,240,0.8)}body.ui-indigo .nav-sidebar li.active{box-shadow:inset 4px 0 0 #4b4ba3}body.ui-indigo .nav-sidebar li.active>a{color:#393982}body.ui-indigo .nav-sidebar li.active .nav-icon-container svg{fill:#393982}body.ui-indigo .sidebar-top-level-items>li.active .badge.badge-pill{color:#393982}body.ui-indigo .nav-links li.active a,body.ui-indigo .nav-links li.md-header-tab.active button,body.ui-indigo .nav-links li a.active{border-bottom:2px solid #6666c4}body.ui-indigo .nav-links li.active a .badge.badge-pill,body.ui-indigo .nav-links li.md-header-tab.active button .badge.badge-pill,body.ui-indigo .nav-links li a.active .badge.badge-pill{font-weight:600}body.ui-indigo .branch-header-title{color:#4b4ba3}body.ui-indigo .ide-sidebar-link.active{color:#4b4ba3;box-shadow:inset 3px 0 #4b4ba3}body.ui-indigo .ide-sidebar-link.active.is-right{box-shadow:inset -3px 0 #4b4ba3}
+
+*,*::before,*::after{box-sizing:border-box}html{font-family:sans-serif;line-height:1.15}header,nav,section{display:block}body{margin:0;font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", Ubuntu, Cantarell, "Helvetica Neue", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-size:1rem;font-weight:400;line-height:1.5;color:#303030;text-align:left;background-color:#fff}h1,h2,h3{margin-top:0;margin-bottom:0.25rem}p{margin-top:0;margin-bottom:1rem}ul{margin-top:0;margin-bottom:1rem}ul ul{margin-bottom:0}strong{font-weight:bolder}sub{position:relative;font-size:75%;line-height:0;vertical-align:baseline}sub{bottom:-.25em}a{color:#007bff;text-decoration:none;background-color:transparent}a:not([href]){color:inherit;text-decoration:none}pre,code{font-family:"Menlo", "DejaVu Sans Mono", "Liberation Mono", "Consolas", "Ubuntu Mono", "Courier New", "andale mono", "lucida console", monospace;font-size:1em}pre{margin-top:0;margin-bottom:1rem;overflow:auto}img{vertical-align:middle;border-style:none}svg{overflow:hidden;vertical-align:middle}table{border-collapse:collapse}th{text-align:inherit}button{border-radius:0}input,button,textarea{margin:0;font-family:inherit;font-size:inherit;line-height:inherit}button,input{overflow:visible}button{text-transform:none}button:not(:disabled),[type="button"]:not(:disabled),[type="reset"]:not(:disabled){cursor:pointer}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner{padding:0;border-style:none}textarea{overflow:auto;resize:vertical}[type="search"]{outline-offset:-2px}summary{display:list-item;cursor:pointer}template{display:none}[hidden]{display:none !important}h1,h2,h3,.h1,.h2,.h3{margin-bottom:0.25rem;font-weight:600;line-height:1.2;color:#303030}h1,.h1{font-size:2.1875rem}h2,.h2{font-size:1.75rem}h3,.h3{font-size:1.53125rem}.list-unstyled{padding-left:0;list-style:none}code{font-size:90%;color:#1f1f1f;word-wrap:break-word}a>code{color:inherit}pre{display:block;font-size:90%;color:#303030}pre code{font-size:inherit;color:inherit;word-break:normal}.container{width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}@media (min-width: 576px){.container{max-width:540px}}@media (min-width: 768px){.container{max-width:720px}}@media (min-width: 992px){.container{max-width:960px}}@media (min-width: 1200px){.container{max-width:1140px}}.container-fluid{width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}@media (min-width: 576px){.container{max-width:540px}}@media (min-width: 768px){.container{max-width:720px}}@media (min-width: 992px){.container{max-width:960px}}@media (min-width: 1200px){.container{max-width:1140px}}.row{display:flex;flex-wrap:wrap;margin-right:-15px;margin-left:-15px}.table{width:100%;margin-bottom:0.5rem;color:#303030}.table th,.table td{padding:0.75rem;vertical-align:top;border-top:1px solid #dbdbdb}.search form{display:block;width:100%;height:34px;padding:0.375rem 0.75rem;font-size:0.875rem;font-weight:400;line-height:1.5;color:#303030;background-color:#fff;background-clip:padding-box;border:1px solid #dbdbdb;border-radius:0.25rem}.search form:-moz-focusring{color:transparent;text-shadow:0 0 0 #303030}.search form::placeholder{color:#5e5e5e;opacity:1}.search form:disabled{background-color:#fafafa;opacity:1}.form-inline{display:flex;flex-flow:row wrap;align-items:center}@media (min-width: 576px){.form-inline .search form,.search .form-inline form{display:inline-block;width:auto;vertical-align:middle}}.btn{display:inline-block;font-weight:400;color:#303030;text-align:center;vertical-align:middle;cursor:pointer;user-select:none;background-color:transparent;border:1px solid transparent;padding:0.375rem 0.75rem;font-size:1rem;line-height:20px;border-radius:0.25rem}.btn.disabled,.btn:disabled{opacity:0.65}a.btn.disabled{pointer-events:none}.collapse:not(.show){display:none}.dropdown{position:relative}.dropdown-menu-toggle{white-space:nowrap}.dropdown-menu-toggle::after{display:inline-block;margin-left:0.255em;vertical-align:0.255em;content:"";border-top:0.3em solid;border-right:0.3em solid transparent;border-bottom:0;border-left:0.3em solid transparent}.dropdown-menu-toggle:empty::after{margin-left:0}.dropdown-menu{position:absolute;top:100%;left:0;z-index:1000;display:none;float:left;min-width:10rem;padding:0.5rem 0;margin:0.125rem 0 0;font-size:1rem;color:#303030;text-align:left;list-style:none;background-color:#fff;background-clip:padding-box;border:1px solid rgba(0,0,0,0.15);border-radius:0.25rem}.dropdown-menu-right{right:0;left:auto}.divider{height:0;margin:4px 0;overflow:hidden;border-top:1px solid #dbdbdb}.dropdown-menu.show{display:block}.nav{display:flex;flex-wrap:wrap;padding-left:0;margin-bottom:0;list-style:none}.navbar{position:relative;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:0.25rem 0.5rem}.navbar .container,.navbar .container-fluid{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between}.navbar-nav{display:flex;flex-direction:column;padding-left:0;margin-bottom:0;list-style:none}.navbar-nav .dropdown-menu{position:static;float:none}.navbar-collapse{flex-basis:100%;flex-grow:1;align-items:center}.navbar-toggler{padding:0.25rem 0.75rem;font-size:1.25rem;line-height:1;background-color:transparent;border:1px solid transparent;border-radius:0.25rem}@media (max-width: 575.98px){.navbar-expand-sm>.container,.navbar-expand-sm>.container-fluid{padding-right:0;padding-left:0}}@media (min-width: 576px){.navbar-expand-sm{flex-flow:row nowrap;justify-content:flex-start}.navbar-expand-sm .navbar-nav{flex-direction:row}.navbar-expand-sm .navbar-nav .dropdown-menu{position:absolute}.navbar-expand-sm>.container,.navbar-expand-sm>.container-fluid{flex-wrap:nowrap}.navbar-expand-sm .navbar-collapse{display:flex !important;flex-basis:auto}.navbar-expand-sm .navbar-toggler{display:none}}.card{position:relative;display:flex;flex-direction:column;min-width:0;word-wrap:break-word;background-color:#fff;background-clip:border-box;border:1px solid #dbdbdb;border-radius:0.25rem}.badge{display:inline-block;padding:0.25em 0.4em;font-size:75%;font-weight:600;line-height:1;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:0.25rem}.badge:empty{display:none}.btn .badge{position:relative;top:-1px}.badge-pill{padding-right:0.6em;padding-left:0.6em;border-radius:10rem}.media{display:flex;align-items:flex-start}.close{float:right;font-size:1.5rem;font-weight:600;line-height:1;color:#000;text-shadow:0 1px 0 #fff;opacity:.5}button.close{padding:0;background-color:transparent;border:0;appearance:none}a.close.disabled{pointer-events:none}.modal-dialog{position:relative;width:auto;margin:0.5rem;pointer-events:none}@media (min-width: 576px){.modal-dialog{max-width:500px;margin:1.75rem auto}}.bg-transparent{background-color:transparent !important}.border{border:1px solid #dbdbdb !important}.border-top{border-top:1px solid #dbdbdb !important}.border-right{border-right:1px solid #dbdbdb !important}.border-bottom{border-bottom:1px solid #dbdbdb !important}.border-left{border-left:1px solid #dbdbdb !important}.rounded{border-radius:0.25rem !important}.clearfix::after{display:block;clear:both;content:""}.d-none{display:none !important}.d-inline-block{display:inline-block !important}.d-block{display:block !important}@media (min-width: 576px){.d-sm-none{display:none !important}}@media (min-width: 768px){.d-md-block{display:block !important}}@media (min-width: 992px){.d-lg-none{display:none !important}.d-lg-block{display:block !important}}@media (min-width: 1200px){.d-xl-block{display:block !important}}.flex-wrap{flex-wrap:wrap !important}.float-right{float:right !important}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0}.m-auto{margin:auto !important}.text-nowrap{white-space:nowrap !important}.visible{visibility:visible !important}.search form.focus{color:#303030;background-color:#fff;border-color:#80bdff;outline:0;box-shadow:0 0 0 0.2rem rgba(0,123,255,0.25)}.gl-badge{display:inline-flex;align-items:center;font-size:0.75rem;font-weight:400;line-height:1rem;padding-top:0.25rem;padding-bottom:0.25rem;padding-left:0.5rem;padding-right:0.5rem;outline:none}body,.search form,.search form{font-size:0.875rem}button,html [type='button'],[type='reset'],[role='button']{cursor:pointer}h1,.h1,h2,.h2,h3,.h3{margin-top:20px;margin-bottom:10px}input[type='file']{line-height:1}strong{font-weight:bold}a{color:#1068bf}code{padding:2px 4px;color:#1f1f1f;background-color:#f0f0f0;border-radius:4px}.code>code{background-color:inherit;padding:unset}table{border-spacing:0}.hidden{display:none !important;visibility:hidden !important}.hide{display:none}.dropdown-menu-toggle::after{display:none}.badge:not(.gl-badge){padding:4px 5px;font-size:12px;font-style:normal;font-weight:400;display:inline-block}pre code{white-space:pre-wrap}.toggle-sidebar-button .collapse-text,.toggle-sidebar-button .icon-chevron-double-lg-left,.toggle-sidebar-button .icon-chevron-double-lg-right{color:#666}svg{vertical-align:baseline}html{overflow-y:scroll}body{text-decoration-skip:ink}.content-wrapper{margin-top:40px;padding-bottom:100px}.container{padding-top:0;z-index:5}.container .content{margin:0}@media (max-width: 575.98px){.container .content{margin-top:20px}}@media (max-width: 575.98px){.container .container .title{padding-left:15px !important}}.btn{border-radius:4px;font-size:0.875rem;font-weight:400;padding:6px 10px;background-color:#fff;border-color:#dbdbdb;color:#303030;color:#303030;white-space:nowrap}.btn:active,.btn.active{box-shadow:rgba(0,0,0,0.16);background-color:#eaeaea;border-color:#e3e3e3;color:#303030}.btn svg{height:15px;width:15px}.btn svg:not(:last-child),.btn .fa:not(:last-child){margin-right:5px}.badge.badge-pill:not(.gl-badge){font-weight:400;background-color:rgba(0,0,0,0.07);color:#525252;vertical-align:baseline}.hint{font-style:italic;color:#bfbfbf}.bold{font-weight:600}pre.wrap{word-break:break-word;white-space:pre-wrap}table a code{position:relative;top:-2px;margin-right:3px}.loading{margin:20px auto;height:40px;color:#525252;font-size:32px;text-align:center}.highlight{text-shadow:none}.chart{overflow:hidden;height:220px}.break-word{word-wrap:break-word}.center{text-align:center}.block{display:block}.flex{display:flex}.flex-grow{flex-grow:1}.dropdown{position:relative}.show.dropdown .dropdown-menu{transform:translateY(0);display:block;min-height:40px;max-height:312px;overflow-y:auto}@media (max-width: 575.98px){.show.dropdown .dropdown-menu{width:100%}}.show.dropdown .dropdown-menu-toggle,.show.dropdown .dropdown-menu-toggle{border-color:#c4c4c4}.show.dropdown [data-toggle='dropdown']{outline:0}.search-input-container .dropdown-menu{margin-top:11px}.dropdown-menu-toggle{padding:6px 8px 6px 10px;background-color:#fff;color:#303030;font-size:14px;text-align:left;border:1px solid #dbdbdb;border-radius:0.25rem;white-space:nowrap}.no-outline.dropdown-menu-toggle{outline:0}.dropdown-menu-toggle .fa{color:#c4c4c4}.dropdown-menu-toggle{padding-right:25px;position:relative;width:160px;text-overflow:ellipsis;overflow:hidden}.dropdown-menu-toggle .fa{position:absolute}.dropdown-menu{display:none;position:absolute;width:auto;top:100%;z-index:300;min-width:240px;max-width:500px;margin-top:4px;margin-bottom:24px;font-size:14px;font-weight:400;padding:8px 0;background-color:#fff;border:1px solid #dbdbdb;border-radius:0.25rem;box-shadow:0 2px 4px rgba(0,0,0,0.1)}.dropdown-menu ul{margin:0;padding:0}.dropdown-menu li{display:block;text-align:left;list-style:none;padding:0 1px}.dropdown-menu li>a,.dropdown-menu li button{background:transparent;border:0;border-radius:0;box-shadow:none;display:block;font-weight:400;position:relative;padding:8px 12px;color:#303030;line-height:16px;white-space:normal;overflow:hidden;text-align:left;width:100%}.dropdown-menu .divider{height:1px;margin:0.25rem 0;padding:0;background-color:#dbdbdb}.dropdown-menu .badge.badge-pill+span:not(.badge.badge-pill){margin-right:40px}.dropdown-select{width:300px}@media (max-width: 767.98px){.dropdown-select{width:100%}}.dropdown-content{max-height:252px;overflow-y:auto}.dropdown-loading{position:absolute;top:0;right:0;bottom:0;left:0;display:none;z-index:9;background-color:rgba(255,255,255,0.6);font-size:28px}.dropdown-loading .fa{position:absolute;top:50%;left:50%;margin-top:-14px;margin-left:-14px}@media (max-width: 575.98px){.navbar-gitlab li.dropdown{position:static}header.navbar-gitlab .dropdown .dropdown-menu{width:100%;min-width:100%}}@media (max-width: 767.98px){.dropdown-menu-toggle{width:100%}}textarea{resize:vertical}input{border-radius:0.25rem;color:#303030;background-color:#fff}.search form{border-radius:4px;padding:6px 10px}.search form::placeholder{color:#868686}.navbar-gitlab{padding:0 16px;z-index:1000;margin-bottom:0;min-height:40px;border:0;border-bottom:1px solid #dbdbdb;position:fixed;top:0;left:0;right:0;border-radius:0}.navbar-gitlab .logo-text{line-height:initial}.navbar-gitlab .logo-text svg{width:55px;height:14px;margin:0;fill:#fff}.navbar-gitlab .close-icon{display:none}.navbar-gitlab .header-content{width:100%;display:flex;justify-content:space-between;position:relative;min-height:40px;padding-left:0}.navbar-gitlab .header-content .title-container{display:flex;align-items:stretch;flex:1 1 auto;padding-top:0;overflow:visible}.navbar-gitlab .header-content .title{padding-right:0;color:currentColor;display:flex;position:relative;margin:0;font-size:18px;vertical-align:top;white-space:nowrap}.navbar-gitlab .header-content .title img{height:28px}.navbar-gitlab .header-content .title img+.logo-text{margin-left:8px}.navbar-gitlab .header-content .title.wrap{white-space:normal}.navbar-gitlab .header-content .title a{display:flex;align-items:center;padding:2px 8px;margin:5px 2px 5px -8px;border-radius:4px}.navbar-gitlab .header-content .dropdown.open>a{border-bottom-color:#fff}.navbar-gitlab .header-content .navbar-collapse>ul.nav>li:not(.d-none){margin:0 2px}.navbar-gitlab .navbar-collapse{flex:0 0 auto;border-top:0;padding:0}@media (max-width: 575.98px){.navbar-gitlab .navbar-collapse{flex:1 1 auto}}.navbar-gitlab .navbar-collapse .nav{flex-wrap:nowrap}@media (max-width: 575.98px){.navbar-gitlab .navbar-collapse .nav>li:not(.d-none) a{margin-left:0}}.navbar-gitlab .container-fluid{padding:0}.navbar-gitlab .container-fluid .user-counter svg{margin-right:3px}.navbar-gitlab .container-fluid .navbar-toggler{position:relative;right:-10px;border-radius:0;min-width:45px;padding:0;margin:8px -7px 8px 0;font-size:14px;text-align:center;color:currentColor}@media (max-width: 575.98px){.navbar-gitlab .container-fluid .navbar-nav{display:flex;padding-right:10px;flex-direction:row}}.navbar-gitlab .container-fluid .navbar-nav li .badge.badge-pill{box-shadow:none;font-weight:600}@media (max-width: 575.98px){.navbar-gitlab .container-fluid .nav>li.header-user{padding-left:10px}}.navbar-gitlab .container-fluid .nav>li>a{will-change:color;margin:4px 0;padding:6px 8px;height:32px}@media (max-width: 575.98px){.navbar-gitlab .container-fluid .nav>li>a{padding:0}}.navbar-gitlab .container-fluid .nav>li>a.header-user-dropdown-toggle{margin-left:2px}.navbar-gitlab .container-fluid .nav>li>a.header-user-dropdown-toggle .header-user-avatar{margin-right:0}.navbar-gitlab .container-fluid .nav>li .header-new-dropdown-toggle{margin-right:0}.navbar-sub-nav>li>a,.navbar-sub-nav>li>button,.navbar-nav>li>a,.navbar-nav>li>button{display:flex;align-items:center;justify-content:center;padding:6px 8px;margin:4px 2px;font-size:12px;color:currentColor;border-radius:4px;height:32px;font-weight:600}.navbar-sub-nav>li>button,.navbar-nav>li>button{background:transparent;border:0}.navbar-sub-nav .dropdown-menu,.navbar-nav .dropdown-menu{position:absolute}.navbar-sub-nav{display:flex;margin:0 0 0 6px}.caret-down,.btn .caret-down{top:0;height:11px;width:11px;margin-left:4px;fill:currentColor}.header-user .dropdown-menu,.header-new .dropdown-menu{margin-top:4px}.btn-sign-in{background-color:#ebebfa;color:#292961;font-weight:600;line-height:18px;margin:4px 0 4px 2px}.title-container .badge.badge-pill,.navbar-nav .badge.badge-pill{position:inherit;font-weight:400;margin-left:-6px;font-size:11px;color:#fff;padding:0 5px;line-height:12px;border-radius:7px;box-shadow:0 1px 0 rgba(76,78,84,0.2)}.title-container .badge.badge-pill.green-badge,.navbar-nav .badge.badge-pill.green-badge{background-color:#108548}.title-container .badge.badge-pill.merge-requests-count,.navbar-nav .badge.badge-pill.merge-requests-count{background-color:#de7e00}.title-container .badge.badge-pill.todos-count,.navbar-nav .badge.badge-pill.todos-count{background-color:#1f75cb}.title-container .canary-badge .badge,.navbar-nav .canary-badge .badge{font-size:12px;line-height:16px;padding:0 0.5rem}@media (max-width: 575.98px){.navbar-gitlab .container-fluid{font-size:18px}.navbar-gitlab .container-fluid .navbar-nav{table-layout:fixed;width:100%;margin:0;text-align:right}.navbar-gitlab .container-fluid .navbar-collapse{margin-left:-8px;margin-right:-10px}.navbar-gitlab .container-fluid .navbar-collapse .nav>li:not(.d-none){flex:1}.header-user-dropdown-toggle{text-align:center}.header-user-avatar{float:none}}.header-user.show .dropdown-menu{margin-top:4px;color:#303030;left:auto;max-height:445px}.header-user.show .dropdown-menu svg{vertical-align:text-top}.header-user-avatar{float:left;margin-right:5px;border-radius:50%;border:1px solid #f5f5f5}.media{display:flex;align-items:flex-start}.card{margin-bottom:16px}.content-wrapper{width:100%}.content-wrapper .container-fluid{padding:0 16px}@media (min-width: 768px){.page-with-contextual-sidebar{padding-left:50px}}@media (min-width: 1200px){.page-with-contextual-sidebar{padding-left:220px}}.context-header{position:relative;margin-right:2px;width:220px}.context-header>a,.context-header>button{font-weight:600;display:flex;width:100%;align-items:center;padding:10px 16px 10px 10px;color:#303030;background-color:transparent;border:0;text-align:left}.context-header .avatar-container{flex:0 0 40px;background-color:#fff}.context-header .sidebar-context-title{overflow:hidden;text-overflow:ellipsis}.context-header .sidebar-context-title.text-secondary{font-weight:normal;font-size:0.8em}.nav-sidebar{position:fixed;z-index:600;width:220px;top:40px;bottom:0;left:0;background-color:#fafafa;box-shadow:inset -1px 0 0 #dbdbdb;transform:translate3d(0, 0, 0)}@media (min-width: 576px) and (max-width: 576px){.nav-sidebar:not(.sidebar-collapsed-desktop){box-shadow:inset -1px 0 0 #dbdbdb,2px 1px 3px rgba(0,0,0,0.1)}}.nav-sidebar.sidebar-collapsed-desktop{width:50px}.nav-sidebar.sidebar-collapsed-desktop .nav-sidebar-inner-scroll{overflow-x:hidden}.nav-sidebar.sidebar-collapsed-desktop .badge.badge-pill:not(.fly-out-badge),.nav-sidebar.sidebar-collapsed-desktop .sidebar-context-title,.nav-sidebar.sidebar-collapsed-desktop .nav-item-name{border:0;clip:rect(0, 0, 0, 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;white-space:nowrap;width:1px}.nav-sidebar.sidebar-collapsed-desktop .sidebar-top-level-items>li>a{min-height:45px}.nav-sidebar.sidebar-collapsed-desktop .fly-out-top-item{display:block}.nav-sidebar.sidebar-collapsed-desktop .avatar-container{margin:0 auto}.nav-sidebar.sidebar-expanded-mobile{left:0}.nav-sidebar a{text-decoration:none}.nav-sidebar ul{padding-left:0;list-style:none}.nav-sidebar li{white-space:nowrap}.nav-sidebar li a{display:flex;align-items:center;padding:12px 16px;color:#666}.nav-sidebar li .nav-item-name{flex:1}.nav-sidebar li.active>a{font-weight:600}@media (max-width: 767.98px){.nav-sidebar{left:-220px}}.nav-sidebar .nav-icon-container{display:flex;margin-right:8px}.nav-sidebar .fly-out-top-item{display:none}.nav-sidebar svg{height:16px;width:16px}@media (min-width: 768px) and (max-width: 1199px){.nav-sidebar:not(.sidebar-expanded-mobile){width:50px}.nav-sidebar:not(.sidebar-expanded-mobile) .nav-sidebar-inner-scroll{overflow-x:hidden}.nav-sidebar:not(.sidebar-expanded-mobile) .badge.badge-pill:not(.fly-out-badge),.nav-sidebar:not(.sidebar-expanded-mobile) .sidebar-context-title,.nav-sidebar:not(.sidebar-expanded-mobile) .nav-item-name{border:0;clip:rect(0, 0, 0, 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;white-space:nowrap;width:1px}.nav-sidebar:not(.sidebar-expanded-mobile) .sidebar-top-level-items>li>a{min-height:45px}.nav-sidebar:not(.sidebar-expanded-mobile) .fly-out-top-item{display:block}.nav-sidebar:not(.sidebar-expanded-mobile) .avatar-container{margin:0 auto}.nav-sidebar:not(.sidebar-expanded-mobile) .context-header{height:60px;width:50px}.nav-sidebar:not(.sidebar-expanded-mobile) .context-header a{padding:10px 4px}.nav-sidebar:not(.sidebar-expanded-mobile) .sidebar-top-level-items>li .sidebar-sub-level-items:not(.flyout-list){display:none}.nav-sidebar:not(.sidebar-expanded-mobile) .nav-icon-container{margin-right:0}.nav-sidebar:not(.sidebar-expanded-mobile) .toggle-sidebar-button{padding:16px;width:49px}.nav-sidebar:not(.sidebar-expanded-mobile) .toggle-sidebar-button .collapse-text,.nav-sidebar:not(.sidebar-expanded-mobile) .toggle-sidebar-button .icon-chevron-double-lg-left{display:none}.nav-sidebar:not(.sidebar-expanded-mobile) .toggle-sidebar-button .icon-chevron-double-lg-right{display:block;margin:0}}.nav-sidebar-inner-scroll{height:100%;width:100%;overflow:auto}.sidebar-sub-level-items{display:none;padding-bottom:8px}.sidebar-sub-level-items>li a{padding:8px 16px 8px 40px}.sidebar-top-level-items{margin-bottom:60px}@media (min-width: 576px){.sidebar-top-level-items>li>a{margin-right:1px}}.sidebar-top-level-items>li .badge.badge-pill{background-color:rgba(0,0,0,0.08);color:#666}.sidebar-top-level-items>li.active{background:rgba(0,0,0,0.04)}.sidebar-top-level-items>li.active>a{margin-left:4px;padding-left:12px}.sidebar-top-level-items>li.active .badge.badge-pill{font-weight:600}.sidebar-top-level-items>li.active .sidebar-sub-level-items:not(.is-fly-out-only){display:block}.toggle-sidebar-button,.close-nav-button{width:219px;position:fixed;height:48px;bottom:0;padding:0 16px;background-color:#fafafa;border:0;border-top:1px solid #dbdbdb;color:#666;display:flex;align-items:center}.toggle-sidebar-button svg,.close-nav-button svg{margin-right:8px}.toggle-sidebar-button .icon-chevron-double-lg-right,.close-nav-button .icon-chevron-double-lg-right{display:none}.collapse-text{white-space:nowrap;overflow:hidden}.sidebar-collapsed-desktop .context-header{height:60px;width:50px}.sidebar-collapsed-desktop .context-header a{padding:10px 4px}.sidebar-collapsed-desktop .sidebar-top-level-items>li .sidebar-sub-level-items:not(.flyout-list){display:none}.sidebar-collapsed-desktop .nav-icon-container{margin-right:0}.sidebar-collapsed-desktop .toggle-sidebar-button{padding:16px;width:49px}.sidebar-collapsed-desktop .toggle-sidebar-button .collapse-text,.sidebar-collapsed-desktop .toggle-sidebar-button .icon-chevron-double-lg-left{display:none}.sidebar-collapsed-desktop .toggle-sidebar-button .icon-chevron-double-lg-right{display:block;margin:0}.fly-out-top-item>a{display:flex}.fly-out-top-item .fly-out-badge{margin-left:8px}.fly-out-top-item-name{flex:1}.close-nav-button{display:none}@media (max-width: 767.98px){.close-nav-button{display:flex}.toggle-sidebar-button{display:none}}table.table{margin-bottom:16px}table.table .dropdown-menu a{text-decoration:none}table.table .success,table.table .info{color:#fff}table.table .success a:not(.btn),table.table .info a:not(.btn){text-decoration:underline;color:#fff}pre{font-family:"Menlo", "DejaVu Sans Mono", "Liberation Mono", "Consolas", "Ubuntu Mono", "Courier New", "andale mono", "lucida console", monospace;display:block;padding:8px 12px;margin:0 0 8px;font-size:13px;word-break:break-all;word-wrap:break-word;color:#303030;background-color:#fafafa;border:1px solid #dbdbdb;border-radius:2px}.monospace{font-family:"Menlo", "DejaVu Sans Mono", "Liberation Mono", "Consolas", "Ubuntu Mono", "Courier New", "andale mono", "lucida console", monospace}input::-moz-placeholder,textarea::-moz-placeholder{color:#868686;opacity:1}input::-ms-input-placeholder,textarea::-ms-input-placeholder{color:#868686}input:-ms-input-placeholder,textarea:-ms-input-placeholder{color:#868686}svg{fill:currentColor}svg.s12{width:12px;height:12px}svg.s16{width:16px;height:16px}svg.s18{width:18px;height:18px}svg.s12{vertical-align:-1px}svg.s16{vertical-align:-3px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0, 0, 0, 0);border:0}table.code{width:100%;font-family:"Menlo", "DejaVu Sans Mono", "Liberation Mono", "Consolas", "Ubuntu Mono", "Courier New", "andale mono", "lucida console", monospace;border:0;border-collapse:separate;margin:0;padding:0;table-layout:fixed;border-radius:0 0 4px 4px}.frame .badge.badge-pill{position:absolute;background-color:#428fdc;color:#fff;border:#fff 1px solid;min-height:16px;padding:5px 8px;border-radius:12px}.frame .badge.badge-pill{transform:translate(-50%, -50%)}.color-label{padding:0 0.5rem;line-height:16px;border-radius:100px;color:#fff}.label-link{display:inline-flex;vertical-align:text-bottom}.milestones{padding:8px;margin-top:8px;border-radius:4px;background-color:#dbdbdb}.search{margin:0 8px}.search form{margin:0;padding:4px;width:200px;line-height:24px;height:32px;border:0;border-radius:4px}@media (min-width: 1200px){.search form{width:320px}}.search .search-input{border:0;font-size:14px;padding:0 20px 0 0;margin-left:5px;line-height:25px;width:98%;color:#fff;background:none}.search .search-input-container{display:flex;position:relative}.search .search-input-wrap{width:100%}.search .search-input-wrap .search-icon,.search .search-input-wrap .clear-icon{position:absolute;right:5px;top:4px}.search .search-input-wrap .search-icon{-moz-user-select:none;user-select:none}.search .search-input-wrap .clear-icon{display:none}.search .search-input-wrap .dropdown{position:static}.search .search-input-wrap .dropdown-menu{left:-5px;max-height:400px;overflow:auto}@media (min-width: 1200px){.search .search-input-wrap .dropdown-menu{width:320px}}.search .search-input-wrap .dropdown-content{max-height:382px}.settings{border-top:1px solid #dbdbdb}.settings:first-of-type{margin-top:10px;border:0}.settings+div .settings:first-of-type{margin-top:0;border-top:1px solid #dbdbdb}.avatar,.avatar-container{float:left;margin-right:16px;border-radius:50%;border:1px solid #f5f5f5}.s16.avatar,.s16.avatar-container{width:16px;height:16px;margin-right:8px}.s18.avatar,.s18.avatar-container{width:18px;height:18px;margin-right:8px}.s40.avatar,.s40.avatar-container{width:40px;height:40px;margin-right:8px}.avatar{transition-property:none;width:40px;height:40px;padding:0;background:#fdfdfd;overflow:hidden;border-color:rgba(0,0,0,0.1)}.avatar.center{font-size:14px;line-height:1.8em;text-align:center}.avatar.avatar-tile{border-radius:0;border:0}.avatar-container{overflow:hidden;display:flex}.avatar-container a{width:100%;height:100%;display:flex;text-decoration:none}.avatar-container .avatar{border-radius:0;border:0;height:auto;width:100%;margin:0;align-self:center}.avatar-container.s40{min-width:40px;min-height:40px}.rect-avatar{border-radius:2px}.rect-avatar.s16{border-radius:2px}.rect-avatar.s18{border-radius:2px}.rect-avatar.s40{border-radius:4px}.tab-width-8{-moz-tab-size:8;tab-size:8}.gl-sr-only{border:0;clip:rect(0, 0, 0, 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;white-space:nowrap;width:1px}.gl-ml-3{margin-left:0.5rem}.content-wrapper>.alert-wrapper,#content-body,.modal-dialog{display:block}.content-wrapper>.alert-wrapper,#content-body,.modal-dialog{display:none}
+
+</style>
+
+<link rel="stylesheet" media="print" href="https://assets.gitlab-static.net/assets/application-dc6aa5e5f390807e0561788a5e4cf2f39f49e546288524114265a4610f79c579.css" crossorigin="anonymous" />
+
+<link rel="stylesheet" media="print" href="https://assets.gitlab-static.net/assets/application_utilities-2374d94f499c958e1cc21e64130006e6b38a1c1c46ea34ba6b1a7b9406a2a063.css" crossorigin="anonymous" />
+
+<link rel="stylesheet" media="print" href="https://assets.gitlab-static.net/assets/highlight/themes/white-b3993639b265e6a0de95d667365bc0dc4a707b70202945298c5715dc0d1f6159.css" crossorigin="anonymous" />
+<script nonce="mA15KVQkLAvNFrXvIUy6xA==">
+//<![CDATA[
+document.querySelectorAll('link[media="print"]').forEach(linkTag => {
+  linkTag.setAttribute('data-startupcss', 'loading');
+  const startupLinkLoadedEvent = new CustomEvent('CSSStartupLinkLoaded');
+  linkTag.addEventListener('load',function(){this.media='all';this.setAttribute('data-startupcss', 'loaded');document.dispatchEvent(startupLinkLoadedEvent);},{once: true});
+})
+
+//]]>
+</script>
+
+<script nonce="mA15KVQkLAvNFrXvIUy6xA==">
+//<![CDATA[
+window.gon={};gon.global={"experiment":{"null_hypothesis":{"variant":"control","experiment":"null_hypothesis","key":"39a5a39ee79dfd7ab37312fed6b7c601"}}};gon.features={"vueIssuablesList":false,"notIssuableQueries":true};
+//]]>
+</script>
+
+
+
+<script src="https://assets.gitlab-static.net/assets/webpack/runtime.8eff0fb6.bundle.js" defer="defer" nonce="mA15KVQkLAvNFrXvIUy6xA=="></script>
+<script src="https://assets.gitlab-static.net/assets/webpack/main.98b2bc36.chunk.js" defer="defer" nonce="mA15KVQkLAvNFrXvIUy6xA=="></script>
+<script src="https://assets.gitlab-static.net/assets/webpack/commons-pages.groups.boards-pages.groups.details-pages.groups.show-pages.groups.wikis-pages.projects-81ad1b0a.4d92d96b.chunk.js" defer="defer" nonce="mA15KVQkLAvNFrXvIUy6xA=="></script>
+<script src="https://assets.gitlab-static.net/assets/webpack/commons-pages.admin.audit_logs-pages.admin.impersonation_tokens-pages.analytics.productivity_analyti-829548b7.b51b3d03.chunk.js" defer="defer" nonce="mA15KVQkLAvNFrXvIUy6xA=="></script>
+<script src="https://assets.gitlab-static.net/assets/webpack/commons-pages.dashboard.groups.index-pages.explore.groups-pages.groups.details-pages.groups.show-pag-f1e39234.e2a740a6.chunk.js" defer="defer" nonce="mA15KVQkLAvNFrXvIUy6xA=="></script>
+<script src="https://assets.gitlab-static.net/assets/webpack/commons-pages.dashboard.groups.index-pages.explore.groups-pages.groups.details-pages.groups.show.5255b471.chunk.js" defer="defer" nonce="mA15KVQkLAvNFrXvIUy6xA=="></script>
+<script src="https://assets.gitlab-static.net/assets/webpack/commons-pages.groups.edit-pages.groups.show-pages.projects.incident_management.oncall_schedules.inde-07b56964.6d1cf652.chunk.js" defer="defer" nonce="mA15KVQkLAvNFrXvIUy6xA=="></script>
+<script src="https://assets.gitlab-static.net/assets/webpack/commons-pages.groups.details-pages.groups.show-pages.users.5a1c84a3.chunk.js" defer="defer" nonce="mA15KVQkLAvNFrXvIUy6xA=="></script>
+<script src="https://assets.gitlab-static.net/assets/webpack/commons-pages.groups.show-pages.projects.show.0e6aca89.chunk.js" defer="defer" nonce="mA15KVQkLAvNFrXvIUy6xA=="></script>
+<script src="https://assets.gitlab-static.net/assets/webpack/pages.groups.show.b178642e.chunk.js" defer="defer" nonce="mA15KVQkLAvNFrXvIUy6xA=="></script>
+
+
+<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="EOPFzpN+MWILgeyIzjDYcDpFthcatuMzTQyBR4gemqmCUGTZFDnW3ZB86N5Fous0WgILDs1PjcMDu9xuKUhrug==" />
+<meta name="csp-nonce" content="mA15KVQkLAvNFrXvIUy6xA==" />
+<meta name="action-cable-url" content="/-/cable" />
+<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+<meta content="#474D57" name="theme-color">
+<link rel="apple-touch-icon" type="image/x-icon" href="https://assets.gitlab-static.net/assets/touch-icon-iphone-5a9cee0e8a51212e70b90c87c12f382c428870c0ff67d1eb034d884b78d2dae7.png" />
+<link rel="apple-touch-icon" type="image/x-icon" href="https://assets.gitlab-static.net/assets/touch-icon-ipad-a6eec6aeb9da138e507593b464fdac213047e49d3093fc30e90d9a995df83ba3.png" sizes="76x76" />
+<link rel="apple-touch-icon" type="image/x-icon" href="https://assets.gitlab-static.net/assets/touch-icon-iphone-retina-72e2aadf86513a56e050e7f0f2355deaa19cc17ed97bbe5147847f2748e5a3e3.png" sizes="120x120" />
+<link rel="apple-touch-icon" type="image/x-icon" href="https://assets.gitlab-static.net/assets/touch-icon-ipad-retina-8ebe416f5313483d9c1bc772b5bbe03ecad52a54eba443e5215a22caed2a16a2.png" sizes="152x152" />
+<link color="rgb(226, 67, 41)" href="https://assets.gitlab-static.net/assets/logo-d36b5212042cebc89b96df4bf6ac24e43db316143e89926c0db839ff694d2de4.svg" rel="mask-icon">
+<meta content="https://assets.gitlab-static.net/assets/msapplication-tile-1196ec67452f618d39cdd85e2e3a542f76574c071051ae7effbfde01710eb17d.png" name="msapplication-TileImage">
+<meta content="#30353E" name="msapplication-TileColor">
+<link rel="alternate" type="application/atom+xml" title="Kali Linux activity" href="https://gitlab.com/kalilinux.atom" />
+
+
+
+<script nonce="mA15KVQkLAvNFrXvIUy6xA==">
+//<![CDATA[
+;(function(p,l,o,w,i,n,g){if(!p[i]){p.GlobalSnowplowNamespace=p.GlobalSnowplowNamespace||[];
+p.GlobalSnowplowNamespace.push(i);p[i]=function(){(p[i].q=p[i].q||[]).push(arguments)
+};p[i].q=p[i].q||[];n=l.createElement(o);g=l.getElementsByTagName(o)[0];n.async=1;
+n.src=w;g.parentNode.insertBefore(n,g)}}(window,document,"script","https://assets.gitlab-static.net/assets/snowplow/sp-8f295715475b6b307338c8f64cb0b3a6715c691fa0cc667c9c332c17bb4474d9.js","snowplow"));
+
+window.snowplowOptions = {"namespace":"gl","hostname":"snowplow.trx.gitlab.net","cookieDomain":".gitlab.com","appId":"gitlab","formTracking":true,"linkClickTracking":true}
+
+
+//]]>
+</script>
+</head>
+
+<body class="ui-indigo tab-width-8  gl-browser-safari gl-platform-ios" data-group="kalilinux" data-page="groups:show" data-page-type-id="kalilinux">
+
+<script nonce="mA15KVQkLAvNFrXvIUy6xA==">
+//<![CDATA[
+gl = window.gl || {};
+gl.client = {"isSafari":true,"isIos":true};
+
+
+//]]>
+</script>
+
+
+<header class="navbar navbar-gitlab navbar-expand-sm js-navbar" data-qa-selector="navbar">
+<a class="sr-only gl-accessibility" href="#content-body" tabindex="1">Skip to content</a>
+<div class="container-fluid">
+<div class="header-content">
+<div class="title-container">
+<h1 class="title">
+<span class="gl-sr-only">GitLab</span>
+<a title="Dashboard" id="logo" data-track-label="main_navigation" data-track-event="click_gitlab_logo_link" data-track-property="navigation" href="/"><svg width="24" height="24" class="tanuki-logo" viewBox="0 0 36 36">
+  <path class="tanuki-shape tanuki-left-ear" fill="#e24329" d="M2 14l9.38 9v-9l-4-12.28c-.205-.632-1.176-.632-1.38 0z"/>
+  <path class="tanuki-shape tanuki-right-ear" fill="#e24329" d="M34 14l-9.38 9v-9l4-12.28c.205-.632 1.176-.632 1.38 0z"/>
+  <path class="tanuki-shape tanuki-nose" fill="#e24329" d="M18,34.38 3,14 33,14 Z"/>
+  <path class="tanuki-shape tanuki-left-eye" fill="#fc6d26" d="M18,34.38 11.38,14 2,14 6,25Z"/>
+  <path class="tanuki-shape tanuki-right-eye" fill="#fc6d26" d="M18,34.38 24.62,14 34,14 30,25Z"/>
+  <path class="tanuki-shape tanuki-left-cheek" fill="#fca326" d="M2 14L.1 20.16c-.18.565 0 1.2.5 1.56l17.42 12.66z"/>
+  <path class="tanuki-shape tanuki-right-cheek" fill="#fca326" d="M34 14l1.9 6.16c.18.565 0 1.2-.5 1.56L18 34.38z"/>
+</svg>
+
+<span class="logo-text d-none d-lg-block gl-ml-3">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 617 169"><path d="M315.26 2.97h-21.8l.1 162.5h88.3v-20.1h-66.5l-.1-142.4M465.89 136.95c-5.5 5.7-14.6 11.4-27 11.4-16.6 0-23.3-8.2-23.3-18.9 0-16.1 11.2-23.8 35-23.8 4.5 0 11.7.5 15.4 1.2v30.1h-.1m-22.6-98.5c-17.6 0-33.8 6.2-46.4 16.7l7.7 13.4c8.9-5.2 19.8-10.4 35.5-10.4 17.9 0 25.8 9.2 25.8 24.6v7.9c-3.5-.7-10.7-1.2-15.1-1.2-38.2 0-57.6 13.4-57.6 41.4 0 25.1 15.4 37.7 38.7 37.7 15.7 0 30.8-7.2 36-18.9l4 15.9h15.4v-83.2c-.1-26.3-11.5-43.9-44-43.9M557.63 149.1c-8.2 0-15.4-1-20.8-3.5V70.5c7.4-6.2 16.6-10.7 28.3-10.7 21.1 0 29.2 14.9 29.2 39 0 34.2-13.1 50.3-36.7 50.3m9.2-110.6c-19.5 0-30 13.3-30 13.3v-21l-.1-27.8h-21.3l.1 158.5c10.7 4.5 25.3 6.9 41.2 6.9 40.7 0 60.3-26 60.3-70.9-.1-35.5-18.2-59-50.2-59M77.9 20.6c19.3 0 31.8 6.4 39.9 12.9l9.4-16.3C114.5 6 97.3 0 78.9 0 32.5 0 0 28.3 0 85.4c0 59.8 35.1 83.1 75.2 83.1 20.1 0 37.2-4.7 48.4-9.4l-.5-63.9V75.1H63.6v20.1h38l.5 48.5c-5 2.5-13.6 4.5-25.3 4.5-32.2 0-53.8-20.3-53.8-63-.1-43.5 22.2-64.6 54.9-64.6M231.43 2.95h-21.3l.1 27.3v94.3c0 26.3 11.4 43.9 43.9 43.9 4.5 0 8.9-.4 13.1-1.2v-19.1c-3.1.5-6.4.7-9.9.7-17.9 0-25.8-9.2-25.8-24.6v-65h35.7v-17.8h-35.7l-.1-38.5M155.96 165.47h21.3v-124h-21.3v124M155.96 24.37h21.3V3.07h-21.3v21.3"/></svg>
+
+</span>
+</a></h1>
+<ul class="list-unstyled navbar-sub-nav">
+<li class="home"><a title="Projects" class="dashboard-shortcuts-projects" href="/explore">Projects
+</a></li><li class="active"><a title="Groups" class="dashboard-shortcuts-groups" href="/explore/groups">Groups
+</a></li><li class=""><a title="Snippets" class="dashboard-shortcuts-snippets" href="/explore/snippets">Snippets
+</a></li><li>
+<a title="About GitLab CE" href="/help">Help</a>
+</li>
+</ul>
+
+</div>
+<div class="navbar-collapse collapse">
+<ul class="nav navbar-nav">
+<li class="nav-item d-none d-lg-block m-auto">
+<div class="search search-form" data-track-event="activate_form_input" data-track-label="navbar_search" data-track-value="">
+<form class="form-inline" action="/search" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" /><div class="search-input-container">
+<div class="search-input-wrap">
+<div class="dropdown" data-url="/search/autocomplete">
+<input type="search" name="search" id="search" placeholder="Search or jump to…" class="search-input dropdown-menu-toggle no-outline js-search-dashboard-options" spellcheck="false" autocomplete="off" data-issues-path="/dashboard/issues" data-mr-path="/dashboard/merge_requests" data-qa-selector="search_term_field" aria-label="Search or jump to…" />
+<button class="hidden js-dropdown-search-toggle" data-toggle="dropdown" type="button"></button>
+<div class="dropdown-menu dropdown-select" data-testid="dashboard-search-options">
+<div class="dropdown-content"><ul>
+<li class="dropdown-menu-empty-item">
+<a>
+Loading...
+</a>
+</li>
+</ul>
+</div><div class="dropdown-loading"><div class="gl-spinner-container"><span class="gl-spinner gl-spinner-orange gl-spinner-md gl-mt-7" aria-label="Loading"></span></div></div>
+</div>
+<svg class="s16 search-icon" data-testid="search-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#search"></use></svg>
+<svg class="s16 clear-icon js-clear-input" data-testid="close-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#close"></use></svg>
+</div>
+</div>
+</div>
+<input type="hidden" name="group_id" id="group_id" value="5034914" class="js-search-group-options" data-group-path="kalilinux" data-name="Kali Linux" data-issues-path="/groups/kalilinux/-/issues" data-mr-path="/groups/kalilinux/-/merge_requests" />
+<input type="hidden" name="project_id" id="search_project_id" value="" class="js-search-project-options" />
+<input type="hidden" name="snippets" id="snippets" value="false" />
+<input type="hidden" name="repository_ref" id="repository_ref" />
+<input type="hidden" name="nav_source" id="nav_source" value="navbar" />
+<div class="search-autocomplete-opts hide" data-autocomplete-path="/search/autocomplete"></div>
+</form></div>
+
+</li>
+<li class="nav-item d-inline-block d-lg-none">
+<a title="Search" aria-label="Search" data-toggle="tooltip" data-placement="bottom" data-container="body" href="/search?group_id=5034914"><svg class="s16" data-testid="search-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#search"></use></svg>
+</a></li>
+<li class="nav-item header-help dropdown d-none d-md-block" data-track-event="click_question_mark_link" data-track-label="main_navigation" data-track-property="navigation">
+<a class="header-help-dropdown-toggle" data-toggle="dropdown" href="/help"><span class="gl-sr-only">
+Help
+</span>
+<svg class="s16" data-testid="question-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#question"></use></svg>
+<span class="notification-dot rounded-circle gl-absolute"></span>
+<svg class="s16 caret-down" data-testid="chevron-down-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#chevron-down"></use></svg>
+</a><div class="dropdown-menu dropdown-menu-right">
+<ul>
+<li>
+<a target="_blank" rel="noopener noreferrer" data-track-event="click_whats_new" data-track-property="question_menu" href="https://about.gitlab.com/releases/gitlab-com/">See what&#39;s new at GitLab</a>
+</li>
+
+<li>
+<a href="/help">Help</a>
+</li>
+<li>
+<a href="https://about.gitlab.com/getting-help/">Support</a>
+</li>
+<li>
+<a target="_blank" class="text-nowrap" rel="noopener noreferrer" data-track-event="click_forum" data-track-property="question_menu" href="https://forum.gitlab.com/">Community forum</a>
+
+</li>
+<li>
+<button class="js-shortcuts-modal-trigger" type="button">
+Keyboard shortcuts
+<span aria-hidden class="text-secondary float-right">?</span>
+</button>
+</li>
+<li class="divider"></li>
+<li>
+<a href="https://about.gitlab.com/submit-feedback">Submit feedback</a>
+</li>
+<li>
+<a target="_blank" class="text-nowrap" href="https://about.gitlab.com/contributing">Contribute to GitLab
+</a>
+
+</li>
+
+<li>
+<a href="https://next.gitlab.com/">Switch to GitLab Next</a>
+</li>
+</ul>
+
+</div>
+</li>
+<li class="nav-item">
+<div>
+<a class="btn btn-sign-in" href="/users/sign_in?redirect_to_referer=yes">Sign in / Register</a>
+</div>
+</li>
+</ul>
+</div>
+<button class="navbar-toggler d-block d-sm-none" type="button">
+<span class="sr-only">Toggle navigation</span>
+<svg class="s12 more-icon js-navbar-toggle-right" data-testid="ellipsis_h-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#ellipsis_h"></use></svg>
+<svg class="s12 close-icon js-navbar-toggle-left" data-testid="close-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#close"></use></svg>
+</button>
+</div>
+</div>
+</header>
+
+<div class="layout-page page-with-contextual-sidebar">
+<div class="nav-sidebar" data-track-event="render" data-track-label="groups_side_navigation" data-track-property="groups_side_navigation">
+<div class="nav-sidebar-inner-scroll">
+<div class="context-header">
+<a title="Kali Linux" href="/kalilinux"><div class="avatar-container rect-avatar s40 group-avatar">
+<img class="avatar s40 avatar-tile lazy" data-src="https://assets.gitlab-static.net/uploads/-/system/group/avatar/5034914/kali-logo.jpeg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" />
+</div>
+<div class="sidebar-context-title">
+Kali Linux
+</div>
+</a></div>
+<ul class="sidebar-top-level-items qa-group-sidebar">
+<li class="home active"><a href="/kalilinux"><div class="nav-icon-container">
+<svg class="s16" data-testid="home-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#home"></use></svg>
+</div>
+<span class="nav-item-name">
+Group overview
+</span>
+</a><ul class="sidebar-sub-level-items">
+<li class="fly-out-top-item active"><a href="/kalilinux"><strong class="fly-out-top-item-name">
+Group overview
+</strong>
+</a></li><li class="divider fly-out-top-item"></li>
+<li class="home active"><a title="Group details" href="/groups/kalilinux/-/details"><span>
+Details
+</span>
+</a></li><li class=""><a title="Activity" href="/groups/kalilinux/-/activity"><span>
+Activity
+</span>
+</a></li></ul>
+</li><li class=""><a class="qa-group-epics-link" href="/groups/kalilinux/-/epics"><div class="nav-icon-container">
+<svg class="s16" data-testid="epic-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#epic"></use></svg>
+</div>
+<span class="nav-item-name">
+Epics
+</span>
+<span class="badge badge-pill count">7</span>
+</a><ul class="sidebar-sub-level-items">
+<li class="fly-out-top-item"><a href="/groups/kalilinux/-/epics"><strong class="fly-out-top-item-name">Epics</strong>
+<span class="badge badge-pill count epic_counter fly-out-badge">7</span>
+</a></li><li class="divider fly-out-top-item"></li>
+<li class="home"><a title="List" href="/groups/kalilinux/-/epics"><span>List</span>
+</a></li><li class="home"><a title="Roadmap" href="/groups/kalilinux/-/roadmap"><span>Roadmap</span>
+</a></li></ul>
+</li>
+<li class=""><a data-qa-selector="group_issues_item" href="/groups/kalilinux/-/issues"><div class="nav-icon-container">
+<svg class="s16" data-testid="issues-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#issues"></use></svg>
+</div>
+<span class="nav-item-name">
+Issues
+</span>
+<span class="badge badge-pill count">231</span>
+</a><ul class="sidebar-sub-level-items" data-qa-selector="group_issues_sidebar_submenu">
+<li class="fly-out-top-item"><a href="/groups/kalilinux/-/issues"><strong class="fly-out-top-item-name">
+Issues
+</strong>
+<span class="badge badge-pill count issue_counter fly-out-badge">231</span>
+</a></li><li class="divider fly-out-top-item"></li>
+<li class="home"><a title="List" href="/groups/kalilinux/-/issues"><span>
+List
+</span>
+</a></li><li class=""><a title="Boards" data-qa-selector="group_issue_boards_link" href="/groups/kalilinux/-/boards"><span>
+Boards
+</span>
+</a></li><li class=""><a title="Labels" href="/groups/kalilinux/-/labels"><span>
+Labels
+</span>
+</a></li><li class=""><a title="Milestones" data-qa-selector="group_milestones_link" href="/groups/kalilinux/-/milestones"><span>
+Milestones
+</span>
+</a></li><li class=""><a data-qa-selector="group_iterations_link" href="/groups/kalilinux/-/iterations"><span>
+Iterations
+</span>
+</a></li>
+</ul>
+</li><li class=""><a href="/groups/kalilinux/-/merge_requests"><div class="nav-icon-container">
+<svg class="s16" data-testid="git-merge-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#git-merge"></use></svg>
+</div>
+<span class="nav-item-name">
+Merge Requests
+</span>
+<span class="badge badge-pill count">20</span>
+</a><ul class="sidebar-sub-level-items is-fly-out-only">
+<li class="fly-out-top-item"><a href="/groups/kalilinux/-/merge_requests"><strong class="fly-out-top-item-name">
+Merge Requests
+</strong>
+<span class="badge badge-pill count merge_counter js-merge-counter fly-out-badge">20</span>
+</a></li></ul>
+</li><li class=""><a data-qa-selector="security_compliance_link" href="/groups/kalilinux/-/security/dashboard"><div class="nav-icon-container">
+<svg class="s16" data-testid="shield-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#shield"></use></svg>
+</div>
+<span class="nav-item-name">
+Security &amp; Compliance
+</span>
+</a><ul class="sidebar-sub-level-items" data-qa-selector="group_secure_submenu">
+<li class=""><a title="Security Dashboard" data-qa-selector="security_dashboard_link" href="/groups/kalilinux/-/security/dashboard"><span>Security Dashboard</span>
+</a></li><li class=""><a title="Vulnerability Report" data-qa-selector="vulnerability_report_link" href="/groups/kalilinux/-/security/vulnerabilities"><span>Vulnerability Report</span>
+</a></li></ul>
+</li>
+
+<li class=""><a title="Packages" href="/groups/kalilinux/-/packages"><div class="nav-icon-container">
+<svg class="s16" data-testid="package-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#package"></use></svg>
+</div>
+<span class="nav-item-name">
+Packages &amp; Registries
+</span>
+</a><ul class="sidebar-sub-level-items">
+<li class="fly-out-top-item"><a title="Packages &amp; Registries" href="/groups/kalilinux/-/packages"><strong class="fly-out-top-item-name">
+Packages &amp; Registries
+</strong>
+</a></li><li class="divider fly-out-top-item"></li>
+<li class=""><a title="Packages" href="/groups/kalilinux/-/packages"><span>Package Registry</span>
+</a></li><li class=""><a title="Dependency Proxy" href="/groups/kalilinux/-/dependency_proxy"><span>Dependency Proxy</span>
+</a></li></ul>
+</li>
+<li class=""><a class="shortcuts-analytics" data-qa-selector="analytics_anchor" href="/groups/kalilinux/-/insights/"><div class="nav-icon-container">
+<svg class="s16" data-testid="chart-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#chart"></use></svg>
+</div>
+<span class="nav-item-name" data-qa-selector="analytics_link">
+Analytics
+</span>
+</a><ul class="sidebar-sub-level-items" data-qa-selector="analytics_sidebar_submenu">
+<li class="fly-out-top-item"><a href="/groups/kalilinux/-/insights/"><strong class="fly-out-top-item-name">
+Analytics
+</strong>
+</a></li><li class="divider fly-out-top-item"></li>
+<li class=""><a class="shortcuts-group-insights" data-qa-selector="group_insights_link" title="Insights" href="/groups/kalilinux/-/insights/"><span>Insights</span>
+</a></li><li class=""><a title="Issue" href="/groups/kalilinux/-/issues_analytics"><span>Issue</span>
+</a></li></ul>
+</li>
+<li class=""><a class="shortcuts-wiki" data-qa-selector="wiki_link" href="https://gitlab.com/groups/kalilinux/-/wikis/home"><div class="nav-icon-container">
+<svg class="s16" data-testid="book-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#book"></use></svg>
+</div>
+<span class="nav-item-name">
+Wiki
+</span>
+</a><ul class="sidebar-sub-level-items is-fly-out-only">
+<li class="fly-out-top-item"><a href="https://gitlab.com/groups/kalilinux/-/wikis/home"><strong class="fly-out-top-item-name">
+Wiki
+</strong>
+</a></li></ul>
+</li>
+<li class=""><a href="/groups/kalilinux/-/group_members"><div class="nav-icon-container">
+<svg class="s16" data-testid="users-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#users"></use></svg>
+</div>
+<span class="nav-item-name qa-group-members-item">
+Members
+</span>
+</a><ul class="sidebar-sub-level-items is-fly-out-only">
+<li class="fly-out-top-item"><a href="/groups/kalilinux/-/group_members"><strong class="fly-out-top-item-name">
+Members
+</strong>
+</a></li></ul>
+</li>
+</ul>
+<a class="toggle-sidebar-button js-toggle-sidebar qa-toggle-sidebar rspec-toggle-sidebar" role="button" title="Toggle sidebar" type="button">
+<svg class="s16 icon-chevron-double-lg-left" data-testid="chevron-double-lg-left-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#chevron-double-lg-left"></use></svg>
+<svg class="s16 icon-chevron-double-lg-right" data-testid="chevron-double-lg-right-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#chevron-double-lg-right"></use></svg>
+<span class="collapse-text">Collapse sidebar</span>
+</a>
+<button name="button" type="button" class="close-nav-button"><svg class="s16" data-testid="close-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#close"></use></svg>
+<span class="collapse-text">Close sidebar</span>
+</button>
+</div>
+</div>
+
+<div class="content-wrapper">
+<div class="mobile-overlay"></div>
+
+<div class="alert-wrapper gl-force-block-formatting-context">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="breadcrumbs container-fluid container-limited limit-container-width" role="navigation">
+<div class="breadcrumbs-container">
+<button name="button" type="button" class="toggle-mobile-nav"><span class="sr-only">Open sidebar</span>
+<svg class="s16" data-testid="hamburger-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#hamburger"></use></svg>
+</button><div class="breadcrumbs-links js-title-container" data-qa-selector="breadcrumb_links_content">
+<ul class="list-unstyled breadcrumbs-list js-breadcrumbs-list">
+<li><a class="group-path breadcrumb-item-text js-breadcrumb-item-text " href="/kalilinux"><img class="avatar-tile lazy" width="15" height="15" data-src="https://assets.gitlab-static.net/uploads/-/system/group/avatar/5034914/kali-logo.jpeg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" />Kali Linux</a><svg class="s8 breadcrumbs-list-angle" data-testid="angle-right-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#angle-right"></use></svg></li>
+
+</ul>
+</div>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Kali Linux","item":"https://gitlab.com/kalilinux"}]}
+
+</script>
+
+</div>
+</nav>
+
+</div>
+<div class="container-fluid container-limited limit-container-width">
+<div class="content" id="content-body" itemscope itemtype="https://schema.org/Organization">
+<div class="flash-container flash-container-page sticky" data-qa-selector="flash_container">
+</div>
+
+
+
+<div class="group-home-panel">
+<div class="row mb-3">
+<div class="home-panel-title-row col-md-12 col-lg-6 d-flex">
+<div class="avatar-container rect-avatar s64 home-panel-avatar gl-mr-3 float-none">
+<img class="avatar avatar-tile s64 lazy" width="64" height="64" itemprop="logo" data-src="https://assets.gitlab-static.net/uploads/-/system/group/avatar/5034914/kali-logo.jpeg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" />
+</div>
+<div class="d-flex flex-column flex-wrap align-items-baseline">
+<div class="d-inline-flex align-items-baseline">
+<h1 class="home-panel-title gl-mt-3 gl-mb-2" itemprop="name">
+Kali Linux
+<span class="visibility-icon text-secondary gl-ml-2 has-tooltip" data-container="body" title="Public - The group and any public projects can be viewed without any authentication.">
+<svg class="s16 icon" data-testid="earth-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#earth"></use></svg>
+</span>
+</h1>
+</div>
+<div class="home-panel-metadata d-flex align-items-center text-secondary">
+<span>
+Group ID: 5034914
+</span>
+</div>
+</div>
+</div>
+<div class="home-panel-buttons col-md-12 col-lg-6">
+</div>
+</div>
+<div class="group-home-desc mt-1">
+<div class="home-panel-description">
+<div class="home-panel-description-markdown read-more-container" itemprop="description">
+<p data-sourcepos="1:1-1:74" dir="auto">Offensive Security's Most Advanced Penetration Testing Distribution, Ever.</p>
+</div>
+<button class="btn btn-blank btn-link js-read-more-trigger d-lg-none" type="button">
+Read more
+</button>
+</div>
+</div>
+</div>
+
+
+
+
+<div class="groups-listing" data-endpoints-default="/groups/kalilinux/-/children.json" data-endpoints-shared="/groups/kalilinux/-/shared_projects.json">
+<div class="top-area group-nav-container justify-content-between">
+<div class="scrolling-tabs-container inner-page-scroll-tabs">
+<div class="fade-left"><svg class="s12" data-testid="chevron-lg-left-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#chevron-lg-left"></use></svg></div>
+<div class="fade-right"><svg class="s12" data-testid="chevron-lg-right-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#chevron-lg-right"></use></svg></div>
+<ul class="nav-links scrolling-tabs mobile-separator nav nav-tabs">
+<li class="js-subgroups_and_projects-tab">
+<a data-target="div#subgroups_and_projects" data-action="subgroups_and_projects" data-toggle="tab" href="/kalilinux">Subgroups and projects
+</a></li>
+<li class="js-shared-tab">
+<a data-target="div#shared" data-action="shared" data-toggle="tab" href="/groups/kalilinux/-/shared">Shared projects
+</a></li>
+<li class="js-archived-tab">
+<a data-target="div#archived" data-action="archived" data-toggle="tab" href="/groups/kalilinux/-/archived">Archived projects
+</a></li>
+</ul>
+</div>
+<div class="nav-controls d-block d-md-flex">
+<div class="group-search">
+<form class="group-filter-form js-group-filter-form" id="group-filter-form" action="/kalilinux" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" /><input type="search" name="filter" id="group-filter-form-field" placeholder="Search by name" class="group-filter-form-field form-control js-groups-list-filter qa-groups-filter" spellcheck="false" />
+</form>
+</div>
+<div class="dropdown inline js-group-filter-dropdown-wrap gl-mr-3">
+<button class="dropdown-menu-toggle" data-toggle="dropdown" type="button">
+<span class="dropdown-label">
+Name
+</span>
+<svg class="s16 dropdown-menu-toggle-icon gl-top-3" data-testid="chevron-down-icon"><use xlink:href="https://gitlab.com/assets/icons-15cbe21ccc2237b075efb0b0d170fc8d6716882dbe4fefad34c18b914dbcf811.svg#chevron-down"></use></svg>
+</button>
+<ul class="dropdown-menu dropdown-menu-right dropdown-menu-selectable">
+<li class="dropdown-header">
+Sort by
+</li>
+<li class="js-filter-sort-order">
+<a class="is-active" href="/kalilinux?sort=name_asc">Name
+</a></li>
+<li class="js-filter-sort-order">
+<a href="/kalilinux?sort=name_desc">Name, descending
+</a></li>
+<li class="js-filter-sort-order">
+<a href="/kalilinux?sort=created_desc">Last created
+</a></li>
+<li class="js-filter-sort-order">
+<a href="/kalilinux?sort=created_asc">Oldest created
+</a></li>
+<li class="js-filter-sort-order">
+<a href="/kalilinux?sort=latest_activity_desc">Last updated
+</a></li>
+<li class="js-filter-sort-order">
+<a href="/kalilinux?sort=latest_activity_asc">Oldest updated
+</a></li>
+<li class="js-filter-sort-order">
+<a href="/kalilinux?sort=stars_desc">Most stars
+</a></li>
+</ul>
+</div>
+
+</div>
+</div>
+<div class="tab-content">
+<div class="tab-pane" id="subgroups_and_projects">
+<div id="js-groups-subgroups_and_projects-tree">
+<div class="empty-state hidden">
+<div class="row gl-align-items-center gl-justify-content-center">
+<div class="order-md-2">
+<svg width="249" height="368" viewBox="891 156 249 368" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><rect id="a" width="131" height="162" rx="10"/><mask id="e" x="0" y="0" width="131" height="162" fill="#fff"><use xlink:href="#a"/></mask><path d="M223.616 127.958V108.96c0-4.416-3.584-8-8.005-8h-23.985c-2.778 0-5.98 2.014-7.18 4.5l-5.07 10.5h-49.763c-5.527 0-9.996 4.475-9.996 9.997v53.005c0 5.513 4.475 9.997 9.996 9.997h84.01c5.525 0 9.994-4.477 9.994-9.998v-51.004z" id="b"/><mask id="f" x="0" y="0" width="104" height="88" fill="#fff"><use xlink:href="#b"/></mask><path d="M47 25h.996C53.52 25 58 29.472 58 34.99v20.02C58 60.526 53.52 65 47.996 65H10.004C4.48 65 0 60.528 0 55.01V34.99C0 29.474 4.48 25 10.004 25H11v-7c0-9.94 8.06-18 18-18s18 8.06 18 18v7zm-6 0H17v-7c0-6.627 5.373-12 12-12s12 5.373 12 12v7z" id="c"/><mask id="g" x="0" y="0" width="58" height="65" fill="#fff"><use xlink:href="#c"/></mask><path d="M0 10.008C0 4.48 4.476 0 10 0h218c5.523 0 10 4.473 10 10.008v140.94c0 5.53-4.062 11.882-9.08 14.196l-100.84 46.5c-5.015 2.31-13.142 2.312-18.16 0l-100.84-46.5C4.064 162.832 0 156.484 0 150.95V10.007z" id="d"/><mask id="h" x="0" y="0" width="238" height="213.417" fill="#fff"><use xlink:href="#d"/></mask></defs><g fill="none" fill-rule="evenodd" transform="translate(891 156)"><g transform="rotate(8 -266.528 490.3)"><use stroke="#E5E5E5" mask="url(#e)" stroke-width="8" fill="#FFF" xlink:href="#a"/><rect fill="#FC8A51" x="20" y="31" width="12" height="4" rx="2"/><rect fill="#FC8A51" x="60" y="31" width="12" height="4" rx="2"/><rect fill="#FDE5D8" x="36" y="31" width="20" height="4" rx="2"/><rect fill="#6B4FBB" x="20" y="65" width="20" height="4" rx="2"/><rect fill="#FDE5D8" x="44" y="65" width="20" height="4" rx="2"/><rect fill="#FC8A51" x="36" y="80" width="20" height="4" rx="2"/><rect fill="#FDE5D8" x="20" y="80" width="12" height="4" rx="2"/><rect fill="#FDE5D8" x="20" y="48" width="12" height="4" rx="2"/><rect fill="#FC8A51" x="36" y="48" width="12" height="4" rx="2"/><rect fill="#FDE5D8" x="60" y="80" width="12" height="4" rx="2"/><rect fill="#6B4FBB" x="52" y="48" width="12" height="4" rx="2"/><rect fill="#FDE5D8" x="68" y="48" width="12" height="4" rx="2"/></g><use stroke="#B5A7DD" mask="url(#f)" stroke-width="8" fill="#FFF" transform="rotate(5 171.616 144.96)" xlink:href="#b"/><path d="M58 132c0-9.94 8.06-18 18-18s18 8.06 18 18-8.06 18-18 18-18-8.06-18-18z" fill="#C1E7D0"/><path d="M90.143 132c0-7.81-6.332-14.143-14.143-14.143-7.81 0-14.143 6.332-14.143 14.143 0 7.81 6.332 14.143 14.143 14.143 7.81 0 14.143-6.332 14.143-14.143z" fill="#FFF"/><path d="M74.686 133.875l-3.18-3.18c-.29-.29-.77-.296-1.06-.005l-1.55 1.55c-.287.287-.29.766.004 1.06l4.92 4.92c.504.504 1.32.504 1.823 0l.654-.653 7.804-7.804c.3-.3.29-.77-.005-1.067l-1.578-1.58c-.302-.3-.775-.298-1.068-.004l-6.764 6.763z" fill="#31AF64"/><path d="M4 66c0-9.94 8.06-18 18-18s18 8.06 18 18-8.06 18-18 18S4 75.94 4 66z" fill="#D5ECF7"/><path d="M36.143 66c0-7.81-6.332-14.143-14.143-14.143-7.81 0-14.143 6.332-14.143 14.143 0 7.81 6.332 14.143 14.143 14.143 7.81 0 14.143-6.332 14.143-14.143z" fill="#FFF"/><path d="M22 55.714c5.68 0 10.286 4.605 10.286 10.286 0 5.68-4.605 10.286-10.286 10.286-3.45 0-6.505-1.7-8.37-4.307L22 66V55.714z" fill="#2D9FD8"/><g transform="rotate(-8 748.533 18.147)"><use stroke="#FDE5D8" mask="url(#g)" stroke-width="8" fill="#FFF" xlink:href="#c"/><path d="M31 46.584c1.766-.772 3-2.534 3-4.584 0-2.76-2.24-5-5-5s-5 2.24-5 5c0 2.05 1.234 3.812 3 4.584v3.42c0 1.1.895 1.996 2 1.996 1.112 0 2-.894 2-1.997v-3.42z" fill="#FC8A51"/></g><g transform="translate(0 154)"><use stroke="#E5E5E5" mask="url(#h)" stroke-width="8" fill="#FFF" xlink:href="#d"/><g opacity=".3"><path d="M141.837 104.53l-2.56-7.993-5.074-15.843c-.26-.815-1.398-.815-1.66 0l-5.074 15.843h-16.85l-5.075-15.843c-.26-.815-1.398-.815-1.66 0l-5.073 15.843-2.56 7.993c-.234.73.022 1.528.633 1.98l22.16 16.33 22.16-16.33c.61-.452.866-1.25.632-1.98" fill="#A1A1A1"/><path fill="#5C5C5C" d="M119.044 122.84l8.425-26.303h-16.85l8.424 26.304"/><path fill="#787878" d="M119.044 122.84l-8.425-26.303H98.81l20.232 26.304"/><path fill="#787878" d="M119.044 122.84l8.425-26.303h11.807l-20.233 26.304"/><path d="M98.812 96.537l-2.56 7.993c-.234.73.022 1.528.633 1.98l22.16 16.33L98.81 96.538z" fill="#A1A1A1"/><path d="M98.812 96.537h11.807l-5.075-15.843c-.26-.815-1.398-.815-1.66 0l-5.073 15.843z" fill="#5C5C5C"/><path d="M139.277 96.537l2.56 7.993c.234.73-.022 1.528-.634 1.98l-22.16 16.33 20.234-26.303z" fill="#A1A1A1"/><path d="M139.277 96.537H127.47l5.074-15.843c.26-.815 1.398-.815 1.66 0l5.073 15.843z" fill="#5C5C5C"/></g><path d="M57 18.29c1.105 0 2-.818 2-1.828 0-1.01-.895-1.83-2-1.83H41c-1.105 0-2 .82-2 1.83 0 1.01.895 1.83 2 1.83h16zm36 0c1.105 0 2-.818 2-1.828 0-1.01-.895-1.83-2-1.83H77c-1.105 0-2 .82-2 1.83 0 1.01.895 1.83 2 1.83h16zm36 0c1.105 0 2-.818 2-1.828 0-1.01-.895-1.83-2-1.83h-16c-1.105 0-2 .82-2 1.83 0 1.01.895 1.83 2 1.83h16zm36 0c1.105 0 2-.818 2-1.828 0-1.01-.895-1.83-2-1.83h-16c-1.105 0-2 .82-2 1.83 0 1.01.895 1.83 2 1.83h16zm36 0c1.105 0 2-.818 2-1.828 0-1.01-.895-1.83-2-1.83h-16c-1.105 0-2 .82-2 1.83 0 1.01.895 1.83 2 1.83h16zm17 24.693c0 1.01.895 1.83 2 1.83s2-.82 2-1.83V28.35c0-1.01-.895-1.83-2-1.83s-2 .82-2 1.83v14.633zm-202 0c0 1.01.895 1.83 2 1.83s2-.82 2-1.83V28.35c0-1.01-.895-1.83-2-1.83s-2 .82-2 1.83v14.633zm202 32.923c0 1.01.895 1.83 2 1.83s2-.82 2-1.83V61.274c0-1.01-.895-1.83-2-1.83s-2 .82-2 1.83v14.632zm-202 0c0 1.01.895 1.83 2 1.83s2-.82 2-1.83V61.274c0-1.01-.895-1.83-2-1.83s-2 .82-2 1.83v14.632zm202 32.923c0 1.01.895 1.828 2 1.828s2-.82 2-1.83V94.2c0-1.012-.895-1.83-2-1.83s-2 .818-2 1.83v14.63zm-202 0c0 1.01.895 1.828 2 1.828s2-.82 2-1.83V94.2c0-1.012-.895-1.83-2-1.83s-2 .818-2 1.83v14.63zm202 32.922c0 1.01.895 1.83 2 1.83s2-.82 2-1.83V127.12c0-1.01-.895-1.83-2-1.83s-2 .82-2 1.83v14.632zm-202 0c0 1.01.895 1.83 2 1.83s2-.82 2-1.83V127.12c0-1.01-.895-1.83-2-1.83s-2 .82-2 1.83v14.632zm179.023 19.555c-.988.452-1.388 1.55-.894 2.454.493.904 1.694 1.27 2.682.82l14.31-6.545c.99-.452 1.39-1.55.896-2.454-.494-.902-1.696-1.27-2.684-.817l-14.31 6.544zm-32.2 14.723c-.987.452-1.388 1.55-.894 2.454.493.904 1.695 1.27 2.683.818l14.31-6.544c.99-.45 1.39-1.55.895-2.454-.494-.903-1.695-1.27-2.683-.818l-14.31 6.544zm-32.2 14.724c-.987.45-1.387 1.55-.893 2.454.494.903 1.695 1.27 2.683.818l14.31-6.544c.99-.452 1.39-1.55.896-2.454-.495-.904-1.697-1.27-2.685-.818l-14.31 6.544zm-23.67-2.023l-12.186-5.57c-.987-.452-2.19-.086-2.683.817-.494.904-.093 2.003.895 2.454l12.185 5.573c.754.345 1.57.645 2.438.898 1.052.307 2.177-.224 2.513-1.187.335-.962-.246-1.99-1.298-2.298-.677-.197-1.302-.426-1.864-.684zM62.57 168.437c-.988-.452-2.19-.086-2.683.818-.494.903-.094 2.002.894 2.454l14.31 6.544c.988.45 2.19.085 2.683-.818.494-.904.094-2.003-.894-2.454l-14.312-6.544zm-32.2-14.723c-.988-.452-2.19-.086-2.683.818-.494.904-.093 2.003.895 2.454l14.31 6.544c.988.452 2.19.086 2.684-.818.494-.903.093-2.002-.895-2.454l-14.312-6.543z" fill="#EEE"/></g><g><path d="M104 18c0-9.94 8.06-18 18-18s18 8.06 18 18-8.06 18-18 18-18-8.06-18-18z" fill="#FADFD9"/><path d="M136.143 18c0-7.81-6.332-14.143-14.143-14.143-7.81 0-14.143 6.332-14.143 14.143 0 7.81 6.332 14.143 14.143 14.143 7.81 0 14.143-6.332 14.143-14.143z" fill="#FFF"/><path d="M119.43 8.994c0-.707.57-1.28 1.283-1.28h2.574c.71 0 1.284.57 1.284 1.28v10.298c0 .706-.57 1.28-1.283 1.28h-2.574c-.71 0-1.284-.57-1.284-1.28V8.994zm0 15.433c0-.71.57-1.284 1.283-1.284h2.574c.71 0 1.284.57 1.284 1.284V27c0 .71-.57 1.286-1.283 1.286h-2.574c-.71 0-1.284-.57-1.284-1.285v-2.573z" fill="#E75E40"/></g><g><path d="M213 89c0-9.94 8.06-18 18-18s18 8.06 18 18-8.06 18-18 18-18-8.06-18-18z" fill="#F6D4DC"/><path d="M245.143 89c0-7.81-6.332-14.143-14.143-14.143-7.81 0-14.143 6.332-14.143 14.143 0 7.81 6.332 14.143 14.143 14.143 7.81 0 14.143-6.332 14.143-14.143z" fill="#FFF"/><path d="M231 86.348l-3.603-3.602c-.288-.29-.766-.286-1.063.01l-1.578 1.578c-.3.302-.3.773-.01 1.063L228.348 89l-3.602 3.603c-.29.288-.286.766.01 1.063l1.578 1.578c.302.3.773.3 1.063.01L231 91.652l3.603 3.602c.288.29.766.286 1.063-.01l1.578-1.578c.3-.302.3-.773.01-1.063L233.652 89l3.602-3.603c.29-.288.286-.766-.01-1.063l-1.578-1.578c-.302-.3-.773-.3-1.063-.01L231 86.348z" fill="#D22852"/></g></g></svg>
+
+</div>
+<div class="gl-m-0! order-md-1 text-content">
+<h4>A group is a collection of several projects.</h4>
+<p>If you organize your projects under a group, it works like a folder.</p>
+<p>You can manage your group member’s permissions and access to each project in the group.</p>
+</div>
+</div>
+
+</div>
+<section data-group-id="5034914" data-hide-projects="false" data-path="/kalilinux">
+<div class="js-groups-list-holder" data-show-schema-markup="true">
+<div class="loading-container text-center prepend-top-20">
+<div class="spinner spinner-md"></div>
+</div>
+</div>
+</section>
+</div>
+
+</div>
+<div class="tab-pane" id="shared">
+<div id="js-groups-shared-tree">
+<div class="empty-state text-center hidden">
+<p>There are no projects shared with this group yet</p>
+</div>
+<ul class="content-list" data-group-id="5034914" data-hide-projects="false" data-path="/kalilinux">
+<div class="js-groups-list-holder">
+<div class="loading-container text-center prepend-top-20">
+<div class="spinner spinner-md"></div>
+</div>
+</div>
+</ul>
+</div>
+
+</div>
+<div class="tab-pane" id="archived">
+<div id="js-groups-archived-tree">
+<div class="empty-state text-center hidden">
+<p>There are no archived projects yet</p>
+</div>
+<ul class="content-list" data-group-id="5034914" data-hide-projects="false" data-path="/kalilinux">
+<div class="js-groups-list-holder">
+<div class="loading-container text-center prepend-top-20">
+<div class="spinner spinner-md"></div>
+</div>
+</div>
+</ul>
+</div>
+
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+
+<script nonce="mA15KVQkLAvNFrXvIUy6xA==">
+//<![CDATA[
+if ('loading' in HTMLImageElement.prototype) {
+  document.querySelectorAll('img.lazy').forEach(img => {
+    img.loading = 'lazy';
+    let imgUrl = img.dataset.src;
+    // Only adding width + height for avatars for now
+    if (imgUrl.indexOf('/avatar/') > -1 && imgUrl.indexOf('?') === -1) {
+      const targetWidth = img.getAttribute('width') || img.width;
+      imgUrl += `?width=${targetWidth}`;
+    }
+    img.src = imgUrl;
+    img.removeAttribute('data-src');
+    img.classList.remove('lazy');
+    img.classList.add('js-lazy-loaded', 'qa-js-lazy-loaded');
+  });
+}
+
+//]]>
+</script>
+
+</body>
+</html>
+
