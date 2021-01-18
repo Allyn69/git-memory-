@@ -1,6 +1,6 @@
 macros:
     - &linux
-      language: c
+      language: c3-doc-binary.png3-doc-binary.png
       os: linux
       dist: xenial
       compiler: clang
