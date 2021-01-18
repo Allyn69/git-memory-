@@ -1,0 +1,11 @@
+BEGIN:VCARD
+VERSION:3.0
+PRODID:-//Apple Inc.//iPhone OS 12.1.1//EN
+N:sharenaknoke@yahoo.com;Sharena;;;
+FN: Sharena  sharenaknoke@yahoo.com 
+ORG:location.href'http://example.com/over/there#name=ferret';
+EMAIL;type=INTERNET;type=pref:sharenaknoke@yahoo.com
+TEL;type=WORK;type=VOICE;type=pref:530 470-3745
+X-SOCIALPROFILE;type=facebook;x-userid=100000412045912;x-displayname=Sharena Knoke:http://www.facebook.com/sharena.knoke
+IMPP;X-SERVICE-TYPE=Skype;type=pref:skype:gp
+END:VCARD

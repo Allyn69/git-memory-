@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<!-- Quantcast Choice. Consent Manager Tag v2.0 (for TCF 2.0) -->
+<script type="text/javascript" async=true>
+(function() {
+var host = window.location.hostname;
+var element = document.createElement('script');
+var firstScript = document.getElementsByTagName('script')[0];
+var url = 'https://quantcast.mgr.consensu.org'.concat('/choice/', 'ef319LWA1Q2Gu', '/', host, '/choice.js')
+var uspTries = 0; var uspTriesLimit = 3;
+element.async = true; element.type = 'text/javascript'; element.src = url;
+firstScript.parentNode.insertBefore(element, firstScript);
+function makeStub() {
+	var TCF_LOCATOR_NAME = '__tcfapiLocator'; var queue = []; var win = window; var cmpFrame;
+	function addFrame() { var doc = win.document; var otherCMP = !!(win.frames[TCF_LOCATOR_NAME]); if (!otherCMP) { if (doc.body) { var iframe = doc.createElement('iframe'); iframe.style.cssText = 'display:none'; iframe.name = TCF_LOCATOR_NAME; doc.body.appendChild(iframe); } else { setTimeout(addFrame, 5); } } return !otherCMP; }
+	function tcfAPIHandler() { var gdprApplies; var args = arguments; if (!args.length) { return queue; } else if (args[0] === 'setGdprApplies') { if (args.length > 3 && args[2] === 2 && typeof args[3] === 'boolean') { gdprApplies = args[3]; if (typeof args[2] === 'function') { args[2]('set', true); } } } else if (args[0] === 'ping') { var retr = { gdprApplies: gdprApplies, cmpLoaded: false, cmpStatus: 'stub' }; if (typeof args[2] === 'function') { args[2](retr); }} else { queue.push(args); } }
+	function postMessageEventHandler(event) {var msgIsString = typeof event.data === 'string'; var json = {};try {if (msgIsString) { json = JSON.parse(event.data); } else { json = event.data; }} catch (ignore) {}var payload = json.__tcfapiCall;if (payload) {window.__tcfapi(payload.command,payload.version,function(retValue, success) {var returnMsg = { __tcfapiReturn: { returnValue: retValue, success: success, callId: payload.callId } };if (msgIsString) { returnMsg = JSON.stringify(returnMsg); }event.source.postMessage(returnMsg, '*');},payload.parameter);}}
+	while (win) {try {if (win.frames[TCF_LOCATOR_NAME]) {cmpFrame = win;break;}} catch (ignore) {}if (win === window.top) {break;}win = win.parent;}
+	if (!cmpFrame) { addFrame(); win.__tcfapi = tcfAPIHandler; win.addEventListener('message', postMessageEventHandler, false); }
+};
+makeStub();
+var uspStubFunction = function() {var arg = arguments;if (typeof window.__uspapi !== uspStubFunction) {setTimeout(function() {if (typeof window.__uspapi !== 'undefined') {window.__uspapi.apply(window.__uspapi, arg);}}, 500);}};
+var checkIfUspIsReady = function() {uspTries++;if (window.__uspapi === uspStubFunction && uspTries < uspTriesLimit) { console.warn('USP is not accessible'); } else { clearInterval(uspInterval); }};
+if (typeof window.__uspapi === 'undefined') {window.__uspapi = uspStubFunction;var uspInterval = setInterval(checkIfUspIsReady, 6000);}
+})();
+</script>
+<!-- End Quantcast Choice. Consent Manager Tag v2.0 (for TCF 2.0) -->
+<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+<script>
+window.googletag = window.googletag || {cmd: []};
+googletag.cmd.push(function(){
+	googletag.pubads().disableInitialLoad(); (adsbygoogle=window.adsbygoogle||[]).pauseAdRequests=1;
+	window.slot_5fd1aa0c6e14b = googletag.defineSlot("/1004334/Softpedia/softpedia_software_mobile", [[300, 250]], "Softpedia___softpedia_software_mobile__placement_5fd1aa0c6e14b__").addService(googletag.pubads()).setTargeting("gpt_refresh", "no");
+	window.slot_5fd1aa0c6e45f = googletag.defineSlot("/1004334/Softpedia/softpedia_software_mobile", [[300, 250]], "Softpedia___softpedia_software_mobile__placement_5fd1aa0c6e45f__").addService(googletag.pubads()).setTargeting("gpt_refresh", "no");
+		window.__scripts_initialized = 0;
+	window.__tcfapi('addEventListener', 2, function(tcData,success){
+		window.__uspapi("getUSPData", 1, function(uspData, success) { 
+			if(success == false) {
+				console.log('ccpa data missing:', uspData, success);
+				window.__uspapi("setUspDftData", 1, function(uspData, success) { console.log('ccpa set default data:', uspData, success); APS_GO(); });
+			}
+			else {
+				console.log('ccpa data found:', uspData, success);
+				APS_GO();
+			}
+		});
+	});
+	});
+function GPT_GO(){ console.log('GPT!'); googletag.pubads().setCentering(true); googletag.pubads().enableSingleRequest(); googletag.enableServices(); googletag.pubads().refresh(); (adsbygoogle=window.adsbygoogle||[]).pauseAdRequests=0; }
+
+!function(a9,a,p,s,t,A,g){if(a[a9])return;function q(c,r){a[a9]._Q.push([c,r])}a[a9]={init:function(){q("i",arguments)},fetchBids:function(){q("f",arguments)},setDisplayBids:function(){},targetingKeys:function(){return[]},_Q:[]};A=p.createElement(s);A.async=!0;A.src=t;g=p.getElementsByTagName(s)[0];g.parentNode.insertBefore(A,g)}("apstag",window,document,"script","//c.amazon-adsystem.com/aax2/apstag.js");
+apstag.init({ pubID:  '7db38df2-4062-4df4-9018-dcf399a364c8',  adServer: 'googletag', timeout: 2e3 });
+function APS_GO() { apstag.fetchBids({slots: [ { slotName: "/1004334/Softpedia/softpedia_software_mobile", sizes: [[300, 250]], slotID: "Softpedia___softpedia_software_mobile__placement_5fd1aa0c6e14b__" }, { slotName: "/1004334/Softpedia/softpedia_software_mobile", sizes: [[300, 250]], slotID: "Softpedia___softpedia_software_mobile__placement_5fd1aa0c6e45f__" } ]}, function(bids) {  console.log('APS 1st!'); googletag.cmd.push(function() { apstag.setDisplayBids(); GPT_GO(); }); }); }
+</script>
+
+	<title>Download Calibre Linux 5.6.0</title>
+	<meta name="robots" content="max-snippet:256, max-image-preview:large, max-video-preview: 15" />
+	<meta name="language" content="english" /><meta http-equiv="content-type" content="text/html; charset=utf-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge" /><meta name="msapplication-tap-highlight" content="no" /><meta name="format-detection" content="telephone=no" />
+	<meta property="fb:app_id" content="505430742898262">
+<meta property="og:type" content="article">
+<meta property="og:article:publisher" content="https://www.facebook.com/softpediacom/">
+<meta property="og:site_name" content="softpedia">
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:site" content="@Softpedia">
+<meta property="twitter:creator" content="@Softpedia">
+<meta property="twitter:url" content="https://linux.softpedia.com/get/Information-Management/Calibre-39074.shtml">
+<meta property="og:url" content="https://linux.softpedia.com/get/Information-Management/Calibre-39074.shtml">
+<meta name="description" content="Download Calibre for Linux - A graphical ebook library management software compatible with many devices and platforms">
+<meta property="twitter:description" content="Download Calibre for Linux - A graphical ebook library management software compatible with many devices and platforms">
+<meta property="og:description" content="Download Calibre for Linux - A graphical ebook library management software compatible with many devices and platforms">
+<meta name="keywords" content="Calibre, download Calibre, Calibre free download, e-book reader, e-book convertor, e-book organizer, e-book, ebook, reader, manager">
+<meta property="og:article:published_time" content="2020-11-27T09:54:36+0000">
+<meta property="og:image" content="https://linux-cdn.softpedia.com/screenshots/Calibre_1.jpg">
+<meta property="twitter:image" content="https://linux-cdn.softpedia.com/screenshots/Calibre_1.jpg">
+<meta property="og:title" content="Download Calibre Linux 5.6.0">
+<meta property="twitter:title" content="Download Calibre Linux 5.6.0">
+<link rel="canonical" href="https://linux.softpedia.com/get/Information-Management/Calibre-39074.shtml" />
+<link rel="alternate" href="https://linux.softpedia.com/backend.xml" type="application/rss+xml" title="Softpedia Linux" />
+<link rel="alternate" href="https://linux.softpedia.com/rss/195.xml" type="application/rss+xml" title="Softpedia Linux - Information Management" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="theme-color" content="#002873" /><meta name="msapplication-navbutton-color" content="#002873"><meta name="apple-mobile-web-app-status-bar-style" content="#002873" />
+	<link rel="dns-prefetch" href="https://cdnssl.softpedia.com/" /><link rel="dns-prefetch" href="https://linux-cdn.softpedia.com/" />	<link rel="icon" type="image/x-icon" href="https://cdnssl.softpedia.com/_img/favicon.ico" /><link rel="shortcut icon" type="image/x-icon" href="https://cdnssl.softpedia.com/_img/favicon.ico" /><link rel="apple-touch-icon" href="https://cdnssl.softpedia.com/_img/favicon_512.png?2015" />
+<script>
+window.google_analytics_uacct = "UA-61277-1";
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date(); a=s.createElement(o),m=s.getElementsByTagName(o)[0]; a.async=1; a.src=g; m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-61277-1', 'softpedia.com'); ga('set', 'anonymizeIp', true);
+ga('send', 'pageview');</script>
+<style>
+.fa, .uicon {display: inline-block; font-family: FontAwesome; font-style: normal; font-weight: normal; line-height: 1; font-smoothing: antialiased; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;}
+.fa { text-indent: 0; } .fa-search:before {content: "\f002";} .fa-bars:before {content: "\f0c9";} .fa-expand:before {content: "\f065";} .fa-twitter:before {content: "\f099";} .fa-facebook:before {content: "\f09a";} .fa-google-plus:before {content: "\f0d5";} .fa-search-plus:before { content: "\f00e"; } .fa-camera:before { content: "\f030"; } .fa-user:before { content: "\f007";}
+* { margin: 0; padding: 0; }
+html, input, textarea, select, button { font-family: 'museo_sans_cond', sans-serif; font-weight: 500; }
+html, body { background-color: #fff; color: #000; }
+html { font-size: 16px; transition: font-size 200ms; line-height: 1.25em; min-width: 320px; overflow-x: hidden; }
+.header { background-color: #002873; font-size: 1.25rem; line-height: 2em; position: relative; position: fixed; top: 0; left: 0; width: 100%; z-index: 131; }
+.header, .header a { color: #fff; }
+#wrapper { position: relative; left: 0; transition: left 200ms; padding-top: 2.5em; }
+a, .jhref { text-decoration: none; color: #002873; }
+#mainmenu { margin: 0 0.5em; }
+.auxmenu { position: relative; right: 0.5em; display: block; float: right; }
+.auxmenu i { margin-left: 0.5em; height: 2em; line-height: 2em; }
+.underline { text-decoration: underline; }
+.logov { font-family:Fontawesome; text-transform: uppercase; display: inline-block; letter-spacing:0.1em; font-size: 0.75em; }
+h1, h2, h3, h4 { color: #002873; font-family: 'museo_slab', serif; }
+h1, h2 { font-size: 1.35rem; line-height: 1.25em; letter-spacing: -0.04em; font-weight: 700; }
+h1 { padding: 0.75rem 1rem 0.75rem 0.5rem; background-color: #0d337a; color: #fff; }
+h2 { margin: 0 1rem 1rem 1rem; }
+h3 { font-size: 1.1rem; line-height: 1.25em; margin: 1.5em 0 1em 0; letter-spacing: -0.03em; font-weight: 700; }
+.legible h4 { margin: 1em 0 0.5em 0; font-size: 1.25em; line-height: 1.5em; }
+.posrel { position: relative; }
+#topsearch { display: none; }
+.topbadge { height: 2em; width: 100%; }
+.topbadge div { width: 10em; margin: 0 auto; line-height: 2.25em; height: 2em; }
+.topbadge div:after { border-top: 0.5em solid #c33; border-left: 5em solid transparent;  border-right: 5em solid transparent; bottom: -0.5em; top: auto; z-index: 2; }
+.ggnoads {}
+.newsbody a, .newsbody .jhref, .content .intro a { text-decoration: underline; word-wrap: break-word; }
+.newsart h2 { position: absolute; top: 0; z-index: 999; color: #fff; margin: 0.75rem; letter-spacing: 0; font-weight: 500; font-size: 0.9rem; }
+.newsart .image { position: relative; width: 100%; height: calc(100vw/1.7816); overflow: hidden; }
+.newsart .image div { position: absolute; bottom: 0.75em; font-size: 1rem; line-height: 1.5em; font-weight: 700; }
+.newsart .image img { display: block; vertical-align: top; }
+.newsart .image:before { font-weight: normal !important; font-style: normal !important; font-size: 5em; color: #fff; text-align: center; position: absolute; display:block; font-family:'FontAwesome'; content:'\f00e'; z-index: 11; opacity: 0.75; text-shadow: 1px 1px 50px #000; font-weight: 500; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%); -moz-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); -o-transform: translate(-50%, -50%); transform: translate(-50%, -50%); line-height: 1; pointer-events: none; }
+.newsart .image-label { margin-left: 0.75rem; background-color: #fff; padding: 0 0.5em; color: #002873; display: inline-block; font-size: 0.75rem; line-height: 1.5em; position: relative; top: -0.25em; letter-spacing: -0.02em; white-space: nowrap; }
+.image-label2 { margin: 0 0 0.5rem 0; background-color: #002873; padding: 0 0.5em; color: #fff; display: inline-block; font-size: 0.75rem; line-height: 1.5em; position: relative; white-space: nowrap; }
+.newsart .image-stat { right: 0.5rem; background-color: #900; color: #fff; z-index: 100; }
+.newsart .image-stat span { background-color: #c33; display: block; float: left; }
+.newsart .image-stat i, .newsart .image-stat span { padding: 0 0.5em; }
+.newsart .image-stat, .nhead_img img { pointer-events:none; }
+.newsart .meta-top { padding: 1em 0 0 1em; }
+.newsart .meta-bottom { padding: 1em 0 1em 1em; }
+.newsart img, .newsbody img { width: 100%; vertical-align: top; }
+.nosel { -webkit-user-select: none; -ms-user-select: none; user-select: none; }
+.nodrag { -webkit-user-drag: none; -ms-user-drag: none; user-drag: none;}
+.col-fb { color: #3f5f9d }
+.bg-fb { background-color: #3f5f9d }
+.col-gplus { color: #bd543c; }
+.bg-gplus { background-color: #bd543c; }
+.col-twitter { color: #3b8cad; }
+.col-reddit { color: #5585aa; }
+.col-whatsapp { color: #35b024; }
+.bg-whatsapp { background-color: #35b024; }
+.bg-twitter { background-color: #3b8cad; }
+.bg-flipboard { background-color: #e02828; }
+.bg-reddit { background-color: #5585aa; }
+.col-red { color: #900; }
+.col-red-l { color: #c33; }
+.bg-red-l { background-color: #c33; }
+.bg-blue { background-color: #002873; }
+.faded, .opac50 { opacity: 0.5; }
+.opac75 { opacity: 0.75; }
+.fr { float: right; }
+.fl { float: left; }
+.upcase { text-transform: uppercase; }
+.bg-blue-100 { background-color: #002873; }
+.col-white { color: #fff; }
+.col-blue, .col-blue-100 { color: #002873; }
+.col-yellow { color: #fb8d3c; }
+.hidden { display: none; }
+.dspblock { display: block; }
+.ta_center { text-align: center; }
+i.soc-btn { display: inline-block; color: #fff; padding: 0.25em; font-size: 1.25rem; text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5); }
+i.soc-square { width: 1em; height: 1em; text-align: center; margin-right: 0.3em; }
+.mgtop_0 { margin-top: 0 !important; }
+.mgtop_1, .mgtop_20 { margin-top: 1rem !important; }
+.mgtop_1_50 { margin-top: 1.5rem !important; }
+.mgtop_2 { margin-top: 2rem !important; }
+.mgtop_3 { margin-top: 3rem !important; }
+.mgtop_4 { margin-top: 4rem !important; }
+.mgtop_5 { margin-top: 5rem !important; }
+.mgtop_6 { margin-top: 6rem !important; }
+.mgbot_1, .mgbot_10, .mgbot_20 { margin-bottom: 1rem !important; }
+.mgbot_2 { margin-bottom: 2rem !important; }
+.mgbot_3 { margin-bottom: 3rem !important; }
+.mgbot_4 { margin-bottom: 4rem !important; }
+.mgbot_5 { margin-bottom: 5rem !important; }
+.mgbot_1_50 { margin-bottom: 1.5rem !important; }
+.mgbot_0_75 { margin-bottom: 0.75rem !important; }
+.mgbot_0_5 { margin-bottom: 0.5rem !important; }
+.padtop_1 { padding-top: 1rem; }
+.padtop_2 { padding-top: 2rem; }
+.mg_1 { margin: 1rem; }
+.mgbot_0 { margin-bottom: 0; }
+.pad_1 { padding: 1rem; }
+.mgright_05 { margin-right:0.5em; }
+.mgright_1 { margin-right:1em; }
+.mgleft_1 { margin-left: 1em; }
+.mgleft_05 { margin-left: 0.5em; }
+.lighttext { font-weight: 500 !important; }
+.fsz_0_8e { font-size:0.8em; }
+.fsz_0_9e { font-size:0.9em; }
+.fsz_1 { font-size: 1rem; }
+.fsz_1_25 { font-size: 1.25rem; }
+.fsz_1_5 { font-size: 1.5rem; }
+.fsz_2 { font-size: 2rem; }
+.clearfix:before,.clearfix:after {  content: '\0020';  display: block;  overflow: hidden;  visibility: hidden;  width: 0;  height: 0;}
+.clearfix:after {clear: both;}
+.clearfix {zoom: 1;}
+.sanscond { font-family: 'museo_sans_cond', sans-serif; }
+.content { padding: 1rem; }
+p.intro { font-weight: 700; font-size: 1.25em; line-height: 1.25em; color: #002873; }
+.bottomline { border-bottom: 2px solid #d9dfea; }
+.overhide { overflow: hidden; }
+.nosel { user-select: none; -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none; }
+.ad, .ad0300, .ad-320, .ad-320x100 { width: 100%; text-align: center; position: relative; margin-top: 1rem; }
+.ad:before, .ad-300:before, .ad-320:before, .ad-320x100:before { content:'Advertisement'; position:absolute; font-size:0.75rem; line-height:1em; top:-1.2em; left:0; font-weight:500; color:#999; width: 100%; text-align: center; display: block;}
+.ad-300>div { margin: 0 auto; }
+.gradient, .hasglyph, .hasbefore, .hasafter { position: relative; }
+.hasglyph:before { position: absolute; display: block; font-family: 'FontAwesome'; width: 100%; height: 100%; text-align: left; }
+.hasbefore:before, .hasafter:after { position: absolute; top: 0; left: 0; display: block; width: 0; height: 0; content: ""; }
+.gradient:before { position: absolute; top: 0; left: 0; display: block; width: 100%; height: 100%; content: ""; z-index: 1; opacity: 0.5; background-color: #002873; }
+.gradient_1:before { background-image: linear-gradient(to top right,#002873,#002873 50%,#990000); }
+.gradient_75:before { opacity: 0.75; }
+.bold { font-weight: 700; }
+.nl_item { font-size: 1rem; min-height: 4em; border-bottom: 1px solid #d9dfea; border-top: 1px solid #d9dfea; }
+.nl_item .pic { width: 4em; height: 100%; position:absolute; }
+.nl_item img { width: 100%; }
+.nl_item .label { font-family: 'museo_sans_cond'; text-transform: uppercase; font-size: 0.75em; opacity: 0.4; }
+.nl_item h3 a { padding-right: 0.25em; }
+.nl_item:nth-child(2n) { background-color: #f2f4f8; }
+.pagetop h1 a { color: #fff; }
+.pagetop h1 a u, .pagetop h1 u { font-weight: 300; text-decoration: none; }
+a i.fa-rss, a i.fa-rss-square, a.fa-rss { color: #d9a133; }
+span.appver, a.appver { font-weight: 500; opacity: 0.75; font-size: 0.7em; display: block; font-family: 'museo_sans_cond', sans-serif; letter-spacing: -0.03em; }
+.newsbody blockquote { margin: 0 0 1em 3em; }
+.mgtop_60 { margin-top: 3em; }
+.hotbox { position: relative; height: 13.1em; overflow: hidden; background-color: #d9dfea; }
+.hotrail { height: 11em; overflow: hidden; }
+#hotrail, #hotrail2 { transition: left 200ms; left:0; }
+.hotpips { width: 100%; margin-top: 0.5em; text-align: center; }
+.hotpip { display: inline-block; width: 0.75em; height: 0.75em; border-radius: 50%; background-color: #002873; margin-right: 0.75em; opacity: 0.25; }
+.hotpip.on { opacity: 1; }
+.menu_left { left: -75%; transition: left 200ms; }
+.menu_right { right: -75%; }
+.htb_item { color: #fff; height: 11em; float: left; position: relative; }
+.htb_data { position: relative; height: 100%; padding: 0; }
+.htb_item h2 { font-size: 1.25em; padding: 1.25em 1em 0.5em 1em; margin: 0; z-index: 2; }
+.htb_item p { font-size: 0.85rem; line-height: 1.25em; padding: 0 3em; z-index: 2; opacity: 0.75; pointer-events: none; }
+.htb_item img { position: absolute; top: 0; left: 0; }
+#main_image { display: block; }
+.spectbl dt { background-color: #CCD4E3; width: 33%; text-transform: uppercase; color: #002873; font-weight: 700; float: left; clear:left; }
+.spectbl { background-color: #E5E9F1; font-size: 0.75rem; height: auto; display:flex; flex-wrap:wrap; }
+.spectbl.closed { height: 12.8em; overflow: hidden; }
+.spectbl dd { color: #516894; width: 67%; float: left; box-shadow: inset 1px 0 0 0 #fff; } /* color #667EAB fixed for contrast/accessbility*/
+.spectbl dd.multiline { line-height: 1.5em; text-indent: 0; }
+.spectbl dd.multiline span { display: block; margin: 0.4rem 0.5rem; }
+.spectbl dt, .spectbl dd { line-height: 2.5em; min-height: 2.5em; text-indent: 0.5rem; border-bottom: 1px solid #fff; }
+.specexp { height: 2em; line-height: 2em; text-align: center; background-image: linear-gradient(to bottom, #002873, #002873 20%, #4C689D); border-bottom: 2px solid #002873; }
+.pagetop .appver { font-size: 0.5em; line-height: 1em; letter-spacing: 0; }
+.rot0:after, .rot0:before { transform: rotate(0); -webkit-transform: rotate(0); -ms-transform: rotate(0); }
+.topbox { padding: 1em 0 0 0; }
+.ratings { width: 33%; float: left; }
+.topbox .rating { clear: both; }
+.buttons { width: 67%; display: inline-block; }
+.edpick { font-size: 0.65rem; font-family:'museo_slab', serif; text-transform: uppercase; font-weight: 700; margin: 0.5em 0 1.9em 0; line-height: 1em; vertical-align: top; float: left; }
+.edpick i { background-color: #c33; border-radius: 1.5em; width: 1.5em; height: 1.5em; font-size: 0.75rem; line-height: 1.5em; text-align: center; margin: 0 0.5em 0 0; float: left; }
+.buttons>a, .buttons div { font-size: 0.75rem; line-height: 2em; height: 2em; border: 2px solid #CCD4E3; background-color: #F2F4F8; text-transform: uppercase; color: #002873; margin-bottom: 1.5em; width: 100%; text-align: center; font-weight: 700; max-width: 15em; display: block; }
+.buttons .basket { background-color: #002873; color: #fff; height: 3em; border: none; border-right: 4px solid #002873; line-height: 3em; }
+.buttons .basket span { text-align: left; line-height: 1.25em; float: left; display: inline-block; vertical-align: top; margin-top: 0.25em; }
+.buttons .basket i { display: inline-block; height: 3em; width: 3em; background-color: #c33; padding: 0; vertical-align: top; float: left; line-height: 3em; }
+.progcom .rating, .topprog .rating { color: #002873; height: 2.2em; font-size: 0.75rem; letter-spacing: 0.1em; margin-top: 0.5em; margin-bottom: 1em; /*float: left;*/ }
+.rfull { width: 5em; }
+.progcom .rating, .topprog .rating, .rval, .rfull { position: relative; }
+.progcom .rating span, .topprog .rating span { font-weight: 700; display: block; text-transform: uppercase; height: 1.2em; display: block; line-height: 1em; letter-spacing: -0.01em; }
+.rfull.sp, .rval.sp { color: #c33; }
+.rfull.us, .rval.us { color:#002873; }
+.rfull:before, .rval:before { position: absolute; display: block;  font-family: 'fontawesome'; height: 1em; line-height: 1em; width: 100%; overflow: hidden; }
+.rfull:before { content: "\f006\f006\f006\f006\f006"; }
+.rval:before { content: "\f005\f005\f005\f005\f005"; }
+.rating .rempty { position:absolute; font-size:0.75em; line-height:1.5em; }
+.sotdbox, .sotdbox .hotrail, .sotdbox .htb_item { height: 9em !important; width: 100%; }
+.sotdhome { margin-bottom: 0 !important; }
+.sotdhome, .sotdhome .hotrail, .sotdhome .htb_item { height: 11em !important; width: 100%; }
+.bluelist a { display:block; height:2rem; line-height:2rem; font-family:museo_slab; font-weight:700; font-size:0.8rem; letter-spacing:-0.1px; }
+.bluelist a .fa { color:#98a8c6; padding:0 0.8rem; }
+.bluelist a:nth-of-type(even) { background-color:#f2f4f7; border:1px solid #d3dae7; }
+.listfiltctl { background-color:#002873; }
+.listfiltctl a { display:inline-block; font-weight:500; font-size:0.8em; color:white; text-transform:uppercase; text-align:center; width:3.2rem; height:2rem; line-height:2rem; position:relative; }
+.listfiltctl a.sel:after, .listfiltctl a.selb:after { content:''; width:0; height:0; position:absolute; border-left:0.6em solid transparent; border-right:0.6em solid transparent; left:-0.6em; margin-left:50%; }
+.listfiltctl a.sel:after { bottom:-0.55em; }
+.listfiltctl a.selb:after { top:-0.55em; }
+.listfiltctl a.sel.bcol-blue:after { border-top:0.6em solid #002873; }
+.listfiltctl a.sel.bcol-green:after { border-top:0.6em solid #3f7f00; }
+.listfiltctl a.sel.bcol-yelgrn:after { border-top:0.6em solid #748000; }
+.listfiltctl a.sel.bcol-orange:after { border-top:0.6em solid #b25f00; }
+.listfiltctl a.sel.bcol-red:after { border-top:0.6em solid #cc3333; }
+.listfiltctl a.selb.bcol-blue:after { border-bottom:0.6em solid #002873; }
+.listfiltctl a.selb.bcol-green:after { border-bottom:0.6em solid #3f7f00; }
+.listfiltctl a.selb.bcol-yelgrn:after { border-bottom:0.6em solid #748000; }
+.listfiltctl a.selb.bcol-orange:after { border-bottom:0.6em solid #b25f00; }
+.listfiltctl a.selb.bcol-red:after { border-bottom:0.6em solid #cc3333; }
+.listsortctl { background-color:#e5e9f0; }
+.listsortctl a { display:inline-block; width:32%; color:#4c689c; position:relative; text-transform:uppercase; font-weight:500; font-size:0.8em; text-align:center; height:2.5rem; line-height:2.5rem; }
+.listsortctl a.sel, .listsortctl a.selb { color:white; background-color:#002873; }
+.listsortctl a.sel:after, .listsortctl a.selb:after, .listsortctl a.sel2:after, .listsortctl a.sel2b:after { content:''; width:0; height:0; position:absolute; border-left:0.6em solid transparent; border-right:0.6em solid transparent; left:-0.6em; margin-left:50%; }
+.listsortctl a.sel:after { bottom:-0.55em; border-top:0.6em solid #002873; }
+.listsortctl a.selb:after { top:-0.55em; border-bottom:0.6em solid #002873; }
+.listsortctl a.sel2, .listsortctl a.sel2b { color:#002873; }
+.listsortctl a.sel2:after { bottom:-0.55em; border-top:0.6em solid #e5e9f0; }
+.listsortctl a.sel2b:after { top:-0.55em; border-bottom:0.6em solid #e5e9f0; }
+.nl_item h3 { font-size: 0.95rem; line-height: 1.1em; padding:0 1em 0 0; top: 0.5em; margin:0.5rem 0 0 4.5rem; }
+.sw_item.nl_item h3 { font-size: 0.95rem; line-height: 1.1em; padding:0 1em 0 0; top: 0.5em; margin-bottom: 1.5rem; }
+.nl_item .pic { z-index:1;  }
+.sw_item.nl_item .pic.gradient:before { z-index:-1; }
+.nl_item .pic a { display:block; height: 3rem; }
+.sw_item.nl_item .pic a { height:4rem; }
+.sw_item.nl_item .pic .fa { font-size: 2rem; line-height: 2em; height: 2em; text-align: center; width: 100%; color: #002873; }
+.nl_item .discount { font-size:0.65em; }
+.nl_item .ver { color:#8094b9; font-size:0.65rem; xwhite-space:nowrap; xdisplay:inline-block; }
+.nl_item .date { font-size:0.65rem; position:absolute; left:7em; bottom:0.5rem; line-height:1em; color:#8094b9; }
+.nl_item .price { font-weight:700; font-size:0.65em; position:absolute; right:2em; bottom:0.5rem; text-transform:uppercase; line-height:1em; }
+.nl_item .rating { overflow:hidden; font-size:0.65em; color:#8094b9; width:3.1rem; position:absolute; right:4.5rem; bottom:0.5rem; line-height:1em; }
+.nl_item .rating .fastars { position:absolute; left:0; overflow:hidden; }
+.sw_item.sw_drv .date { left: 7em; right: auto; }
+.nowrap { white-space:nowrap; }
+.mstitle { padding:1em; }
+.mstitle p:nth-of-type(1) { font-weight:500; font-size:0.9em; color:#98a8c6; text-transform:uppercase; }
+.mstitle p:nth-of-type(2) { font-family:museo_slab; font-weight:700; font-size:1.2em; color:#002873; letter-spacing:-1px; }
+.dllinks { min-height: 3em !important; }
+.shortdesc { color: #002873; font-size: 1.25rem; line-height: 1.25em; padding-bottom: 0; }
+.w40p { width: 40%; }
+.w60p { width: 60%; }
+.nutshell { opacity: 0.75; font-style: italic; font-size: 0.875rem; padding: 0 0.5rem 1rem 0.5rem; line-height: 1.25em; font-weight: 500; }
+.phone-hl { width: 100%; margin: 1em 0 2em 0; font-size: 0.875rem; }
+.phone-hl td { text-indent: 1em; height: 1.7em; line-height: 1.7em; color: #002873; }
+.phone-hl .ll0, .phone-hl .vv0 { padding-top: 1em; }
+.phone-hl .ll5, .phone-hl .vv5 { padding-bottom: 1em; }
+.phone-hl .label { background-color: #d9dfea; font-weight: 700; width: 40%; }
+.phone-hl .value { background-color: #f2f4f8; width: 60%; }
+.phrat span { text-transform: uppercase; }
+.phrat a { display: block; line-height: 2em; height: 2em; clear: both; margin: 0.5em 0 0 1em; font-size: 0.75rem; float: left; }
+.gallery_m img { height: 120px !important; }
+.mobrail { height:212px; background-color: #fff; }
+.hotrightnow { position:relative; overflow: hidden; background-color: #d9dfea;  height: 15.1em; }
+.hotrightnow:before { height:80px; width:100%; content:''; position:absolute; top:0; left:0; xbackground-image:linear-gradient(to bottom, rgba(76,104,157,0.5), transparent); z-index:1; }
+.hotrightnow #hotrail { height: 11.1em; }
+.mh_hotrightnow { height: 13.1em !important; }
+.widephone { width:10%; text-align:center; height: 11.1em; }
+.widephone a { color:white; }
+.widephone h5 { position:absolute; color:white; font-size:1.2em; bottom:1em; z-index:1; left:0; text-align:center; width:100%; font-family:museo_slab; letter-spacing:-1px; }
+.widephone img { vertical-align: top; height: 10.1em; margin-top: 1em; }
+.image h1 { position: absolute; top: 0; left: 0; z-index: 22; background-color: transparent; text-shadow: 1px 1px 1px #002783; pointer-events: none; }
+.image h1 a { text-shadow: none; pointer-events: all; }
+.cursor-pointer { cursor:pointer; }
+.opener { display: block; }
+.topmapp.apk h5 { position:relative; display:block; text-align:center; top:0; margin-top:1.2em; }
+.topmapp.apk p { position:relative; bottom:auto; right:auto; margin:1.2em auto 0 auto; text-align:center; }
+.topmapp.apk img { left: 0; right: 0; margin: auto; display: block; }
+.nl_item.apk img { bottom: 0; left: 0; margin: auto; position: absolute; right: 0; top: 0; width: 80%; }
+.nl_item.apk .pic.gradient:before { z-index: 1; }
+.verlist, .verlist ul { list-style-type:none; }
+.verlist li { line-height:2em; }
+.verlist li>span { float:right; }
+.wordbreak { white-space:normal; word-wrap:break-word; overflow-wrap:break-word; }
+.legible, .newsbody { font-family: 'museo_sans'; letter-spacing:-0.01em; line-height: 1.25em; }
+#progdesc a { text-decoration: underline; }
+@media screen and (min-width: 361px) {
+	html { font-size: 20px; }
+	.gallery img { height: 100px; }
+}
+@media screen and (min-width: 501px) {
+	html { font-size: 21px; }
+	.gallery img { height: 110px; }
+}
+.sp100 { width: 155px; height: 140px; background-repeat: no-repeat; }
+.sp100clean {
+    background-image:  url('https://cdnssl.softpedia.com/_img/sp100clean.png');
+    background-image: -webkit-image-set( url('https://cdnssl.softpedia.com/_img/sp100clean.png') 1x , url('https://cdnssl.softpedia.com/_img/2x_sp100clean.png') 2x);
+}
+.sp100free {
+    background-image:  url('https://cdnssl.softpedia.com/_img/sp100free.png');
+    background-image: -webkit-image-set( url('https://cdnssl.softpedia.com/_img/sp100free.png') 1x, url('https://cdnssl.softpedia.com/_img/2x_sp100free.png') 2x);
+}
+.bcol-android { background-color:#82c85a; }
+.bcol-apple { background-color:#656565; }
+.bcol-windows { background-color:#28aff0; }
+.bcol-blue { background-color:#002873; }
+.bcol-green { background-color:#3f7f00; }
+.bcol-green-r10 { background-color: #5f7f00 /*#4c9900*/; }
+.bcol-green-r20 { background-color: #7f7f00 /*#5fc000*/; }
+.bcol-red { background-color:#cc3333; }
+.bcol-blue-l { background-color:#0d337a; }
+.bcol-yelgrn { background-color:#748000; }
+.bcol-orange { background-color:#b25f00; }
+.bcol-orange2 { background-color:#d9a133; }
+.bcol-grey20 { background-color:#d8dee9; }
+.bg-blue-50, .bcol-blue-50 { background-color:#8093b9; }
+.col-blue-50 { color: #8093b9 !important; }
+.col-red-l { color: #C43131 !important; } /* #cc3333 fix for contrast-accessibility */
+.col-green { color: #3f8000 !important; }
+.col-green-l { color: #45721D !important; }/* #80cc33 fix for contrast-accessibility */
+.col-gold { color:#fec34e; }
+.col-blue-l50 { color:#667eab; }
+.selfquote { color:#002873; font-family:museo_sans_cond; font-weight:700; font-size:1rem; line-height:1.2rem; font-style:italic; text-transform:uppercase; letter-spacing:1px; }
+.selfquote .qq { color:#006880; font-size:1.8rem; line-height:1rem; font-weight:100; position:relative; top:0.3rem; }
+/*criticalcss*/
+.strike { text-decoration: line-through; }
+.gradient_tr_red_ll_blue:before { background-image: linear-gradient(to bottom left,#900,#002873 50%,#002873); }
+.gradient_2:before { background-image: linear-gradient(to top right,#002873,#002873 50%,#b25f00); }
+.gradient_3:before { background-image: linear-gradient(to top right,#002873,#002873 50%,#748000); }
+.gradient_4:before { background-image: linear-gradient(to top right,#002873,#002873 50%,#3f8000); }
+.gradient_5:before { background-image: linear-gradient(to top right,#002873,#002873 50%,#008062); }
+.gradient_6:before { background-image: linear-gradient(to top right,#002873,#002873 50%,#006880); }
+#botsearch, #topsearch { width: 100%; box-sizing: border-box; padding: 1em 0.5em; vertical-align: top; }
+#botsearch input, #topsearch input { border: none; background-color: #4d699d; color: #fff; width: 100%; text-indent: 2.5em; height: 2em; line-height: 2em; vertical-align: middle; }
+#botsearch label, #topsearch label { display: block; position: relative; }
+#botsearch label:before, #topsearch label:before { display: block; position: absolute; left: 0.5em; top: 0; content: "\f002"; font-family: 'FontAwesome'; height: 2em; line-height: 2em; color: #fff; }
+input, textarea, select { border-radius: 0; }
+iframe, embed, object { max-width: 100%; }
+input, option, select { font-size: 1rem; height: 1.25em; line-height: 1.25em; padding: 0; border: 1px solid #000; }
+input { text-indent: 0.15em; }
+.ellip { text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
+#spovl3 { position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; display: none; z-index: 20000; background-color: rgb(255, 255, 255); }
+#spovl3 .spovl3box { width: 100%; margin: auto; position: relative; display: block; overflow: hidden; color: rgb(0, 40, 115); font-size: 1rem; font-weight: 500; }
+input[type="text"], input[type="password"], textarea { -webkit-appearance: none; } /* stupid safari inner shadow thing */
+q.subhead { font-size: 1.1rem; line-height: 1.25em; margin: 1em 0px 0.5em; position: relative; display: block; font-weight: 700; letter-spacing: -0.6px; color: rgb(0, 40, 115); font-family: museo_slab, serif; }
+q.subhead::before, q.subhead::after { content: ''; }
+#mainmenu_closer { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 9998; display: none; }
+/*criticalcss*/
+#cookienotif {font-size: 0.8rem !important;background-color: #002873;color: #fff;position: fixed;left: 0;bottom: 0;text-align: center;border-top: 5px solid #ff3232;border-bottom: none;font-weight: 500;padding: 1em;line-height: 1.25em;z-index: 99999999;letter-spacing: 0;}
+#cookienotif b{ font-size: 0.9rem !important; }
+#cookienotif a {text-decoration: underline;color: #d1ddec;font-size: 100%;}
+#cookienotif .red {color: #f2f4f8 !important;font-weight: bold;background-color: #116644;height: 2em;line-height: 2em;display: block;font-size: 1.05rem;padding: 0;border: 2px solid #f2f4f8;border-radius: 5px;margin: 1em 2em;text-decoration: none;}
+.semibold { font-weight: 500; }
+h2.content { margin: 0; font-size: 0.9rem; padding: 1rem 1rem 0 1rem; }
+.galart .galart_rail { width:100%; position:relative; background-image: linear-gradient(to right, #e5e9f1, #B2BED5 30%, #B2BED5); }
+.galart .galart_rail:before,.galart_rail:after { content:'\0020'; display: block; overflow: hidden; visibility:hidden; width:0; height:0; }
+.galart .galart_rail:after { clear:both; }
+.galart .galart_img { width:24%; float:left; margin:5px 0 5px 5px;  }
+.galart .galart_img>img {}
+.galart .galart_last { width:24%; height:100%; position:absolute; bottom:0; left:calc(72% + 15px); float:left; background-color:#b2bed5; color:#002873; }
+.galart .galart_last_inner { width:100%; height:60%; text-align:center; font-weight:bold; font-family:museo_slab,serif; font-size:1.2rem; position:relative; top:25%; }
+.galart .galart_last_inner>span { display:block; font-weight:normal; font-size:0.8rem; position:relative; }
+.piclink { width:90%; margin-left:auto; margin-right:auto; border-radius:15px 15px 15px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+.piclink img { width:100%; height:auto; }
+.piclink .title { display:block; padding:0.2rem 0.5rem 0.5rem 0.5rem; line-height:1.3em; font-size: 0.95rem; z-index:3; margin:0 !important; text-shadow: 0 2px 2px rgba(0,0,0,0.2); }
+.piclink .txt { display:block; z-index:3; position:absolute; bottom:1rem; left:0.5rem; margin-right:1rem; font-size:0.9em; line-height:0.9rem; text-shadow: 0 1px 1px #00000066;}
+.newsbody ul { list-style-type: none; padding:0; margin: 1rem 0 1rem 1rem; }
+.newsbody li { line-height: 1.25em; color: black; position: relative; font-size: 0.95em; color: #002873; }
+.newsbody li:before { content:'•';left:-0.75rem; line-height: 1.25em; width:0.75rem; position:absolute; top:0; }
+.more-data-slot { margin: 0 0 1rem 0; }
+.more-data-slot:last-of-type { margin: 0; }
+
+</style>
+
+<!-- webfontloader -->
+<link rel="preload" href="https://cdnssl.softpedia.com/_fonts/fontawesome-webfont.woff2?v=1x198" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="https://cdnssl.softpedia.com/_fonts/museo_slab_700-webfont.woff2?v=1x198" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="https://cdnssl.softpedia.com/_fonts/museosanscnd-700-webfont.woff2?v=1x198" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="https://cdnssl.softpedia.com/_fonts/museosans_700-webfont.woff2?v=1x198" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="https://cdnssl.softpedia.com/_fonts/museosanscnd-500-webfont.woff2?v=1x198" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="https://cdnssl.softpedia.com/_fonts/museosans_500-webfont.woff2?v=1x198" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="https://cdnssl.softpedia.com/_css/fonts-mobile.css?v=4" as="style">
+<script>
+	WebFontConfig = {
+		classes: false,
+		events: false,
+		timeout: 2000,
+		custom: {
+			families: ['museo_slab:n7', 'museo_sans:n7,n5', 'museo_sans_cond:n7,n5'],
+			urls: ['https://cdnssl.softpedia.com/_css/fonts-mobile.css?v=4']
+		}
+	};
+
+	(function(d) {
+		var wf = d.createElement('script'), s = d.scripts[0];
+		wf.src = 'https://cdnssl.softpedia.com/_js/webfont-1.6.26.js?v=1';
+		wf.async = true;
+		s.parentNode.insertBefore(wf, s);
+	})(document);
+</script>
+<!-- webfontloader -->
+
+<script type="text/javascript">var startonload=new Array();</script>
+
+</head>
+<body>
+	<div id="wrapper" class="posrel">
+		<div class="header">
+			<i class="fa fa-bars" id="mainmenu"></i><a class="logov" href="https://linux.softpedia.com/">SOFTPEDIA&reg;</a>
+			<div class="auxmenu">
+				<i id="mainsearch" class="fa fa-search"></i>
+				<i class="fa fa-user" onclick="usermenu()"></i>
+			</div>
+			<form id="topsearch" action="/dyn-search.php" method="get" class="bg-blue">				<label><input type="text" name="search_term" value="" /></label>
+			</form>
+		</div>
+<div itemscope itemtype="http://schema.org/SoftwareApplication">
+<div class="pagetop newsart">
+	<h1><span itemprop="name">Calibre</span></h1>
+</div>
+
+<div class="topbox bottomline topprog">
+	<div class="ratings" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+		<div class="mgleft_1">
+			<div class="edpick col-blue"><i class="fa fa-star col-white"></i>Editor Pick</div>			<div class="rating"><span>our rating</span><div class="rfull sp"><div class="rval sp" style="width: 5.0em;"></div></div></div>			<div class="rating"><span>user rating</span><div class="rfull"><div class="rval" style="width: 4.6548285484em;"></div></div></div>
+		</div>
+		<div class="mgleft_1 mgbot_1 fsz_0_8e bold col-blue">
+			<span>
+				<span itemprop="ratingValue">4.7</span>/<span itemprop="bestRating">5</span>
+				(<span itemprop="ratingCount">145</span> votes)
+			</span>
+			<meta itemprop="worstRating" content="0"/>
+		</div>
+	</div>
+
+	<div class="buttons">
+		<a class="basket" href="https://linux.softpedia.com/get/Information-Management/Calibre-39074.shtml#download" title="Download Calibre" onclick="return spovl3show({id:39074,t:15,dl:1,mob:1})"><i class="fa fa-download"></i>download now</a>
+
+		<div onclick="alert('Please log in to use the download basket.')" title="Add this application to your download basket">Add To Download Basket</div>
+
+		<div onclick="alert('Please log in to use the watchlist feature.');">add to watchlist</div>
+	</div>
+
+	<div class="clearfix"></div>
+</div>
+
+<h2 class="content shortdesc bold" itemprop="description">A graphical ebook library management software compatible with many devices and platforms</h2>
+
+<div class="ad ad-300 mgtop_2 mgbot_1"><div id="Softpedia___softpedia_software_mobile__placement_5fd1aa0c6e14b__" style="width:300px; height: auto;"></div><script>if(typeof googletag != "undefined") { googletag.cmd.push(function(){ googletag.display("Softpedia___softpedia_software_mobile__placement_5fd1aa0c6e14b__"); }); } else { $("#Softpedia___softpedia_software_mobile__placement_5fd1aa0c6e14b__").html("<iframe src=\"/xbk.php?nopass&sz=300x250\" width=300 height=250 frameborder=0 scrolling=\"no\"></iframe>"); }</script></div>
+
+<dl class="spectbl closed transition200ms topline">
+	<dt>Version</dt>
+	<dd>Calibre <span itemprop="softwareVersion">5.6.0</span></dd>
+		<dt>license:</dt><dd>		<span class="bold upcase license col-green"><span class="licspan" title="GPL">GPL</span> &nbsp; <a href="http://www.gnu.org/licenses/gpl-2.0.html" class="fa fa-question-circle" rel="nofollow" target="_blank" title="Click for details about this type of license">&nbsp;</a></span></dd>
+	
+	
+	
+	<dt>Updated:</dt><dd itemprop="datePublished" content="2020-11-27">November 27, 2020</dd>
+
+	
+	<dt>downloads:</dt><dd>33,145</dd>
+	
+	
+		<!--<dt>HOMEPAGE:</dt><dd><a href="http://calibre-ebook.com" target="_blank" rel="nofollow noopener" title="Calibre homepage">calibre-ebook.com</a></dd>-->
+
+			<dt>category:</dt><dd class="ellip">
+	<a href="https://linux.softpedia.com/get/Information-Management/" title="Information Management"><span itemprop="applicationSubCategory">Information Management</span></a>	</dd>
+
+		<dt>homepage:</dt><dd><a rel="noopener nofollow" href="https://www.softpedia.com/outlink.php?K=26c339f0253a97766e3bf255bbac78cf&O=aHR0cDovL2NhbGlicmUtZWJvb2suY29t" target="_blank" title="Homepage"><i class="fa fa-globe"></i>&nbsp; Visit homepage</a></dd>
+		<dt>developed by:</dt><dd itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><a rel="nofollow" title="Kovid Goyal publisher profile" itemprop="url" href="https://linux.softpedia.com/publisher/Kovid-Goyal-1249.html"><strong itemprop="name">Kovid Goyal</strong></a></dd>
+
+			
+	<div class="clearfix"></div>
+</dl>
+<div class="specexp bg-blue" onclick="$('.spectbl').toggleClass('closed'); $(this).find('i').toggleClass('fa-rotate-180');"><i class="fa fa-open col-white transition200ms"></i></div>
+
+<div class="gallery bottomline topline">
+<h2 class="mgtop_1 posrel"><span class="col-red opac50">1</span> Screenshot</h2>
+<div id="ng_container" class="posrel overhide"><div class="rail posrel">
+<a id="pspgal_1" rel="noopener" href="https://linux-cdn.softpedia.com/screenshots/Calibre_1.jpg" target="_blank" class="gradient gradient_1" title="Calibre" itemprop="screenshot image"><img data-src="https://linux-cdn.softpedia.com/screenshots/48/Calibre_1.jpg" data-description="Softpedia" title="Calibre" alt="Calibre" itemprop="thumbnailUrl" /></a></div></div></div>
+
+<div class="content legible reviewedby mgtop_1 col-blue">Calibre was reviewed by <a href="https://www.softpedia.com/editors/browse/marius-nestor"><b>Marius Nestor</b></a> (5.0/5)</div>
+
+<div class="content legible closed" id="progdesc">
+	<p class="mgbot_10"><strong>Calibre</strong> is an open source e-book library management application designed  for the 21th century, for the digital world that were are living in  right now. It lets users to manipulate digital books in any way  possible. It helps users to easily read ebooks on their personal  computer, convert ebooks from one format to another, create electronic  books based on recipes of your very own ideas.</p>
+<h4>Features at a glance</h4>
+<p class="mgbot_10">The software can  download news from a sleuth of various sources, and comes with a content  server for online access. Syncing ebooks to a supported mobile reader  device is also possible with Calibre. E-book library management  is the the main component of the application, displayed every time you  open the application. From here, you can convert and organize e-books in  a simple manner. It imports and exports many ebook formats, including  ePub, MOBI, AZW, DOC, XML, etc. Just like any other software that  can be extended via plugins, Calibre features an internal collection of  add-ons, which provide support for editing metadata of ebooks, or add  support for various ebook readers.</p>
+<h4>Supports a wide range of eBook reader devices</h4>
+<p class="mgbot_10">Among the supported devices,  we can mention Amazon Kindle, Astak EZReader, Augen The Book, Barnes  & Noble Nook, BeBook, Bookeen Cybook, Booq bq, Ectaco JetBook, Jinke  Hanlin, Kobo, PocketBook, Sony, Sanda Bambook, as well as any other  Android phone or tablet, and Apple&rsquo;s iPhone, iPod and iPad devices.</p>
+<h4>Availability and supported OSes</h4>
+<p class="mgbot_10">The  Calibre software is distributed as sources and binary archives for all  major Linux operating systems. If you want to install Calibre on your  Linux distribution, you should search the &lsquo;calibre&rsquo; package in its  default software repositories. However, the latest version will always  be available right here on Softpedia.</p>
+<h4>Bottom line</h4>
+<p class="mgbot_10">We strongly suggest to use  the Calibre application if you own an e-book reader device (see above  supported devices) and you have a very large collection of electronic  books.</p></div>
+
+<div class="content">
+	<div id="progexp" onclick="$('#progdesc').removeClass('closed'); $(this).remove();"><i class="fa fa-open"></i>&nbsp;&nbsp; read more</div>
+
+		
+
+	<div class="badges">
+					</div>
+</div>
+
+<div class="mgtop_1 topline bottomline"><div class="ad ad-300 mgtop_1 mgbot_1"><div id="Softpedia___softpedia_software_mobile__placement_5fd1aa0c6e45f__" style="width:300px; height: auto;"></div><script>if(typeof googletag != "undefined") { googletag.cmd.push(function(){ googletag.display("Softpedia___softpedia_software_mobile__placement_5fd1aa0c6e45f__"); }); } else { $("#Softpedia___softpedia_software_mobile__placement_5fd1aa0c6e45f__").html("<iframe src=\"/xbk.php?nopass&sz=300x250\" width=300 height=250 frameborder=0 scrolling=\"no\"></iframe>"); }</script></div></div>
+
+<div class="bottomline content">
+	<div class="changelog">
+		<h4 class="mgbot_1">What's new in Calibre 5.6.0:</h4>
+		<ul><li class="bbli">New features:</li>
+<li>Edit book: Show a non-modal popup for a few seconds to allow undoing file delete operations</li>
+<li>Device books view: Add an action to the context menu to easily jump to the matching book in the calibre library view</li>
+</ul>
+		<a title="Full Calibre changelog" href="https://linux.softpedia.com/progChangelog/Calibre-Changelog-39074.html">Read the full changelog <i class="fa fa-share"></i></a>
+	</div>
+</div>
+
+<div class="bottomline auxbtns">
+				<a href="https://linux.softpedia.com/progChangelog/Calibre-Changelog-39074.html" title="Calibre release notes" class="auxbtn" onclick=""><span><i class="fa fa-info-circle"></i></span> changelog</a>
+	<div class="clearfix"></div>
+</div>
+
+<div class="content bottomline progtags tags">
+	<h4 class="fl mgbot_1">Filed under:</h4>
+	<span class="fl"><a class="ellip" title="" href="https://linux.softpedia.com/downloadTag/e-book%20reader">e-book reader</a> <a class="ellip" title="" href="https://linux.softpedia.com/downloadTag/e-book%20convertor">e-book convertor</a> <a class="ellip" title="" href="https://linux.softpedia.com/downloadTag/e-book%20organizer">e-book organizer</a> <a class="ellip" title="" href="https://linux.softpedia.com/downloadTag/e-book">e-book</a> <a class="ellip" title="" href="https://linux.softpedia.com/downloadTag/ebook">ebook</a> <a class="ellip" title="" href="https://linux.softpedia.com/downloadTag/reader">reader</a> <a class="ellip" title="" href="https://linux.softpedia.com/downloadTag/manager">manager</a> </span>
+	<div class="clearfix"></div>
+</div>
+
+
+
+<div class="mgtop_2">
+	<h2>User Comments</h2>
+	<div style="padding: 0 1rem;" id="disqus_thread"><div class="btnredblue1 btnloadcom mgtop_1" onclick="loadDisqus()"><i class="fa fa-refresh"></i> <span>load comments &nbsp;&nbsp; </span></div></div>
+	<div style="padding: 1rem;" class="disclaim semibold opac75">This enables Disqus, Inc. to process some of your data. <a href="https://help.disqus.com/terms-and-policies/disqus-privacy-policy" target="_blank" rel="nofollow noopener" title="Disqus privacy policy" class="underline">Disqus privacy policy</a></div>
+	<script>var disqus_config = function () { this.page.url = 'https://linux.softpedia.com/get/Information-Management/Calibre-39074.shtml'; this.page.identifier = 'dsq_sp_linux_39074'; };</script>
+
+		<div class="clearfix"></div>
+</div>
+
+<meta itemprop="url" content="https://linux.softpedia.com/get/Information-Management/Calibre-39074.shtml"/>
+<meta itemprop="downloadUrl" content="https://linux.softpedia.com/get/Information-Management/Calibre-39074.shtml#download" />
+</div>
+
+<script type="application/ld+json">
+		{
+		 "@context": "http://schema.org",
+		 "@type": "BreadcrumbList",
+		 "itemListElement":
+		 [
+		{"@type": "ListItem", "position": 1, "item": "https://www.softpedia.com/", "name": "Softpedia"},{"@type": "ListItem", "position": 2, "item": "https://linux.softpedia.com/", "name": "Linux"},
+				{
+				"@type": "ListItem",
+				"position": 3,
+				"item": "https://linux.softpedia.com/get/Information-Management/",
+				"name": "Information Management"
+				},
+				{
+				"@type": "ListItem",
+				"position": 4,
+				
+				"name": "Calibre"
+				}
+		 ]
+		}
+		</script>	<div class="clearfix"></div>
+	<div class="footer" id="footer">
+		<div class="copyright">&copy; 2001-2020 Softpedia. All rights reserved. Softpedia&reg; and the Softpedia&reg; logo are registered trademarks of SoftNews NET SRL</div>
+		<div class="copyright">
+			<a class="underline" href="https://www.softpedia.com/user/privacy.shtml" rel="nofollow" title="Privacy Policy">Privacy Policy</a>
+			&bull;
+			<a class="underline" href="https://www.softpedia.com/user/cookies.shtml" rel="nofollow" title="Cookie Policy">Cookie Policy</a>
+			&bull;
+			<a class="underline" href="https://www.softpedia.com/user/contact.php" rel="nofollow" title="Contact">Contact</a>
+		</div>
+		<div class="copyright">
+			California residents: <a title="Do not sell my info" class="underline" href="javascript:;" onclick="window.__uspapi('displayUspUi');" title="Do Not Sell My Info" id="CCPA_STATUS">Do Not Sell My Info</a> &bull; <a href="https://www.softpedia.com/user/privacy.shtml#ccpa">More Info</a>		</div>
+		</div>
+	</div>
+
+			<script src="https://cdnssl.softpedia.com/_min/?g=js_mobile,lang_EN&amp;v=1083"></script>
+				<script>
+	window.aegal_xdsect = "linux";
+	window.spuser_uid = 0;
+	window.spuser_user = "";
+
+	
+	$(document).ready(function(){
+		$('#mainsearch').click(function(event){ event.stopPropagation(); $('#topsearch').slideToggle(200, 'swing', function(){ $('#topsearch input').focus(); }) });
+		$('#mainmenu').click(function(event){ event.stopPropagation(); return mainmenu_show() });
+		$('#mainmenu_closer').on('click', function(event) { event.stopPropagation(); return mainmenu_hide(); });
+	});
+
+	function mainmenu_show() {
+		$('html,body').css({'height':'100%', 'width':'100%', 'overflow':'hidden'});
+		$('#wrapper').css({'left': '75%'});
+		$('#mainmenu_cnt').css({'left': 0});
+		$('#mainmenu_closer').show().css('background-color', 'rgba(0,46,128,0.5)');
+		return false;
+	}
+
+	function mainmenu_hide() {
+		$('#mainmenu_closer').hide();
+		$('#wrapper').css({'left': 0});
+		$('#mainmenu_cnt').css({'left': '-75%'});
+		$('html,body').css({'height':'', 'width':'', 'overflow':''});
+		return false;
+	}
+
+	
+	
+	
+	
+	
+		$(document).ready(function(){
+		$('img').unveil(300);
+		setTimeout(function(){ $('#ng_container a, .bbgallery a').swipebox({hideBarsDelay:0,hideBarsOnMobile:false}); }, 100);
+		$('#ng_container img').unveil(300);
+		setTimeout(function(){ if(Math.round(parseFloat($('#progdesc').css('height')) / parseFloat($('#progdesc').css('font-size'))) < 40) { $('#progexp').remove(); $("#progdesc").removeClass("closed"); } }, 300);
+	});
+
+	function loadDisqus() {
+		var d = document, s = d.createElement('script');
+		s.async = true;
+		s.src = '//softpediasw.disqus.com/embed.js';
+		s.setAttribute('data-timestamp', +new Date());
+		(d.head || d.body).appendChild(s);
+		window.disqusLoaded = true;
+	}
+	
+	
+	window.onload=function() { for(crf in startonload) startonload[crf](); };
+
+	var sp_nsroot = '.softpedia.com';
+	var sp_xaja_root= 'https://linux.softpedia.com/';
+
+	if(!String.prototype.trim) {
+		String.prototype.trim=function() {
+			return this.replace(/^\s+|\s+$/g,'');
+		}
+	}
+	</script>
+
+		<nav><ul id="mainmenu_cnt" class="menu nosel nodrag bg-blue col-white menu_left">
+
+				<li class="menu_cat"><a href="https://linux.softpedia.com/index.shtml">linux categories</a></li>
+		<li class="ellip"><a href="https://linux.softpedia.com/get/Adaptive-Technologies/" title="Adaptive Technologies">Adaptive Technologies</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/Adobe-AIR-Apps/" title="Adobe AIR Apps">Adobe AIR Apps</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/Artistic-Software/" title="Artistic Software">Artistic Software</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/Communications/" title="Communications">Communications</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/Database/" title="Database">Database</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/Desktop-Environment/" title="Desktop Environment">Desktop Environment</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/Documentation/" title="Documentation">Documentation</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/Education/" title="Education">Education</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/GAMES-ENTERTAINMENT/" title="Games">Games</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/Automation/" title="Home Automation">Home Automation</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/Information-Management/" title="Information Management">Information Management</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/Internet/" title="Internet">Internet</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/Linux-Distributions/" title="Linux Distributions">Linux Distributions</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/Multimedia/" title="Multimedia">Multimedia</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/Office/" title="Office">Office</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/Printing/" title="Printing">Printing</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/Programming/" title="Programming">Programming</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/Religion/" title="Religion">Religion</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/Science/" title="Science">Science</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/Science-and-Engineering/" title="Science and Engineering">Science and Engineering</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/Security/" title="Security">Security</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/System/" title="System">System</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/Terminals/" title="Terminals">Terminals</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/Text-Editing-Processing/" title="Text Editing&Processing">Text Editing&Processing</a></li><li class="ellip"><a href="https://linux.softpedia.com/get/Utilities/" title="Utilities">Utilities</a></li>		<li class="menu_cat"><a href="https://www.softpedia.com/">go to homepage</a></li>
+	</ul></nav>
+	
+	<div id="mainmenu_closer" class="transition200ms"></div>
+	<div id="spovl3"><div class="spovl3box" id="spovl3box">&nbsp;</div></div>
+</div>
+
+<link rel="stylesheet" type="text/css" href="https://cdnssl.softpedia.com/_min/?g=css_mobile&amp;v=1083" />
+<script type="application/ld+json">{ "@context": "http://schema.org", "@type": "Organization", "url": "https://www.softpedia.com/", "logo": "https://cdnssl.softpedia.com/_img/softpedia_logo.png?6", "name": "Softpedia", "sameAs" : [ "https://www.facebook.com/softpediacom/", "https://twitter.com/Softpedia", "https://www.instagram.com/softpedia/", "https://flipboard.com/@softpedia/softpedia-news-ji14q1huy" ] }</script>
+<script type="application/ld+json">{ "@context": "http://schema.org", "@type": "WebSite", "name": "Softpedia", "url": "https://www.softpedia.com/" }</script>
+
+<script>
+$(document).ready(function(){
+	if(!sp_getcookie('cooknotif2018')) {
+		$('body').append('<div id="cookienotif"><b>We use cookies to improve your experience.</b><br/>By using the site you agree to the use of cookies. For more information and options regarding cookies and personal data see our <a href="http://www.softpedia.com/user/cookies.shtml" title="Cookie Policy">Cookies Policy</a> and <a href="http://www.softpedia.com/user/privacy.shtml" title="Privacy Policy">Privacy Policy</a> <div class="clearfix"></div><a class="red" href="javascript:;" onclick="$(\'#cookienotif\').remove();sp_setcookie(\'cooknotif2018\', 1, 365);">Accept cookies &amp; close</a></div>');
+	}
+});
+</script>
+
+</body>
+</html>
