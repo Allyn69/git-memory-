@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>
+
+	<!-- This site is optimized with the Yoast SEO plugin v14.8 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Understanding Kubernetes Cluster Autoscaler: Features, Limitations and Alternatives - The Spot.io Blog</title>
+	<meta name="description" content="Understand Kubernetes infrastructure autoscaling tools, including Kubernetes Cluster Autoscaler, to get started with scaling your container clusters." />
+	<meta name="robots" content="index, follow" />
+	<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+	<meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+	<link rel="canonical" href="https://spot.io/blog/kubernetes-cluster-autoscaler-features-limitations-and-comparisons-to-ocean-by-spot/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Understanding Kubernetes Cluster Autoscaler: Features, Limitations and Alternatives - The Spot.io Blog" />
+	<meta property="og:description" content="Understand Kubernetes infrastructure autoscaling tools, including Kubernetes Cluster Autoscaler, to get started with scaling your container clusters." />
+	<meta property="og:url" content="https://spot.io/blog/kubernetes-cluster-autoscaler-features-limitations-and-comparisons-to-ocean-by-spot/" />
+	<meta property="og:site_name" content="The Spot.io Blog" />
+	<meta property="article:publisher" content="https://facebook.com/spotinst" />
+	<meta property="article:published_time" content="2020-07-24T09:21:09+00:00" />
+	<meta property="article:modified_time" content="2020-10-01T13:25:44+00:00" />
+	<meta property="og:image" content="https://blog-assets.spot.io/app/uploads/2020/07/29122715/Blog_Ocean_Comparing-K8s-Cluster-AutoscalerAWS-ASG-with-Ocean-_2_29jul20.jpg" />
+	<meta property="og:image:width" content="1440" />
+	<meta property="og:image:height" content="800" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:creator" content="@spotinst" />
+	<meta name="twitter:site" content="@spotinst" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://spot.io/blog/#website","url":"https://spot.io/blog/","name":"The Spot.io Blog","description":"Thoughts from the team at Spot on continuously optimizing performance, availability and cost in the cloud.","potentialAction":[{"@type":"SearchAction","target":"https://spot.io/blog/?s={search_term_string}","query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"ImageObject","@id":"https://spot.io/blog/kubernetes-cluster-autoscaler-features-limitations-and-comparisons-to-ocean-by-spot/#primaryimage","inLanguage":"en-US","url":"https://blog-assets.spot.io/app/uploads/2020/07/29122715/Blog_Ocean_Comparing-K8s-Cluster-AutoscalerAWS-ASG-with-Ocean-_2_29jul20.jpg","width":1440,"height":800,"caption":"kubernetes cluster autoscaler"},{"@type":"WebPage","@id":"https://spot.io/blog/kubernetes-cluster-autoscaler-features-limitations-and-comparisons-to-ocean-by-spot/#webpage","url":"https://spot.io/blog/kubernetes-cluster-autoscaler-features-limitations-and-comparisons-to-ocean-by-spot/","name":"Understanding Kubernetes Cluster Autoscaler: Features, Limitations and Alternatives - The Spot.io Blog","isPartOf":{"@id":"https://spot.io/blog/#website"},"primaryImageOfPage":{"@id":"https://spot.io/blog/kubernetes-cluster-autoscaler-features-limitations-and-comparisons-to-ocean-by-spot/#primaryimage"},"datePublished":"2020-07-24T09:21:09+00:00","dateModified":"2020-10-01T13:25:44+00:00","author":{"@id":"https://spot.io/blog/#/schema/person/51c00b8e94e10b1805bf07143e048b8a"},"description":"Understand Kubernetes infrastructure autoscaling tools, including Kubernetes Cluster Autoscaler, to get started with scaling your container clusters.","inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://spot.io/blog/kubernetes-cluster-autoscaler-features-limitations-and-comparisons-to-ocean-by-spot/"]}]},{"@type":"Person","@id":"https://spot.io/blog/#/schema/person/51c00b8e94e10b1805bf07143e048b8a","name":"Manik Taneja","image":{"@type":"ImageObject","@id":"https://spot.io/blog/#personlogo","inLanguage":"en-US","url":"https://blog-assets.spot.io/app/uploads/2020/04/05105511/Screen-Shot-2020-04-05-at-1.53.13-PM.png","caption":"Manik Taneja"}}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel='dns-prefetch' href='//s7.addthis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="The Spot.io Blog &raquo; Feed" href="https://spot.io/blog/feed/" />
+<link rel="alternate" type="application/rss+xml" title="The Spot.io Blog &raquo; Comments Feed" href="https://spot.io/blog/comments/feed/" />
+<link rel='stylesheet' id='wp-block-library-css'  href='https://spot.io/blog/wp-includes/css/dist/block-library/style.min.css?ver=5.5' type='text/css' media='all' />
+<link rel='stylesheet' id='contact-form-7-css'  href='https://spot.io/blog/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.2.1' type='text/css' media='all' />
+<link rel='stylesheet' id='addthis_all_pages-css'  href='https://spot.io/blog/wp-content/plugins/addthis/frontend/build/addthis_wordpress_public.min.css?ver=5.5' type='text/css' media='all' />
+<link rel='stylesheet' id='enlighterjs-css'  href='https://spot.io/blog/wp-content/plugins/enlighter/cache/enlighterjs.min.css?ver=w+nlb5mBbgLcRe3' type='text/css' media='all' />
+<link rel='stylesheet' id='main-css'  href='https://spot.io/blog/wp-content/themes/v10/assets/css/style.css?ver=20190913' type='text/css' media='all' />
+<link rel='stylesheet' id='menu.css-css'  href='https://spot.io/wp-content/themes/spot/dist/css/menu.css' type='text/css' media='all' />
+<link rel='stylesheet' id='dashicons-css'  href='https://spot.io/blog/wp-includes/css/dashicons.min.css?ver=5.5' type='text/css' media='all' />
+<script type='text/javascript' src='https://spot.io/blog/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp' id='jquery-js'></script>
+<link rel="https://api.w.org/" href="https://spot.io/blog/wp-json/" /><link rel="alternate" type="application/json" href="https://spot.io/blog/wp-json/wp/v2/posts/6961" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://spot.io/blog/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://spot.io/blog/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.5" />
+<link rel='shortlink' href='https://spot.io/blog/?p=6961' />
+<link rel="alternate" type="application/json+oembed" href="https://spot.io/blog/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fspot.io%2Fblog%2Fkubernetes-cluster-autoscaler-features-limitations-and-comparisons-to-ocean-by-spot%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://spot.io/blog/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fspot.io%2Fblog%2Fkubernetes-cluster-autoscaler-features-limitations-and-comparisons-to-ocean-by-spot%2F&#038;format=xml" />
+
+<!--[if lte IE 8]>
+<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2-legacy.js"></script>
+<![endif]-->
+<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2.js"></script>
+
+<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><link rel="icon" href="https://blog-assets.spot.io/app/uploads/2020/03/25174027/cropped-favicon-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://blog-assets.spot.io/app/uploads/2020/03/25174027/cropped-favicon-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://blog-assets.spot.io/app/uploads/2020/03/25174027/cropped-favicon-180x180.png" />
+<meta name="msapplication-TileImage" content="https://blog-assets.spot.io/app/uploads/2020/03/25174027/cropped-favicon-270x270.png" />
+
+    <!-- head scripts start -->
+    <meta name="google-site-verification" content="TDbzf38XBrJ26I_vsC-_GKcA6Hv4om5fkhXcbPO9X6c" />
+<meta name="google-site-verification" content="pDb_P-DeSfuv-EDbs20mkLY3bevCAwdCfhZTi37URy8" />
+
+<style>.async-hide { opacity: 0 !important} </style> <script>(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date; h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')}; (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c; })(window,document.documentElement,'async-hide','dataLayer',4000, {'GTM-MXS6K8J':true});</script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MXS6K8J');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Start of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/3418389.js"></script>
+<!-- End of HubSpot Embed Code -->
+
+<!-- LinkedIn insights script -->
+<script type="text/javascript">
+_linkedin_partner_id = "469564";
+window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+</script><script type="text/javascript">
+(function(){var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+s.parentNode.insertBefore(b, s);})();
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=469564&fmt=gif" />
+</noscript>
+
+<!-- Adobe Launch -->
+<script type="text/javascript">
+  var $ = jQuery.noConflict();
+  var cookieLaw = {};
+  cookieLaw.shouldInject = function(){return true};
+  cookieLaw.shouldInjectGDPR = function(){return true};
+</script>
+<script src="https://www.netapp.com/us/static/js/omniture.js"></script>
+<script src="//assets.adobedtm.com/60287eadf1ee/fdd9d4fa374e/launch-c8d922ea8b62.min.js" async></script>
+
+<!-- Autoplilot tracking script -->
+<!--
+<script type="text/javascript">(function(o){var b="https://api.autopilothq.com/anywhere/",t="4439f442862c4d37956271dc9b8c9e79e6389188e07a4e48bcda687d66109a48",a=window.AutopilotAnywhere={_runQueue:[],run:function(){this._runQueue.push(arguments);}},c=encodeURIComponent,s="SCRIPT",d=document,l=d.getElementsByTagName(s)[0],p="t="+c(d.title||"")+"&u="+c(d.location.href||"")+"&r="+c(d.referrer||""),j="text/javascript",z,y;if(!window.Autopilot) window.Autopilot=a;if(o.app) p="devmode=true&"+p;z=function(src,asy){var e=d.createElement(s);e.src=src;e.type=j;e.async=asy;l.parentNode.insertBefore(e,l);};y=function(){z(b+t+'?'+p,true);};if(window.attachEvent){window.attachEvent("onload",y);}else{window.addEventListener("load",y,false);}})({});</script>
+-->
+
+<!-- AOS Lib -->
+<script src="https://spot.io/wp-content/themes/spotinst-website-theme/resources/assets/scripts/aos.js?ver=2.3.4"></script>
+
+<style>
+  h1, .h1 {
+    line-height: 1.2;
+    font-weight: 700;
+  }
+  @media all and (min-width: 1024px) {
+      .zEWidget-launcher {
+        transform: rotate(-90deg) !important;
+        right:     -51px !important;
+        bottom:    45% !important;
+    }
+  }
+  
+  @media all and (max-width: 1024px) {
+      .zEWidget-launcher {
+        bottom:    10px !important;
+    }
+  }
+</style>    <!-- head scripts end -->
+
+</head>
+
+<body class="post-template-default single single-post postid-6961 single-format-standard group-blog has-sidebar">
+    <!-- body scripts start -->
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MXS6K8J"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->    <!-- body scripts end -->
+
+    
+
+<div id="top-header">
+  <div class="social-icons">
+    <ul>
+              <li class="network">
+          <a href="https://www.facebook.com/spothq" target="new" title="Facebook">
+                          <svg aria-hidden="true" focusable="false" class="svg-inline--fa fa-facebook-f fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"></path></svg>                      </a>
+        </li>
+              <li class="network">
+          <a href="https://www.linkedin.com/company/spothq/" target="new" title="LinkedIn">
+                          <svg aria-hidden="true" focusable="false" class="svg-inline--fa fa-linkedin-in fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"></path></svg>                      </a>
+        </li>
+              <li class="network">
+          <a href="https://twitter.com/spot_hq" target="new" title="Twitter">
+                          <svg aria-hidden="true" focusable="false" class="svg-inline--fa fa-twitter fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path></svg>                      </a>
+        </li>
+              <li class="network">
+          <a href="https://www.youtube.com/c/Spotinstances" target="new" title="YouTube">
+                          <svg aria-hidden="true" focusable="false" class="svg-inline--fa fa-youtube fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"></path></svg>                      </a>
+        </li>
+            </ul>
+  </div>
+  <div class="top-menu">
+    <ul id="menu-top-menu" class="menu">
+     
+      <li id="menu-item-14483" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14483"><a href="https://spot.io/support/">Support</a></li>
+<li id="menu-item-14484" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14484"><a href="https://spot.io/partners/">Partners</a></li>
+<li id="menu-item-14485" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-14485"><a href="https://spot.io/blog/">Blog</a></li>
+  
+      
+              <li class="console-button"><a target="_self" href="https://console.spotinst.com/auth/signIn">Sign In</a></li>
+            
+    </ul> 
+  </div>
+</div>
+
+<div id="site-header">
+  <div class="site-header-background">
+
+    <div class="branding">
+      <a href="/">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 417.1 147.4" style="enable-background:new 0 0 417.1 147.4;" xml:space="preserve">
+        <g>
+          <g>
+            <path fill="#FF00CE" d="M109.3,33.9c-0.3,0-0.6,0-0.8,0c0.5,2.7,0.8,5.4,0.8,8.2c0,14-7,26.3-17.6,33.7c4.5,4.6,10.7,7.4,17.6,7.4
+              c13.6,0,24.7-11.1,24.7-24.7S123,33.9,109.3,33.9z"/>
+            <path fill="#0086FF" d="M108.5,33.9C104.7,15.1,88.1,1,68.2,1C54.7,1,42.8,7.5,35.3,17.5c-18.2,0-32.9,14.7-32.9,32.9
+              s14.7,32.9,32.9,32.9c5.6,0,26.7,0,32.9,0c8.8,0,16.9-2.7,23.5-7.4c-4.4-4.5-7.1-10.5-7.1-17.3C84.7,45.2,95.3,34.4,108.5,33.9z"
+              />
+            <path fill="#1E1E9A" d="M109.3,42.1c0-2.8-0.3-5.6-0.8-8.2c-13.2,0.4-23.8,11.3-23.8,24.7c0,6.7,2.7,12.8,7.1,17.3
+              C102.4,68.4,109.3,56.1,109.3,42.1z"/>
+          </g>
+          <g>
+            <g>
+              <path d="M166,71.4l10.5-12.6c7.4,6,14.9,9.9,24.2,9.9c7.4,0,11.7-2.9,11.7-7.6v-0.2c0-4.5-2.8-7-16.3-10.3
+                c-16.5-4.1-26.9-8.8-26.9-24.8v-0.2c0-14.7,11.7-24.5,28.4-24.5c11.9,0,21.8,3.7,30.1,10.3l-9.3,13.4c-7.3-5-14.1-8-21.1-8
+                s-10.4,3-10.4,7.1v0.2c0,5.4,3.5,7,17.5,10.7c16.5,4.4,25.7,10.2,25.7,24.3v0.2c0,16.1-12.3,25.1-29.8,25.1
+                C188,84.4,175.7,80.3,166,71.4z"/>
+              <path d="M236.5,21.2h17.6v8.9c4.3-5.9,10.1-10.1,19.4-10.1c14.5,0,28.3,11.4,28.3,32.1v0.2c0,20.7-13.6,32.1-28.3,32.1
+                c-9.4,0-15.2-4.3-19.4-9.3v26.7h-17.6V21.2z M284.1,52.3v-0.2c0-10.3-7-17.2-15.2-17.2s-15.1,6.8-15.1,17.2v0.2
+                c0,10.3,6.8,17.2,15.1,17.2S284.1,62.8,284.1,52.3z"/>
+              <path d="M306.6,52.6v-0.2c0-17.8,14.4-32.3,33.7-32.3c19.1,0,33.5,14.1,33.5,32.1v0.2c0,17.8-14.4,32.3-33.7,32.3
+                C320.9,84.7,306.6,70.5,306.6,52.6z M356.4,52.6v-0.2c0-9.2-6.6-17.2-16.3-17.2c-10.1,0-16.1,7.6-16.1,16.9v0.2
+                c0,9.2,6.6,17.2,16.3,17.2C350.4,69.5,356.4,61.8,356.4,52.6z"/>
+              <path d="M382.5,65.7V36.2h-7.4v-15h7.4V5.3h17.6v15.9h14.6v15.1h-14.6v26.5c0,4.1,1.9,6,5.7,6c3.1,0,6-0.7,8.7-2.2v14.1
+                c-3.7,2.2-8,3.6-13.9,3.6C389.9,84.3,382.5,80,382.5,65.7z"/>
+            </g>
+            <path d="M254.9,129c0,1.5-0.2,2.9-0.6,4.1c-0.4,1.2-1,2.2-1.7,3s-1.6,1.4-2.6,1.8c-1,0.4-2,0.6-3.1,0.6c-1.5,0-2.8-0.4-3.9-1.1
+              c-1.1-0.7-1.9-1.7-2.5-3v3.8h-3.9v-26.1h4v11.7c0.6-1.4,1.5-2.4,2.7-3.1c1.2-0.7,2.5-1,3.9-1c1,0,2,0.2,3,0.6
+              c0.9,0.4,1.8,0.9,2.5,1.7s1.3,1.7,1.7,2.9C254.6,126,254.9,127.4,254.9,129z M245.6,135.2c1.8,0,3.1-0.6,3.9-1.7
+              c0.9-1.1,1.3-2.6,1.3-4.5s-0.5-3.4-1.4-4.5s-2.2-1.7-4-1.7c-0.9,0-1.7,0.2-2.4,0.5c-0.7,0.3-1.2,0.8-1.7,1.3c-0.4,0.6-0.8,1.2-1,2
+              s-0.3,1.6-0.3,2.5c0,1.8,0.4,3.2,1.3,4.4C242.3,134.7,243.7,135.2,245.6,135.2z"/>
+            <path d="M275.2,119.9l-10.8,25.5h-4.1l3.2-7.4l-7.7-18.1h4.1l4.9,11.8l0.8,2.4l0.8-2.4l4.8-11.8H275.2z"/>
+            <path d="M293.4,120.4v17.9h-3.9v-24h4.8l10.4,17.5l1,2.2l-0.1-2.4v-17.3h3.9v24H305l-10.8-18.2l-1.1-2L293.4,120.4z"/>
+            <path d="M330.9,134.2c-0.8,1.2-1.8,2.3-3.2,3.1c-1.3,0.8-3,1.3-5.1,1.3c-1.6,0-3-0.2-4.2-0.7s-2.2-1.1-3-2c-0.8-0.8-1.4-1.8-1.8-3
+              s-0.6-2.4-0.6-3.7s0.2-2.5,0.7-3.7c0.4-1.2,1.1-2.2,1.9-3.1c0.8-0.9,1.8-1.6,3-2.1s2.5-0.8,4-0.8s2.8,0.3,3.9,0.8s2,1.2,2.7,2
+              s1.3,1.8,1.6,2.9c0.4,1.1,0.5,2.3,0.5,3.6v1.4H317c0.2,1.6,0.7,2.8,1.6,3.7s2.3,1.4,4,1.4c1.2,0,2.2-0.3,3-0.8s1.4-1.2,2-2.2
+              L330.9,134.2z M322.6,122.8c-1.6,0-2.8,0.4-3.7,1.3c-0.9,0.9-1.5,2.1-1.7,3.6h10.4c-0.1-1.4-0.5-2.6-1.3-3.5
+              C325.4,123.3,324.2,122.8,322.6,122.8z"/>
+            <path d="M346,134.7v3.2c-0.5,0.2-1,0.4-1.5,0.5s-1.1,0.2-1.8,0.2c-2,0-3.4-0.5-4.3-1.6c-0.9-1-1.3-2.6-1.3-4.6v-9.3h-4.2v-3.3h4.2
+              v-4.7l3.7-2.2v6.9h5.2v3.3h-5.2v8.8c0,1.2,0.2,2,0.7,2.5s1.2,0.7,2.1,0.7c0.5,0,0.9,0,1.3-0.1C345.2,135,345.6,134.9,346,134.7z"
+              />
+            <path d="M348.4,138.3l9.3-24h4.6l9.3,24h-4.2l-1.9-5h-11.1l-1.8,5H348.4z M359.2,120.6l-3.6,9.7h8.9l-3.6-9.7L360,118L359.2,120.6
+              z"/>
+            <path d="M392.7,129c0,1.5-0.2,2.9-0.6,4.1c-0.4,1.2-1,2.2-1.7,3s-1.6,1.4-2.6,1.8c-1,0.4-2,0.6-3.2,0.6c-1.5,0-2.8-0.4-3.9-1.1
+              c-1.1-0.7-1.9-1.7-2.5-3v10.9h-4v-25.5h4v4c0.6-1.4,1.5-2.5,2.7-3.2s2.5-1.1,4-1.1c1,0,2,0.2,3,0.6c0.9,0.4,1.8,0.9,2.5,1.7
+              s1.3,1.7,1.7,2.9C392.5,126,392.7,127.4,392.7,129z M383.3,135.2c1.8,0,3.1-0.6,3.9-1.7c0.9-1.1,1.3-2.6,1.3-4.5s-0.5-3.4-1.4-4.5
+              s-2.2-1.7-4-1.7c-0.9,0-1.7,0.2-2.4,0.5c-0.7,0.3-1.2,0.8-1.7,1.3c-0.4,0.6-0.8,1.2-1,2s-0.3,1.6-0.3,2.5c0,1.8,0.4,3.2,1.3,4.4
+              C380.1,134.7,381.4,135.2,383.3,135.2z"/>
+            <path d="M414.7,129c0,1.5-0.2,2.9-0.6,4.1c-0.4,1.2-1,2.2-1.7,3s-1.6,1.4-2.6,1.8c-1,0.4-2,0.6-3.2,0.6c-1.5,0-2.8-0.4-3.9-1.1
+              c-1.1-0.7-1.9-1.7-2.5-3v10.9h-4v-25.5h4v4c0.6-1.4,1.5-2.5,2.7-3.2s2.5-1.1,4-1.1c1,0,2,0.2,3,0.6c0.9,0.4,1.8,0.9,2.5,1.7
+              s1.3,1.7,1.7,2.9C414.5,126,414.7,127.4,414.7,129z M405.4,135.2c1.8,0,3.1-0.6,3.9-1.7c0.9-1.1,1.3-2.6,1.3-4.5s-0.5-3.4-1.4-4.5
+              s-2.2-1.7-4-1.7c-0.9,0-1.7,0.2-2.4,0.5c-0.7,0.3-1.2,0.8-1.7,1.3s-0.8,1.2-1,2s-0.3,1.6-0.3,2.5c0,1.8,0.4,3.2,1.3,4.4
+              C402.1,134.7,403.5,135.2,405.4,135.2z"/>
+          </g>
+        </g>
+        </svg>
+      </a>
+    </div>
+    <div class="navigation">
+
+      
+      <ul class="menu">
+                  <li class="main-page">
+           <a class="main-page-link" href="#" target="_self">
+             Solutions             <svg xmlns="http://www.w3.org/2000/svg" width="7.262" height="13.416" viewBox="0 0 7.262 13.416"><g transform="translate(-162.335 -157.375)"><path d="M163.042,158.082l6.055,6.055-5.948,5.948" fill="none" stroke="#ff00ce" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/></g></svg>
+           </a>
+                        <div class="sub-menu-wrap">
+              <ul class="sub-menu">                <li>
+                  <a href="https://spot.io/solutions/cloud-cost-visibility/" target="_self">
+                    <div class="sub-menu-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="23.956" height="23.957" viewBox="0 0 23.956 23.957"><g transform="translate(-2954.192 -153.208)"><path d="M2976.595,154.762a5.315,5.315,0,1,0,0,7.517A5.322,5.322,0,0,0,2976.595,154.762Z" fill="#ff00ce"/><path d="M2972.087,159.23l-3.891,2.987-3.891-2.987-3.891,2.485" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><path d="M2976.563,175.221h-20.428V154.793" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><path d="M2954.66,156.269l1.476-1.476,1.476,1.476" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><path d="M2975.088,173.745l1.476,1.476-1.476,1.476" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line x2="1.754" transform="translate(2956.136 158.769)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line x2="1.754" transform="translate(2956.136 161.401)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line x2="1.754" transform="translate(2956.136 164.032)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line x2="1.754" transform="translate(2956.136 166.664)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line x2="1.754" transform="translate(2956.136 169.295)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line x2="1.754" transform="translate(2956.136 171.927)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line y2="1.754" transform="translate(2972.646 173.467)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line y2="1.754" transform="translate(2970.014 173.467)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line y2="1.754" transform="translate(2967.383 173.467)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line y2="1.754" transform="translate(2964.751 173.467)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line y2="1.754" transform="translate(2962.119 173.467)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line y2="1.754" transform="translate(2959.488 173.467)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><path d="M2970.642,158.336H2973v2.231" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><rect width="1.68" height="6.629" transform="translate(2959.97 165.298)" stroke-width="0.662" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" fill="none"/><rect width="1.68" height="9.199" transform="translate(2963.911 162.728)" stroke-width="0.662" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" fill="none"/><rect width="1.68" height="6.629" transform="translate(2967.612 165.298)" stroke-width="0.662" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" fill="none"/><rect width="1.68" height="9.199" transform="translate(2971.552 162.728)" stroke-width="0.662" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g></svg>                    </div>
+                    <div class="sublink-text">
+                      <div class="link-title">Cloud cost analysis</div>
+                      <div class="link-description">See, understand and manage cloud infrastructure costs</div>
+                    </div>
+                  </a>
+                </li>
+                              <li>
+                  <a href="https://spot.io/solutions/containers-infrastructure/" target="_self">
+                    <div class="sub-menu-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="19.79" height="19.273" viewBox="0 0 19.79 19.273"><g transform="translate(-2956.32 -246.403)"><g ><path d="M2971.925,246.4a3.679,3.679,0,1,0,3.679,3.679,3.682,3.682,0,0,0-3.679-3.679" fill="#ff00ce"/><rect width="3.904" height="3.904" transform="translate(2956.6 261.492)" stroke-width="0.561" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" fill="none"/><rect width="3.904" height="3.904" transform="translate(2961.731 261.492)" stroke-width="0.561" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" fill="none"/><rect width="3.904" height="3.904" transform="translate(2966.863 261.492)" stroke-width="0.561" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" fill="none"/><rect width="3.904" height="3.904" transform="translate(2961.731 256.502)" stroke-width="0.561" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" fill="none"/><rect width="3.904" height="3.904" transform="translate(2966.863 256.502)" stroke-width="0.561" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M0,0H3.9V3.9S.976,4.88,0,3.9,0,0,0,0Z" transform="translate(2966.863 251.512)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-width="0.561"/><rect width="3.904" height="3.904" transform="translate(2971.925 261.492)" stroke-width="0.561" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" fill="none"/><rect width="3.904" height="3.904" transform="translate(2971.925 256.502)" stroke-width="0.561" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g></g></svg>                    </div>
+                    <div class="sublink-text">
+                      <div class="link-title">Container infrastructure</div>
+                      <div class="link-description">Deliver hands-free infrastructure for cloud-native workloads</div>
+                    </div>
+                  </a>
+                </li>
+              </ul><ul class="sub-menu">                <li>
+                  <a href="https://spot.io/solutions/autoscaling-applications/" target="_self">
+                    <div class="sub-menu-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="19.222" height="19.843" viewBox="0 0 19.222 19.843"><g transform="translate(-3237.228 -153.697)"><circle id="s-app" cx="4.615" cy="4.615" r="4.615" transform="translate(3237.228 164.31)" fill="#ff00ce"/><path d="M3254.286,168.912H3243.4a2.167,2.167,0,0,1-2.164-2.165V155.862a2.167,2.167,0,0,1,2.164-2.165h10.886a2.167,2.167,0,0,1,2.164,2.165v10.885A2.167,2.167,0,0,1,3254.286,168.912ZM3243.4,154.25a1.614,1.614,0,0,0-1.612,1.612v10.885a1.614,1.614,0,0,0,1.612,1.612h10.886a1.614,1.614,0,0,0,1.612-1.612V155.862a1.614,1.614,0,0,0-1.612-1.612Z" fill="#1e1e9a"/><path d="M3246.721,163.469a.276.276,0,0,1-.2-.471l5.537-5.537a.277.277,0,1,1,.391.391l-5.537,5.536A.276.276,0,0,1,3246.721,163.469Z" fill="#1e1e9a"/><path d="M3252.474,162.46a.276.276,0,0,1-.277-.276v-4.467h-4.467a.276.276,0,0,1,0-.552h4.744a.276.276,0,0,1,.276.276v4.743A.276.276,0,0,1,3252.474,162.46Z" fill="#1e1e9a"/></g></svg>                    </div>
+                    <div class="sublink-text">
+                      <div class="link-title">Autoscaling applications</div>
+                      <div class="link-description">Automate infrastructure for scale-out applications</div>
+                    </div>
+                  </a>
+                </li>
+                              <li>
+                  <a href="https://spot.io/solutions/reserved-capacity/" target="_self">
+                    <div class="sub-menu-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="22.958" height="22.958" viewBox="0 0 22.958 22.958"><g id="s-managment" transform="translate(-3236.713 -252.254)"><path d="M3254.2,263.6a5.815,5.815,0,1,1-5.816-5.816,5.815,5.815,0,0,1,5.816,5.816" fill="#ff00ce"/><g ><path d="M3259.34,261.213l-1.18-3.071-2.928.868a8.428,8.428,0,0,0-1.959-2.06l1.02-2.882-3.006-1.337-1.458,2.686a8.451,8.451,0,0,0-2.841-.076l-1.316-2.756-3.071,1.18.867,2.928a8.427,8.427,0,0,0-2.059,1.959l-2.882-1.02-1.338,3.006,2.687,1.458a8.456,8.456,0,0,0-.076,2.841l-2.756,1.316,1.179,3.072,2.929-.868a8.451,8.451,0,0,0,1.958,2.059l-1.02,2.882,3.007,1.337,1.458-2.687a8.4,8.4,0,0,0,2.841.076l1.315,2.757,3.072-1.18-.868-2.928a8.446,8.446,0,0,0,2.059-1.958l2.882,1.019,1.338-3.006-2.687-1.458a8.4,8.4,0,0,0,.076-2.841Z" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/></g><g ><path d="M3248.324,265.775v1.209m0-5.644v-1.21m-1.21,4.839a.806.806,0,0,0,.806.806h.807a.806.806,0,0,0,.806-.806v-.4a.86.86,0,0,0-.551-.806l-1.317-.439a.813.813,0,0,1-.551-.77v-.4a.806.806,0,0,1,.806-.806h.807a.806.806,0,0,1,.806.806" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/></g></g></svg>                    </div>
+                    <div class="sublink-text">
+                      <div class="link-title">Reserved capacity management</div>
+                      <div class="link-description">Optimize strategy and lifecycle for cloud commitment purchases</div>
+                    </div>
+                  </a>
+                </li>
+              </ul>            </div>
+                      </li>
+                  <li class="main-page">
+           <a class="main-page-link" href="#" target="_self">
+             Products             <svg xmlns="http://www.w3.org/2000/svg" width="7.262" height="13.416" viewBox="0 0 7.262 13.416"><g transform="translate(-162.335 -157.375)"><path d="M163.042,158.082l6.055,6.055-5.948,5.948" fill="none" stroke="#ff00ce" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/></g></svg>
+           </a>
+                        <div class="sub-menu-wrap">
+              <ul class="sub-menu">                <li>
+                  <a href="https://spot.io/products/" target="_self">
+                    <div class="sub-menu-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="27.853" height="13.843" viewBox="0 0 27.853 13.843"><g transform="translate(-861.101 -158.436)"><circle cx="3.605" cy="3.605" r="3.605" transform="translate(871.526 158.436)" fill="#ff00ce"/><path d="M883.059,160.488A5.866,5.866,0,0,0,879.131,162h-1.237a2.855,2.855,0,0,0-5.659,0h-1.311a5.89,5.89,0,1,0,1.661,6.251,10.63,10.63,0,0,1,4.858-.076,5.895,5.895,0,1,0,5.616-7.686ZM867,171.514a5.131,5.131,0,1,1,5.13-5.131A5.137,5.137,0,0,1,867,171.514Zm5.8-4.087a5.806,5.806,0,0,0-1.153-4.663h.951a.382.382,0,0,0,.383-.382,2.09,2.09,0,1,1,4.179,0,.382.382,0,0,0,.383.382h.877a5.789,5.789,0,0,0-1.162,4.606A11.434,11.434,0,0,0,872.794,167.427Zm10.265,4.087a5.131,5.131,0,1,1,5.13-5.131A5.137,5.137,0,0,1,883.059,171.514Z" fill="#1e1e9a"/><path d="M875.064,161.17a1.589,1.589,0,1,0,1.589,1.588A1.591,1.591,0,0,0,875.064,161.17Zm0,2.412a.824.824,0,1,1,.823-.824A.825.825,0,0,1,875.064,163.582Z" fill="#1e1e9a"/><path d="M867,162.584a3.8,3.8,0,0,0-3.8,3.8.383.383,0,1,0,.766,0A3.037,3.037,0,0,1,867,163.35a.383.383,0,0,0,0-.766Z" fill="#1e1e9a"/><path d="M883.059,162.584a3.8,3.8,0,0,0-3.8,3.8.383.383,0,0,0,.766,0,3.037,3.037,0,0,1,3.034-3.033.383.383,0,0,0,0-.766Z" fill="#1e1e9a"/></g></svg>                    </div>
+                    <div class="sublink-text">
+                      <div class="link-title">Overview</div>
+                      <div class="link-description">Visibility, insights and automation to control cloud costs</div>
+                    </div>
+                  </a>
+                </li>
+                              <li>
+                  <a href="https://spot.io/products/cloud-analyzer/" target="_self">
+                    <div class="sub-menu-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="25.575" height="22.793" viewBox="0 0 25.575 22.793"><g id="p-analyzer" transform="translate(-956.226 -155.515)"><path d="M959.738,170.453l-3.34,5.885a1.319,1.319,0,1,0,2.294,1.3l2.469-4.351-.024-.035A11.255,11.255,0,0,1,959.738,170.453Z" fill="#ff00ce"/><path d="M965.776,162.161a2.107,2.107,0,0,1,1.761,1.12l.166.306-.149-.3a2.112,2.112,0,0,0-3.655-.171l-1.945,3.428,1.954-3.422A2.1,2.1,0,0,1,965.776,162.161Z" fill="#ff00ce"/><path d="M970.474,155.515a11.326,11.326,0,0,0-10.741,14.922l2.221-3.889,1.945-3.428a2.112,2.112,0,0,1,3.655.171l.149.3,3.52,6.476,1.712-2.354a1.308,1.308,0,0,1,2.115,1.539l-2.25,3.093a2.076,2.076,0,0,1-3.48-.3l-3.653-6.721-4.53,7.934.024.035a11.327,11.327,0,1,0,9.313-17.773Zm5.58,11.258a1.454,1.454,0,1,1,1.455-1.455A1.454,1.454,0,0,1,976.054,166.773Z" fill="#ff00ce"/></g></svg>                    </div>
+                    <div class="sublink-text">
+                      <div class="link-title">Cloud Analyzer</div>
+                      <div class="link-description">Visibility, insights and automation to control cloud costs</div>
+                    </div>
+                  </a>
+                </li>
+              </ul><ul class="sub-menu">                <li>
+                  <a href="https://spot.io/products/cloud-analyzer-msp/" target="_self">
+                    <div class="sub-menu-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="25.575" height="22.793" viewBox="0 0 25.575 22.793"><g id="p-msp" transform="translate(-956.226 -255.472)"><path d="M959.738,270.41,956.4,276.3a1.319,1.319,0,1,0,2.294,1.3l2.469-4.352-.024-.034A11.261,11.261,0,0,1,959.738,270.41Z" fill="#ff00ce"/><path d="M965.776,262.118a2.109,2.109,0,0,1,1.761,1.12l.166.306-.149-.3a2.113,2.113,0,0,0-3.655-.172l-1.945,3.428,1.954-3.422A2.106,2.106,0,0,1,965.776,262.118Z" fill="#ff00ce"/><path d="M970.474,255.472a11.327,11.327,0,0,0-10.741,14.923l2.221-3.89,1.945-3.428a2.113,2.113,0,0,1,3.655.172l.149.3,3.52,6.476,1.712-2.353a1.307,1.307,0,0,1,2.275,1.244,1.285,1.285,0,0,1-.16.295L972.8,272.3a2.076,2.076,0,0,1-3.48-.3l-3.653-6.721-4.53,7.935.024.034a11.327,11.327,0,1,0,9.313-17.773Zm5.58,11.258a1.454,1.454,0,1,1,1.455-1.454A1.454,1.454,0,0,1,976.054,266.73Z" fill="#ff00ce"/></g></svg>                    </div>
+                    <div class="sublink-text">
+                      <div class="link-title">Cloud Analyzer MSP</div>
+                      <div class="link-description">Cloud cost visibility and management for MSPs</div>
+                    </div>
+                  </a>
+                </li>
+                              <li>
+                  <a href="https://spot.io/products/elastigroup/" target="_self">
+                    <div class="sub-menu-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="28.817" height="23.742" viewBox="0 0 28.817 23.742"><g id="p-elasti" transform="translate(-1199.343 -154.935)"><g ><path d="M1224.824,174.387a11.4,11.4,0,0,1-13.778,1.8l4.854-4.828a1.317,1.317,0,1,0-1.856-1.868l-5.124,5.1h0c-.07-.066-.141-.134-.209-.2a11.319,11.319,0,0,1-1.692-2.158l7.654-7.773a1.316,1.316,0,0,0-1.875-1.847l-6.933,7.04a11.4,11.4,0,1,1,18.962,4.738Z" fill="#8d52ff"/></g><g ><g ><path d="M1207.016,172.229l-5.421,5.5a1.318,1.318,0,0,1-1.86.014,1.318,1.318,0,0,1-.014-1.861l6.141-6.237A11.237,11.237,0,0,0,1207.016,172.229Z" fill="#8d52ff"/></g></g><g ><g ><path d="M1211.046,176.186l-2.117,2.107a1.316,1.316,0,1,1-1.856-1.865l1.844-1.838h0A11.047,11.047,0,0,0,1211.046,176.186Z" fill="#8d52ff"/></g></g></g></svg>                    </div>
+                    <div class="sublink-text">
+                      <div class="link-title">Elastigroup</div>
+                      <div class="link-description">Automated infrastructure for autoscaling applications</div>
+                    </div>
+                  </a>
+                </li>
+              </ul><ul class="sub-menu">                <li>
+                  <a href="https://spot.io/products/eco/" target="_self">
+                    <div class="sub-menu-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="26.579" height="28.051" viewBox="0 0 26.579 28.051"><g transform="translate(-1202.138 -255.378)"><path d="M1202.138,273.13a10.183,10.183,0,0,0,1.789,5.782,10.4,10.4,0,0,0,8.593,4.517,1.336,1.336,0,0,0,0-2.671,7.836,7.836,0,0,1-6.479-3.387,7.486,7.486,0,0,1,.355-8.951,11.838,11.838,0,0,1,.11-3.677A10.267,10.267,0,0,0,1202.138,273.13Z" fill="#14ca86"/><path d="M1212.257,268.908a4.573,4.573,0,0,1,4.495,4.638,4.64,4.64,0,0,1-2.891,4.328,10.884,10.884,0,0,0,3.648.628c.177,0,.353-.006.528-.014a7.7,7.7,0,0,0,1.68-2.424l.016-.04a7.44,7.44,0,0,0,.58-2.894,7.721,7.721,0,0,0-7.793-7.628,7.844,7.844,0,0,0-6.124,2.918,11.737,11.737,0,0,0,1.434,4.343A4.543,4.543,0,0,1,1212.257,268.908Z" fill="#14ca86"/><path d="M1212.257,271.579a1.968,1.968,0,1,0,1.907,1.967A1.94,1.94,0,0,0,1212.257,271.579Z" fill="#14ca86"/><path d="M1217.509,255.378a11.307,11.307,0,0,0-11,9.365,10.39,10.39,0,0,1,16.4,8.387,10.157,10.157,0,0,1-.786,3.937c-.029.075-.106.261-.237.523a11.576,11.576,0,0,0,6.838-10.65A11.389,11.389,0,0,0,1217.509,255.378Z" fill="#14ca86"/></g></svg>                    </div>
+                    <div class="sublink-text">
+                      <div class="link-title">Eco</div>
+                      <div class="link-description">Reserved Instance and Savings Plans optimization</div>
+                    </div>
+                  </a>
+                </li>
+                              <li>
+                  <a href="https://spot.io/products/ocean/" target="_self">
+                    <div class="sub-menu-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="28.72" height="22.567" viewBox="0 0 28.72 22.567"><g id="p-ocean" transform="translate(-1440.951 -154.169)"><path d="M1448.162,160.7a11.232,11.232,0,0,0-.807,2.44l0,0A11.251,11.251,0,0,1,1448.162,160.7Z" fill="none"/><path d="M1447.148,166.216l-.008,0a11.277,11.277,0,0,0,.944,3.828l.018.011A11.279,11.279,0,0,1,1447.148,166.216Z" fill="none"/><path d="M1466.369,173.419a11.276,11.276,0,0,1-15.947,0c-.111-.11-.216-.223-.321-.337h-.02c.109.119.219.236.334.351a11.283,11.283,0,0,0,18.206-3.229A11.245,11.245,0,0,1,1466.369,173.419Z" fill="none"/><path d="M1448.129,170.114l-.027-.063-.018-.011c.01.022.019.043.028.065Z" fill="#00c3ff"/><path d="M1450.1,173.079h-.02l0,0h.02Z" fill="#00c3ff"/><path d="M1448.112,170.1c-.009-.022-.018-.043-.028-.065a7.45,7.45,0,0,1-1.176-.977,6.224,6.224,0,0,0-4.655-2.14,1.3,1.3,0,0,0,0,2.6,3.738,3.738,0,0,1,2.863,1.425,6.228,6.228,0,0,0,4.656,2.139c.106,0,.207,0,.309-.01l0,0A11.253,11.253,0,0,1,1448.112,170.1Z" fill="#00c3ff"/><path d="M1447.341,163.2l.014-.061c-.135-.122-.271-.251-.414-.387a6.228,6.228,0,0,0-4.656-2.139,1.3,1.3,0,0,0,0,2.6,3.737,3.737,0,0,1,2.864,1.425,8.625,8.625,0,0,0,1.988,1.523A11.362,11.362,0,0,1,1447.341,163.2Z" fill="#00c3ff"/><path d="M1447.344,163.2c0-.02.009-.04.014-.061l0,0-.014.061Z" fill="#00c3ff"/><path d="M1449.763,164.178a3.753,3.753,0,0,0,2.824-1.424,6.226,6.226,0,0,1,4.656-2.139h.08a6.226,6.226,0,0,1,4.656,2.139,3.737,3.737,0,0,0,2.864,1.425,1.3,1.3,0,0,1,0,2.6l-.05,0-.031,0a6.224,6.224,0,0,1-4.655-2.139,3.512,3.512,0,0,0-5.648,0,6.224,6.224,0,0,1-4.655,2.139h-.081a5.706,5.706,0,0,1-2.575-.568,11.279,11.279,0,0,0,.954,3.835,3.042,3.042,0,0,0,1.629.435,3.753,3.753,0,0,0,2.823-1.423,6.229,6.229,0,0,1,4.656-2.14l.041,0,.04,0a6.229,6.229,0,0,1,4.656,2.14,3.737,3.737,0,0,0,2.864,1.424,1.3,1.3,0,0,1,0,2.6h-.081a6.226,6.226,0,0,1-4.656-2.139,3.511,3.511,0,0,0-5.647,0,6.3,6.3,0,0,1-4.326,2.129c.105.114.21.227.321.337a11.31,11.31,0,1,0-3.064-10.276A3.287,3.287,0,0,0,1449.763,164.178Z" fill="#00c3ff"/><path d="M1466.362,157.486a11.281,11.281,0,0,1,2.259,12.718,11.279,11.279,0,0,0-20.459-9.5,11.284,11.284,0,0,1,18.2-3.215Z" fill="#00c3ff"/><path d="M1457.251,169.529h-.041a3.74,3.74,0,0,0-2.864,1.425,6.306,6.306,0,0,1-4.247,2.126l0,0a6.3,6.3,0,0,0,4.326-2.129A3.754,3.754,0,0,1,1457.251,169.529Z" fill="#00c3ff"/><path d="M1449.731,170.486a3.042,3.042,0,0,1-1.629-.435l.027.063a3.093,3.093,0,0,0,1.562.373Z" fill="#00c3ff"/><path d="M1464.73,170.487a1.3,1.3,0,0,1,.031,2.6h.05a1.3,1.3,0,0,0,0-2.6,3.737,3.737,0,0,1-2.864-1.424,6.229,6.229,0,0,0-4.656-2.14l-.04,0a6.231,6.231,0,0,1,4.615,2.138A3.738,3.738,0,0,0,1464.73,170.487Z" fill="#00c3ff"/><path d="M1464.762,164.179a1.3,1.3,0,0,1,.031,2.6l.05,0a1.3,1.3,0,0,0,0-2.6,3.737,3.737,0,0,1-2.864-1.425,6.226,6.226,0,0,0-4.656-2.139h-.04a6.236,6.236,0,0,1,4.615,2.138A3.737,3.737,0,0,0,1464.762,164.179Z" fill="#00c3ff"/><path d="M1449.763,164.178a3.287,3.287,0,0,1-2.4-1.035c-.005.021-.01.041-.014.061a3.236,3.236,0,0,0,2.379.975Z" fill="#00c3ff"/><path d="M1454.379,164.645a6.24,6.24,0,0,1-4.616,2.138h.041a6.224,6.224,0,0,0,4.655-2.139,3.754,3.754,0,0,1,2.824-1.424h-.04A3.735,3.735,0,0,0,1454.379,164.645Z" fill="#00c3ff"/><path d="M1447.145,166.172l-.008,0,0,.044.008,0Z" fill="#fff"/></g></svg>                    </div>
+                    <div class="sublink-text">
+                      <div class="link-title">Ocean</div>
+                      <div class="link-description">Serverless infrastructure engine for containers</div>
+                    </div>
+                  </a>
+                </li>
+              </ul><ul class="sub-menu">                <li>
+                  <a href="https://spot.io/pricing/" target="_self">
+                    <div class="sub-menu-icon">
+                      <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="28px" height="28px" viewBox="0 0 25.9 22.7" style="enable-background:new 0 0 25.9 22.7;" xml:space="preserve"><style type="text/css">.st0{fill:none;stroke:#1E1E9A;stroke-width:0.7244;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}.st1{fill:#FF00CE;}</style><g id="Layer_1_2_"><g id="Layer_1_1_"></g></g><g id="icons"><g><g><path class="st0" d="M20.9,14.8h0.5c2.2,0,4-1.8,4-4s-1.8-4-4-4c-0.9,0-1.8,0.3-2.5,0.9 M6.6,6.4C6.1,6.2,5.5,6,4.9,6c-2.4,0-4.4,2-4.4,4.4s2,4.4,4.4,4.4h1.9 M6.4,7.4c0-1.7,1.4-3.1,3.1-3.1c0.2,0,0.4,0,0.6,0.1 M9.9,6.1c0-3.1,2.5-5.6,5.6-5.6s5.6,2.5,5.6,5.6c0,0.2,0,0.5,0,0.7"/></g><g><circle class="st1" cx="13.8" cy="15.2" r="6"/><circle class="st0" cx="13.8" cy="15.2" r="7"/><path class="st0" d="M13.8,17.7v1.4 M13.8,12.6v-1.3 M12.4,16.8c0,0.5,0.4,0.9,0.9,0.9h0.9c0.5,0,0.9-0.4,0.9-0.9v-0.5c0-0.4-0.3-0.8-0.6-0.9L13,14.9c-0.4-0.1-0.6-0.5-0.6-0.9v-0.5c0-0.5,0.4-0.9,0.9-0.9h0.9c0.5,0,0.9,0.4,0.9,0.9"/></g></g></g></svg>                    </div>
+                    <div class="sublink-text">
+                      <div class="link-title">Pricing</div>
+                      <div class="link-description">Success-based performance to guarantee your ROI</div>
+                    </div>
+                  </a>
+                </li>
+              </ul>            </div>
+                      </li>
+                  <li class="main-page">
+           <a class="main-page-link" href="#" target="_self">
+             Customers             <svg xmlns="http://www.w3.org/2000/svg" width="7.262" height="13.416" viewBox="0 0 7.262 13.416"><g transform="translate(-162.335 -157.375)"><path d="M163.042,158.082l6.055,6.055-5.948,5.948" fill="none" stroke="#ff00ce" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/></g></svg>
+           </a>
+                        <div class="sub-menu-wrap">
+              <ul class="sub-menu">                <li>
+                  <a href="https://spot.io/case-studies/" target="_self">
+                    <div class="sub-menu-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="19.747" height="22" viewBox="0 0 19.747 22"><g id="customers" transform="translate(-5543.37 -1226.984)"><path d="M5552.724,1236.505a5.48,5.48,0,1,0,0,7.751A5.489,5.489,0,0,0,5552.724,1236.505Z" fill="#ff00ce"/><path d="M5552.253,1239.172a.3.3,0,0,1-.1-.591c.895-.3,7.989-1.834,10.047-2.277l-3.352-3.353a.3.3,0,0,1-.064-.335l2.144-4.9-8.794,1.986a.3.3,0,1,1-.133-.592l9.379-2.118a.306.306,0,0,1,.3.1.3.3,0,0,1,.044.314l-2.3,5.261,3.6,3.6a.3.3,0,0,1-.151.511c-.095.02-9.533,2.044-10.528,2.376A.321.321,0,0,1,5552.253,1239.172Z" fill="#1e1e9a"/><path d="M5548.959,1248.984a.3.3,0,0,1-.3-.238l-4.54-20.371a.3.3,0,1,1,.592-.132l4.54,20.371a.3.3,0,0,1-.23.362A.3.3,0,0,1,5548.959,1248.984Z" fill="#1e1e9a"/><path d="M5546.579,1238.335a.291.291,0,0,1-.149-.04.3.3,0,0,1-.147-.2l-1.941-8.736a.3.3,0,0,1,.211-.358c.6-.174,5.923-1.681,7.274-.9a.757.757,0,0,1,.38.477c.337,1.345,1.3,7.774,1.367,8.192a.365.365,0,0,1,0,.057.3.3,0,0,1-.281.3.309.309,0,0,1-.263-.118,4.844,4.844,0,0,0-1.754.114,37.611,37.611,0,0,0-4.606,1.2A.313.313,0,0,1,5546.579,1238.335Zm-1.583-8.827,1.807,8.132a35.567,35.567,0,0,1,4.379-1.114,7.71,7.71,0,0,1,1.719-.149c-.242-1.589-1-6.533-1.283-7.654,0-.012-.012-.051-.093-.1C5550.709,1228.158,5547.2,1228.891,5545,1229.508Z" fill="#1e1e9a"/><path d="M5552.253,1239.172a.31.31,0,0,1-.09-.014.3.3,0,0,1-.208-.235l-.376-2.043a.3.3,0,0,1,.3-.358h1.4a.3.3,0,0,1,.3.3,3.833,3.833,0,0,1-1.111,2.258A.3.3,0,0,1,5552.253,1239.172Zm-.011-2.044.192,1.046a2.948,2.948,0,0,0,.5-1.046Z" fill="#1e1e9a"/></g></svg>                    </div>
+                    <div class="sublink-text">
+                      <div class="link-title">Case Studies</div>
+                      <div class="link-description">Our customers share their Spot success stories</div>
+                    </div>
+                  </a>
+                </li>
+              </ul>            </div>
+                      </li>
+                  <li class="main-page">
+           <a class="main-page-link" href="#" target="_self">
+             Resources             <svg xmlns="http://www.w3.org/2000/svg" width="7.262" height="13.416" viewBox="0 0 7.262 13.416"><g transform="translate(-162.335 -157.375)"><path d="M163.042,158.082l6.055,6.055-5.948,5.948" fill="none" stroke="#ff00ce" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/></g></svg>
+           </a>
+                        <div class="sub-menu-wrap">
+              <ul class="sub-menu">                <li>
+                  <a href="https://spot.io/news/" target="_self">
+                    <div class="sub-menu-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="23.481" height="24" viewBox="0 0 23.481 24"><g id="r-news" transform="translate(-3268.512 -2414.228)"><path d="M3285.609,2426.736a5.356,5.356,0,1,1-5.356-5.357,5.356,5.356,0,0,1,5.356,5.357" fill="#ff00ce"/><g ><path d="M3280.253,2419.032a.326.326,0,0,1-.327-.327v-4.15a.327.327,0,0,1,.654,0v4.15A.327.327,0,0,1,3280.253,2419.032Z" fill="#1e1e9a"/><path d="M3275.117,2421.16a.327.327,0,0,1-.232-.1l-2.934-2.935a.327.327,0,0,1,.462-.462l2.935,2.935a.327.327,0,0,1-.231.558Z" fill="#1e1e9a"/><path d="M3272.989,2426.295h-4.15a.326.326,0,1,1,0-.653h4.15a.326.326,0,1,1,0,.653Z" fill="#1e1e9a"/><path d="M3272.182,2434.366a.326.326,0,0,1-.231-.558l2.934-2.935a.327.327,0,0,1,.463.462l-2.935,2.936A.328.328,0,0,1,3272.182,2434.366Z" fill="#1e1e9a"/><path d="M3288.323,2434.366a.33.33,0,0,1-.231-.095l-2.935-2.936a.327.327,0,0,1,.463-.462l2.935,2.935a.327.327,0,0,1,0,.463A.33.33,0,0,1,3288.323,2434.366Z" fill="#1e1e9a"/><path d="M3291.666,2426.295h-4.15a.326.326,0,1,1,0-.653h4.15a.326.326,0,1,1,0,.653Z" fill="#1e1e9a"/><path d="M3285.388,2421.16a.327.327,0,0,1-.231-.558l2.935-2.935a.329.329,0,0,1,.463,0,.326.326,0,0,1,0,.462l-2.935,2.935A.328.328,0,0,1,3285.388,2421.16Z" fill="#1e1e9a"/><path d="M3281.29,2438.228h-2.075a.323.323,0,0,1-.231-.1l-.423-.423h-.383a.327.327,0,1,1,0-.654h.518a.328.328,0,0,1,.232.1l.423.423h1.8l.423-.423a.324.324,0,0,1,.231-.1h.519a.327.327,0,1,1,0,.654h-.384l-.422.423A.325.325,0,0,1,3281.29,2438.228Z" fill="#1e1e9a"/><path d="M3283.366,2434.6h-6.226a.326.326,0,1,1,0-.653h6.226a.326.326,0,1,1,0,.653Z" fill="#1e1e9a"/><path d="M3282.847,2436.153h-5.188a.327.327,0,0,1,0-.654h5.188a.327.327,0,1,1,0,.654Z" fill="#1e1e9a"/><path d="M3280.253,2433.559a.327.327,0,0,1-.327-.327v-4.15a.327.327,0,1,1,.654,0v4.15A.328.328,0,0,1,3280.253,2433.559Z" fill="#1e1e9a"/><path d="M3280.253,2429.408a.326.326,0,0,1-.232-.095l-1.037-1.038a.327.327,0,0,1,.462-.462l.807.806.806-.806a.327.327,0,0,1,.463.462l-1.038,1.038A.325.325,0,0,1,3280.253,2429.408Z" fill="#1e1e9a"/><path d="M3277.473,2419.586a.326.326,0,0,1-.3-.2l-.794-1.917a.327.327,0,0,1,.6-.25l.794,1.917a.327.327,0,0,1-.177.428A.347.347,0,0,1,3277.473,2419.586Z" fill="#1e1e9a"/><path d="M3273.542,2423.517a.346.346,0,0,1-.125-.025l-1.917-.795a.327.327,0,0,1,.25-.6l1.917.795a.328.328,0,0,1-.125.63Z" fill="#1e1e9a"/><path d="M3271.625,2429.87a.328.328,0,0,1-.125-.63l1.917-.794a.327.327,0,0,1,.25.6l-1.917.794A.342.342,0,0,1,3271.625,2429.87Z" fill="#1e1e9a"/><path d="M3288.88,2429.87a.347.347,0,0,1-.125-.025l-1.917-.794a.327.327,0,0,1,.25-.6l1.917.794a.327.327,0,0,1-.125.63Z" fill="#1e1e9a"/><path d="M3286.963,2423.517a.328.328,0,0,1-.125-.63l1.917-.795a.327.327,0,1,1,.25.6l-1.917.795A.337.337,0,0,1,3286.963,2423.517Z" fill="#1e1e9a"/><path d="M3283.032,2419.586a.347.347,0,0,1-.125-.025.328.328,0,0,1-.177-.428l.794-1.917a.327.327,0,1,1,.6.25l-.794,1.917A.325.325,0,0,1,3283.032,2419.586Z" fill="#1e1e9a"/></g></g></svg>                    </div>
+                    <div class="sublink-text">
+                      <div class="link-title">News</div>
+                      <div class="link-description">Updates on our company, products and features</div>
+                    </div>
+                  </a>
+                </li>
+                              <li>
+                  <a href="https://help.spot.io/" target="_self">
+                    <div class="sub-menu-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20.161" height="24" viewBox="0 0 20.161 24"><g id="r-documantation" transform="translate(-3521.799 -2321.298)"><path d="M3537.424,2336.226a4.536,4.536,0,1,0,4.536,4.536,4.539,4.539,0,0,0-4.536-4.536" fill="#ff00ce"/><path d="M3536.056,2340.829h-13.024a1.234,1.234,0,0,1-1.233-1.233v-14.371a.332.332,0,0,1,.1-.236l3.593-3.593a.334.334,0,0,1,.237-.1h10.329a1.234,1.234,0,0,1,1.233,1.233V2339.6A1.234,1.234,0,0,1,3536.056,2340.829Zm-13.587-15.465V2339.6a.564.564,0,0,0,.563.563h13.024a.564.564,0,0,0,.563-.563v-17.065a.564.564,0,0,0-.563-.564h-10.19Z" fill="#1e1e9a"/><path d="M3526.176,2326.009h-2.7a.335.335,0,0,1,0-.67h2.36v-2.36a.335.335,0,0,1,.67,0v2.7A.335.335,0,0,1,3526.176,2326.009Z" fill="#1e1e9a"/><path d="M3530.6,2330.051h-6.687a.335.335,0,1,1,0-.67h6.687a.335.335,0,0,1,0,.67Z" fill="#1e1e9a"/><path d="M3530.6,2331.832h-6.687a.334.334,0,1,1,0-.669h6.687a.334.334,0,1,1,0,.669Z" fill="#1e1e9a"/><path d="M3530.6,2333.643h-6.687a.334.334,0,1,1,0-.669h6.687a.334.334,0,1,1,0,.669Z" fill="#1e1e9a"/><path d="M3538.21,2342.983h-13.024a1.234,1.234,0,0,1-1.233-1.233v-1.256a.335.335,0,0,1,.67,0v1.256a.564.564,0,0,0,.563.564h13.024a.564.564,0,0,0,.563-.564v-17.065a.564.564,0,0,0-.563-.564h-1.256a.335.335,0,1,1,0-.669h1.256a1.234,1.234,0,0,1,1.233,1.233v17.065A1.234,1.234,0,0,1,3538.21,2342.983Z" fill="#1e1e9a"/></g></svg>                    </div>
+                    <div class="sublink-text">
+                      <div class="link-title">Documentation</div>
+                      <div class="link-description">A central hub for information on using our products</div>
+                    </div>
+                  </a>
+                </li>
+              </ul><ul class="sub-menu">                <li>
+                  <a href="https://status.spotinst.com/" target="_self">
+                    <div class="sub-menu-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"><g id="r-service" transform="translate(-3519.946 -2420.207)"><path d="M3532.371,2427.531a4.754,4.754,0,1,0,0,6.723A4.759,4.759,0,0,0,3532.371,2427.531Z" fill="#ff00ce"/><path d="M3532.937,2435.405a.3.3,0,0,1-.213-.088l-8.724-8.724-1.481-.493a.315.315,0,0,1-.156-.119l-2.064-3.1a.3.3,0,0,1,.038-.381l1.548-1.549a.3.3,0,0,1,.381-.038l3.1,2.065a.3.3,0,0,1,.119.156l.493,1.48,8.724,8.725a.3.3,0,0,1-.427.426l-8.774-8.774a.3.3,0,0,1-.073-.118l-.483-1.45-2.8-1.87-1.2,1.2,1.869,2.805,1.45.484a.289.289,0,0,1,.119.073l8.774,8.774a.3.3,0,0,1-.214.515Z" fill="#1e1e9a"/><path d="M3539.647,2442.026a1.757,1.757,0,0,1-1.246-.516l-4.041-4.041c-.36,0-1.422,0-1.422,0h0a.3.3,0,0,1-.275-.179c-.607-1.354-.607-1.354-.454-1.506l2.87-2.87c.144-.136.144-.136,1.571.354a.3.3,0,0,1,.2.286s0,1.062,0,1.422l4.042,4.042a1.761,1.761,0,0,1-1.246,3.007Zm-6.039-5.161c1,0,1.014.012,1.091.09l4.129,4.129a1.158,1.158,0,1,0,1.638-1.638l-4.129-4.129c-.088-.088-.092-.092-.089-1.547-.244-.084-.647-.222-.874-.3l-2.595,2.6c.086.2.231.523.354.8Z" fill="#1e1e9a"/><path d="M3521.8,2440.659a.3.3,0,0,1-.213-.515l.73-.73a.3.3,0,1,1,.427.426l-.73.731A.3.3,0,0,1,3521.8,2440.659Z" fill="#1e1e9a"/><path d="M3533.451,2431.194a.3.3,0,0,1-.213-.515l2.367-2.368a.822.822,0,0,1,.863-.188,3.5,3.5,0,0,0,3.754-.779,3.833,3.833,0,0,0,1.06-3.385.2.2,0,0,0-.143-.159.218.218,0,0,0-.221.053l-1.729,1.729a.821.821,0,0,1-1.157,0l-1.46-1.461a.818.818,0,0,1,0-1.156l1.729-1.73a.217.217,0,0,0,.052-.221.2.2,0,0,0-.159-.143,3.835,3.835,0,0,0-3.385,1.061,3.5,3.5,0,0,0-.778,3.754.826.826,0,0,1-.188.862l-2.368,2.368a.3.3,0,0,1-.427-.427l2.367-2.367a.228.228,0,0,0,.045-.238,4.083,4.083,0,0,1,.922-4.379,4.434,4.434,0,0,1,3.918-1.228.81.81,0,0,1,.63.556.821.821,0,0,1-.2.829l-1.729,1.729a.214.214,0,0,0,0,.3l1.46,1.461a.215.215,0,0,0,.3,0l1.729-1.728a.824.824,0,0,1,.829-.2.807.807,0,0,1,.557.629,4.436,4.436,0,0,1-1.228,3.918,4.085,4.085,0,0,1-4.38.922.226.226,0,0,0-.236.045l-2.368,2.367A.3.3,0,0,1,3533.451,2431.194Z" fill="#1e1e9a"/><path d="M3521.8,2442.207a1.85,1.85,0,0,1-1.308-3.158l7.323-7.323a.3.3,0,0,1,.427.426l-7.323,7.324a1.247,1.247,0,0,0,0,1.763,1.247,1.247,0,0,0,1.763,0l7.28-7.28a.3.3,0,0,1,.427.427l-7.28,7.281A1.85,1.85,0,0,1,3521.8,2442.207Z" fill="#1e1e9a"/></g></svg>                    </div>
+                    <div class="sublink-text">
+                      <div class="link-title">Service status</div>
+                      <div class="link-description">A summary of current system status</div>
+                    </div>
+                  </a>
+                </li>
+              </ul>            </div>
+                      </li>
+                  <li class="main-page">
+           <a class="main-page-link" href="https://spot.io/company/" target="_self">
+             Company             <svg xmlns="http://www.w3.org/2000/svg" width="7.262" height="13.416" viewBox="0 0 7.262 13.416"><g transform="translate(-162.335 -157.375)"><path d="M163.042,158.082l6.055,6.055-5.948,5.948" fill="none" stroke="#ff00ce" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/></g></svg>
+           </a>
+                        <div class="sub-menu-wrap">
+              <ul class="sub-menu">                <li>
+                  <a href="https://spot.io/company/" target="_self">
+                    <div class="sub-menu-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="25.411" height="23" viewBox="0 0 25.411 23"><g id="c-about" transform="translate(-3137.37 -1225.574)"><circle cx="4.35" cy="4.35" r="4.35" transform="translate(3137.628 1235.327) rotate(-87.908)" fill="#ff00ce"/><path d="M3161.823,1248.574h-23.5a.958.958,0,0,1,0-1.916h23.5a.958.958,0,0,1,0,1.916Zm-23.5-1.218a.26.26,0,0,0,0,.521h23.5a.26.26,0,0,0,0-.521Z" fill="#1e1e9a"/><path d="M3159.141,1247.356h-10.786a.349.349,0,0,1-.349-.349v-21.084a.349.349,0,0,1,.349-.349h10.786a.349.349,0,0,1,.349.349v21.084A.35.35,0,0,1,3159.141,1247.356Zm-10.437-.7h10.087v-20.386H3148.7Z" fill="#1e1e9a"/><path d="M3152.742,1230.476h-1.462a.349.349,0,1,1,0-.7h1.462a.349.349,0,1,1,0,.7Z" fill="#1e1e9a"/><path d="M3156.216,1230.476h-1.463a.349.349,0,0,1,0-.7h1.463a.349.349,0,0,1,0,.7Z" fill="#1e1e9a"/><path d="M3152.742,1233.645h-1.462a.349.349,0,1,1,0-.7h1.462a.349.349,0,1,1,0,.7Z" fill="#1e1e9a"/><path d="M3156.216,1233.645h-1.463a.349.349,0,0,1,0-.7h1.463a.349.349,0,0,1,0,.7Z" fill="#1e1e9a"/><path d="M3152.742,1236.813h-1.462a.349.349,0,1,1,0-.7h1.462a.349.349,0,1,1,0,.7Z" fill="#1e1e9a"/><path d="M3156.216,1236.813h-1.463a.349.349,0,1,1,0-.7h1.463a.349.349,0,1,1,0,.7Z" fill="#1e1e9a"/><path d="M3152.742,1239.982h-1.462a.349.349,0,1,1,0-.7h1.462a.349.349,0,1,1,0,.7Z" fill="#1e1e9a"/><path d="M3156.216,1239.982h-1.463a.349.349,0,1,1,0-.7h1.463a.349.349,0,1,1,0,.7Z" fill="#1e1e9a"/><path d="M3152.742,1243.151h-1.462a.349.349,0,1,1,0-.7h1.462a.349.349,0,1,1,0,.7Z" fill="#1e1e9a"/><path d="M3156.216,1243.151h-1.463a.349.349,0,0,1,0-.7h1.463a.349.349,0,0,1,0,.7Z" fill="#1e1e9a"/><path d="M3148.355,1247.356h-7.345a.349.349,0,0,1-.349-.349v-14.056a.349.349,0,0,1,.349-.349h7.345a.349.349,0,0,1,.349.349v14.056A.349.349,0,0,1,3148.355,1247.356Zm-7-.7h6.647V1233.3h-6.647Z" fill="#1e1e9a"/><path d="M3144.683,1237.545a.349.349,0,0,1-.349-.349v-1.462a.349.349,0,1,1,.7,0v1.462A.35.35,0,0,1,3144.683,1237.545Z" fill="#1e1e9a"/><path d="M3144.683,1240.713a.349.349,0,0,1-.349-.349V1238.9a.349.349,0,1,1,.7,0v1.462A.349.349,0,0,1,3144.683,1240.713Z" fill="#1e1e9a"/><path d="M3144.683,1243.882a.349.349,0,0,1-.349-.349v-1.462a.349.349,0,1,1,.7,0v1.462A.349.349,0,0,1,3144.683,1243.882Z" fill="#1e1e9a"/></g></svg>                    </div>
+                    <div class="sublink-text">
+                      <div class="link-title">About us</div>
+                      <div class="link-description">Who we are, how we got started and where we plan to go</div>
+                    </div>
+                  </a>
+                </li>
+                              <li>
+                  <a href="https://spot.io/company/values/" target="_self">
+                    <div class="sub-menu-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="22.379" height="17.723" viewBox="0 0 22.379 17.723"><g id="c-values" transform="translate(-3139.896 -1324.758)"><path d="M3162.275,1333.31a5.115,5.115,0,1,1-5.115-5.115,5.114,5.114,0,0,1,5.115,5.115" fill="#ff00ce"/><path d="M3149.733,1342.2s-8.02-6.435-9.166-10.093c-.982-2.615,0-6.581,3.577-7.016s5.589,2.737,5.589,2.737,2.012-3.172,5.589-2.737,4.559,4.4,3.577,7.016C3157.753,1335.766,3149.733,1342.2,3149.733,1342.2Z" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.561"/></g></svg>                    </div>
+                    <div class="sublink-text">
+                      <div class="link-title">Our values</div>
+                      <div class="link-description">The principles guiding our interactions with customers, partners and colleagues</div>
+                    </div>
+                  </a>
+                </li>
+              </ul><ul class="sub-menu">                <li>
+                  <a href="https://spot.io/company/team/" target="_self">
+                    <div class="sub-menu-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="23.313" height="23" viewBox="0 0 23.313 23"><g id="c-team" transform="translate(-3388.346 -1226.422)"><path d="M3405.765,1228.794a8.109,8.109,0,1,0,0,11.469A8.119,8.119,0,0,0,3405.765,1228.794Z" fill="#ff00ce"/><path d="M3402.168,1244.339a.32.32,0,0,1,0-.641,1.107,1.107,0,0,0,1.035-1.036v-3.05c0-.784-1.861-1.374-3.068-1.374s-3.069.59-3.069,1.374v3.05a1.107,1.107,0,0,0,1.035,1.036.32.32,0,1,1,0,.641,1.743,1.743,0,0,1-1.676-1.677v-3.05c0-1.407,2.457-2.015,3.71-2.015s3.71.608,3.71,2.015v3.05A1.744,1.744,0,0,1,3402.168,1244.339Z" fill="#1e1e9a"/><path d="M3406.235,1245.016a.32.32,0,0,1,0-.641c.43,0,1.035-.216,1.035-.7v-3.05c0-.852-1.767-1.374-2.729-1.374-.1,0-.2.005-.309.016a.321.321,0,0,1-.061-.639c.131-.013.256-.018.37-.018,1.138,0,3.371.608,3.371,2.015v3.05A1.514,1.514,0,0,1,3406.235,1245.016Z" fill="#1e1e9a"/><path d="M3400.135,1237.221a1.621,1.621,0,0,1-1.677-1.676v-.678a1.677,1.677,0,0,1,3.353,0v.678A1.621,1.621,0,0,1,3400.135,1237.221Zm0-3.389a.98.98,0,0,0-1.035,1.035v.678a1.035,1.035,0,0,0,2.07,0v-.678A.98.98,0,0,0,3400.135,1233.832Z" fill="#1e1e9a"/><path d="M3406.235,1249.423a.32.32,0,0,1-.32-.321v-7.8a.32.32,0,1,1,.641,0v7.8A.32.32,0,0,1,3406.235,1249.423Z" fill="#1e1e9a"/><path d="M3402.168,1249.423a.32.32,0,0,1-.32-.321v-8.812a.321.321,0,1,1,.641,0v8.812A.321.321,0,0,1,3402.168,1249.423Z" fill="#1e1e9a"/><path d="M3398.1,1249.423a.321.321,0,0,1-.321-.321v-8.812a.321.321,0,0,1,.642,0v8.812A.321.321,0,0,1,3398.1,1249.423Z" fill="#1e1e9a"/><path d="M3400.135,1249.423a.321.321,0,0,1-.321-.321v-5.423a.321.321,0,0,1,.642,0v5.423A.321.321,0,0,1,3400.135,1249.423Z" fill="#1e1e9a"/><path d="M3404.541,1238.238a1.622,1.622,0,0,1-1.677-1.676v-.678a1.677,1.677,0,0,1,3.353,0v.678A1.621,1.621,0,0,1,3404.541,1238.238Zm0-3.389a.98.98,0,0,0-1.035,1.035v.678a1.035,1.035,0,1,0,2.07,0v-.678A.98.98,0,0,0,3404.541,1234.849Z" fill="#1e1e9a"/><path d="M3409.983,1245.016a.32.32,0,1,1,0-.641c.43,0,1.035-.216,1.035-.7v-3.05c0-.852-1.768-1.374-2.73-1.374-.095,0-.2.005-.308.016a.321.321,0,0,1-.061-.639c.131-.013.255-.018.369-.018,1.139,0,3.371.608,3.371,2.015v3.05A1.514,1.514,0,0,1,3409.983,1245.016Z" fill="#1e1e9a"/><path d="M3409.983,1249.423a.32.32,0,0,1-.321-.321v-7.8a.32.32,0,1,1,.641,0v7.8A.32.32,0,0,1,3409.983,1249.423Z" fill="#1e1e9a"/><path d="M3408.288,1238.238a1.621,1.621,0,0,1-1.676-1.676v-.678a1.677,1.677,0,0,1,3.353,0v.678A1.622,1.622,0,0,1,3408.288,1238.238Zm0-3.389a.98.98,0,0,0-1.035,1.035v.678a1.035,1.035,0,1,0,2.07,0v-.678A.98.98,0,0,0,3408.288,1234.849Z" fill="#1e1e9a"/><path d="M3394.034,1245.016a1.514,1.514,0,0,1-1.676-1.337v-3.05c0-1.407,2.232-2.015,3.371-2.015.114,0,.238.005.369.018a.321.321,0,0,1-.061.639c-.109-.011-.213-.016-.308-.016-.963,0-2.73.522-2.73,1.374v3.05c0,.48.6.7,1.035.7a.32.32,0,1,1,0,.641Z" fill="#1e1e9a"/><path d="M3394.034,1249.423a.321.321,0,0,1-.321-.321v-7.8a.321.321,0,1,1,.642,0v7.8A.321.321,0,0,1,3394.034,1249.423Z" fill="#1e1e9a"/><path d="M3395.729,1238.238a1.622,1.622,0,0,1-1.677-1.676v-.678a1.677,1.677,0,0,1,3.353,0v.678A1.621,1.621,0,0,1,3395.729,1238.238Zm0-3.389a.98.98,0,0,0-1.035,1.035v.678a1.035,1.035,0,1,0,2.07,0v-.678A.98.98,0,0,0,3395.729,1234.849Z" fill="#1e1e9a"/><path d="M3390.023,1245.016a1.514,1.514,0,0,1-1.677-1.337v-3.05c0-1.407,2.233-2.015,3.371-2.015.115,0,.239.005.37.018a.321.321,0,0,1-.061.639c-.109-.011-.213-.016-.309-.016-.962,0-2.729.522-2.729,1.374v3.05c0,.48.6.7,1.035.7a.32.32,0,1,1,0,.641Z" fill="#1e1e9a"/><path d="M3390.023,1249.423a.321.321,0,0,1-.321-.321v-7.8a.321.321,0,1,1,.642,0v7.8A.321.321,0,0,1,3390.023,1249.423Z" fill="#1e1e9a"/><path d="M3391.717,1238.238a1.621,1.621,0,0,1-1.676-1.676v-.678a1.677,1.677,0,0,1,3.353,0v.678A1.622,1.622,0,0,1,3391.717,1238.238Zm0-3.389a.979.979,0,0,0-1.034,1.035v.678a1.035,1.035,0,1,0,2.07,0v-.678A.98.98,0,0,0,3391.717,1234.849Z" fill="#1e1e9a"/></g></svg>                    </div>
+                    <div class="sublink-text">
+                      <div class="link-title">The Spot team</div>
+                      <div class="link-description">The employees and investors who drive our success</div>
+                    </div>
+                  </a>
+                </li>
+                              <li>
+                  <a href="https://spot.io/careers/" target="_self">
+                    <div class="sub-menu-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="17.824" height="22" viewBox="0 0 17.824 22"><g id="c-career" transform="translate(-3390.505 -1321.81)"><g ><g ><g ><path d="M3404.263,1323.834a6.924,6.924,0,1,0,0,9.793A6.934,6.934,0,0,0,3404.263,1323.834Z" fill="#ff00ce"/></g></g></g><g ><path d="M3406.561,1337.794h-.376a.264.264,0,1,1,0-.529h.376a1.362,1.362,0,0,0,1.239-1.239v-3.008a2.044,2.044,0,0,0-1.991-1.991h-2.632a2.667,2.667,0,0,0-2.03,1.377c-.2.323-.737,1.107-.76,1.14a.265.265,0,1,1-.436-.3c.006-.008.554-.805.744-1.116a3.126,3.126,0,0,1,2.482-1.63h2.632a2.556,2.556,0,0,1,2.52,2.52v3.008A1.889,1.889,0,0,1,3406.561,1337.794Z" fill="#1e1e9a"/><path d="M3402.049,1343.81a.265.265,0,0,1-.265-.265v-8.981l-.651.869a.265.265,0,0,1-.424-.318l1.128-1.5a.264.264,0,0,1,.476.159v9.775A.264.264,0,0,1,3402.049,1343.81Z" fill="#1e1e9a"/><path d="M3406.185,1343.81a.265.265,0,0,1-.265-.265v-10.151a.265.265,0,1,1,.529,0v10.151A.264.264,0,0,1,3406.185,1343.81Z" fill="#1e1e9a"/><path d="M3404.3,1343.81a.265.265,0,0,1-.265-.265v-6.015a.265.265,0,1,1,.529,0v6.015A.264.264,0,0,1,3404.3,1343.81Z" fill="#1e1e9a"/><path d="M3396.409,1343.81a.264.264,0,0,1-.264-.265v-9.775a.264.264,0,0,1,.456-.182l2.317,2.441a.7.7,0,0,0,.494.2h0a.7.7,0,0,0,.5-.2l.269-.264c-.341-.526-1.332-2.049-1.728-2.586-.053-.073-.112-.156-.176-.247-.5-.711-1.335-1.9-2.619-1.9h-2.632a2.025,2.025,0,0,0-1.991,1.991v3.008a1.362,1.362,0,0,0,1.239,1.239.264.264,0,1,1,0,.529,1.889,1.889,0,0,1-1.768-1.768v-3.008a2.556,2.556,0,0,1,2.52-2.52h2.632c1.559,0,2.53,1.383,3.052,2.126.061.087.118.167.169.237.489.663,1.808,2.708,1.864,2.8a.264.264,0,0,1-.038.332l-.421.413a1.222,1.222,0,0,1-.87.356,1.2,1.2,0,0,1-.874-.359l-1.865-1.965v9.112A.265.265,0,0,1,3396.409,1343.81Z" fill="#1e1e9a"/><path d="M3392.273,1343.81a.264.264,0,0,1-.264-.265v-10.151a.265.265,0,1,1,.529,0v10.151A.264.264,0,0,1,3392.273,1343.81Z" fill="#1e1e9a"/><path d="M3394.529,1343.81a.264.264,0,0,1-.264-.265v-6.015a.265.265,0,1,1,.529,0v6.015A.265.265,0,0,1,3394.529,1343.81Z" fill="#1e1e9a"/><path d="M3394.529,1329.9a1.711,1.711,0,0,1-1.768-1.769v-.752a1.769,1.769,0,0,1,3.537,0v.752A1.711,1.711,0,0,1,3394.529,1329.9Zm0-3.76a1.173,1.173,0,0,0-1.239,1.239v.752a1.24,1.24,0,1,0,2.479,0v-.752A1.173,1.173,0,0,0,3394.529,1326.139Z" fill="#1e1e9a"/><path d="M3404.3,1329.9a1.711,1.711,0,0,1-1.769-1.769v-.752a1.769,1.769,0,0,1,3.537,0v.752A1.71,1.71,0,0,1,3404.3,1329.9Zm0-3.76a1.174,1.174,0,0,0-1.24,1.239v.752a1.24,1.24,0,1,0,2.479,0v-.752A1.173,1.173,0,0,0,3404.3,1326.139Z" fill="#1e1e9a"/></g></g></svg>                    </div>
+                    <div class="sublink-text">
+                      <div class="link-title">Careers</div>
+                      <div class="link-description">We’re hiring! Build your career on the Spot team</div>
+                    </div>
+                  </a>
+                </li>
+              </ul><ul class="sub-menu">                <li>
+                  <a href="https://spot.io/contact/" target="_self">
+                    <div class="sub-menu-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="23.956" height="23.957" viewBox="0 0 23.956 23.957"><g transform="translate(-2954.192 -153.208)"><path d="M2976.595,154.762a5.315,5.315,0,1,0,0,7.517A5.322,5.322,0,0,0,2976.595,154.762Z" fill="#ff00ce"/><path d="M2972.087,159.23l-3.891,2.987-3.891-2.987-3.891,2.485" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><path d="M2976.563,175.221h-20.428V154.793" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><path d="M2954.66,156.269l1.476-1.476,1.476,1.476" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><path d="M2975.088,173.745l1.476,1.476-1.476,1.476" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line x2="1.754" transform="translate(2956.136 158.769)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line x2="1.754" transform="translate(2956.136 161.401)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line x2="1.754" transform="translate(2956.136 164.032)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line x2="1.754" transform="translate(2956.136 166.664)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line x2="1.754" transform="translate(2956.136 169.295)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line x2="1.754" transform="translate(2956.136 171.927)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line y2="1.754" transform="translate(2972.646 173.467)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line y2="1.754" transform="translate(2970.014 173.467)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line y2="1.754" transform="translate(2967.383 173.467)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line y2="1.754" transform="translate(2964.751 173.467)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line y2="1.754" transform="translate(2962.119 173.467)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><line y2="1.754" transform="translate(2959.488 173.467)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><path d="M2970.642,158.336H2973v2.231" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.662"/><rect width="1.68" height="6.629" transform="translate(2959.97 165.298)" stroke-width="0.662" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" fill="none"/><rect width="1.68" height="9.199" transform="translate(2963.911 162.728)" stroke-width="0.662" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" fill="none"/><rect width="1.68" height="6.629" transform="translate(2967.612 165.298)" stroke-width="0.662" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" fill="none"/><rect width="1.68" height="9.199" transform="translate(2971.552 162.728)" stroke-width="0.662" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g></svg>                    </div>
+                    <div class="sublink-text">
+                      <div class="link-title">Contact us</div>
+                      <div class="link-description">Let us know how we can help</div>
+                    </div>
+                  </a>
+                </li>
+              </ul>            </div>
+                      </li>
+        
+                  <li class="request-button"><a target="_self" rel="noopener noreferrer" href="#demo-popup" data-lity data-lity-target="#demo-popup">Request Demo</a></li>
+              </ul>
+
+      <a class="mobile-menu-toggle">
+        <svg class="hamburger" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="butt" stroke-linejoin="arcs">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+        <svg class="close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="butt" stroke-linejoin="arcs">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </a>
+    </div>
+      
+    <div class="mobile-quick-links">
+      <ul class="menu">
+        <div class="menu-top-menu-container"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14483"><a href="https://spot.io/support/">Support</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14484"><a href="https://spot.io/partners/">Partners</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-14485"><a href="https://spot.io/blog/">Blog</a></li>
+</div>      </ul>
+    </div>
+         
+    <div class="mobile-bottom-wrap">
+              <a class="console-button" target="_self" href="https://console.spotinst.com/auth/signIn">Sign In</a>
+            <div class="mobile-bottom">
+                  <a class="request-button" target="_self" rel="noopener noreferrer" href="#demo-popup" data-lity>Request Demo</a>
+              </div>
+    </div>
+  </div>
+</div> <!-- /#site-header -->
+
+<div id="demo-popup" class="lity-hide">
+  <div class="popup">
+    <div class="popup-content">
+      <div class="popup-header">
+        <h2>Schedule a demo with a solution architect</h2>
+        <button class="lity-close lity-close-override" type="button" aria-label="Close (Press escape to close)" data-lity-close="">×</button>
+      </div>
+      <div class="popup-body">
+        <!--[if lte IE 8]><script charset=“utf-8” type=“text/javascript” src=“//js.hsforms.net/forms/v2-legacy.js”></script><![endif]-->
+        <script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2.js"></script>
+        <script>
+        hbspt.forms.create({
+          portalId: "3418389",
+          css: "",
+          formId: "5e3b02b8-5315-4aa4-9b97-9d905cd71b90"
+        });
+        </script>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="request-a-trial" class="lity-hide">
+  <div class="popup">
+    <div class="popup-content">
+      <div class="popup-header">
+        <h2>Request a Trial &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>        <button class="lity-close lity-close-override" type="button" aria-label="Close (Press escape to close)" data-lity-close="">×</button>
+      </div>
+      <div class="popup-body">
+        <!--[if lte IE 8]>
+        <script charset="utf-8" type=“text/javascript” src=“//js.hsforms.net/forms/v2-legacy.js"></script>
+        <![endif]-->
+        <script charset="utf-8" type=“text/javascript” src=“//js.hsforms.net/forms/v2.js”></script>
+        <script>
+          hbspt.forms.create({
+          portalId: "3418389",
+          formId: "c270d32c-9633-404e-a1ef-6dd0aff500b7"
+          });
+        </script>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="watch-popup" class="lity-hide">
+  <div class="popup">
+    <div class="popup-content">
+      <div class="popup-header">
+        <h2>Watch demo</h2>
+        <button class="lity-close lity-close-override" type="button" aria-label="Close (Press escape to close)" data-lity-close="">×</button>
+      </div>
+      <div class="popup-body">
+        <!--[if lte IE 8]>
+        <script charset=“utf-8” type=“text/javascript” src=“//js.hsforms.net/forms/v2-legacy.js”></script>
+        <![endif]-->
+        <script charset="utf-8" type=“text/javascript” src=“//js.hsforms.net/forms/v2.js”></script>
+        <script>
+        hbspt.forms.create({
+        portalId: "3418389",
+        formId: "af9bd800-f9ae-4d09-a21a-8b195d7512c0",
+        css: "",
+        sfdcCampaignId: "7014I000000t9VQQAY"
+        });
+        </script>
+      </div>
+    </div>
+  </div>
+</div>
+    <div id="wrap">
+
+
+<div class="single-container">
+    <div class="single-row">
+        
+        <div class="col-single-content">
+            <article class="single single-post" id="post-6961">
+                <div class="post-header single-post-header">
+
+    <h1 class="post-title">
+        Understanding Kubernetes Cluster Autoscaler: Features, Limitations and Alternatives    </h1>
+
+    <div class="post-meta post-header-meta">
+
+        <div class="post-author">
+    <div class="author-avatar">
+        <img src="https://blog-assets.spot.io/app/uploads/2020/04/05105511/Screen-Shot-2020-04-05-at-1.53.13-PM-150x150.png" width="48" height="48" alt="Manik Taneja" class="avatar avatar-48 wp-user-avatar wp-user-avatar-48 alignnone photo" />    </div>
+    <div class="author-data">
+        <div class="author-name">
+            Manik Taneja        </div>
+        
+        <div class="author-role">
+            Principal Product Manager        </div>
+
+    </div>
+</div>
+
+        <div class="post-time-to-read">
+            <span class="span-reading-time rt-reading-time"><span class="rt-label rt-prefix"></span> <span class="rt-time"> 6</span> <span class="rt-label rt-postfix">Min read</span></span>        </div>
+        
+        <div class="post-date">Jul 24th, 2020</div>
+
+
+        <div class="post-share">
+    <div class="addthis_inline_share_toolbox"></div>
+</div>
+
+        <div class="post-tags-list">
+                            <a href="https://spot.io/blog/containers/">Containers</a>
+                            <a href="https://spot.io/blog/kubernetes/">Kubernetes</a>
+                    </div>
+
+    </div>
+
+</div> <!-- /.post-header -->
+                <div class="entry-content">
+        <div class="entry-thumbnail">
+        <img width="1440" height="800" src="https://blog-assets.spot.io/app/uploads/2020/07/29122715/Blog_Ocean_Comparing-K8s-Cluster-AutoscalerAWS-ASG-with-Ocean-_2_29jul20.jpg" class="attachment-_base-featured-image size-_base-featured-image wp-post-image" alt="kubernetes cluster autoscaler" loading="lazy" srcset="https://blog-assets.spot.io/app/uploads/2020/07/29122715/Blog_Ocean_Comparing-K8s-Cluster-AutoscalerAWS-ASG-with-Ocean-_2_29jul20.jpg 1440w, https://blog-assets.spot.io/app/uploads/2020/07/29122715/Blog_Ocean_Comparing-K8s-Cluster-AutoscalerAWS-ASG-with-Ocean-_2_29jul20-600x333.jpg 600w, https://blog-assets.spot.io/app/uploads/2020/07/29122715/Blog_Ocean_Comparing-K8s-Cluster-AutoscalerAWS-ASG-with-Ocean-_2_29jul20-1200x667.jpg 1200w, https://blog-assets.spot.io/app/uploads/2020/07/29122715/Blog_Ocean_Comparing-K8s-Cluster-AutoscalerAWS-ASG-with-Ocean-_2_29jul20-800x444.jpg 800w" sizes="100vw" />    </div><!-- .post-thumbnail -->
+        <div class="at-above-post addthis_tool" data-url="https://spot.io/blog/kubernetes-cluster-autoscaler-features-limitations-and-comparisons-to-ocean-by-spot/"></div><p><span style="font-weight: 400;">There are different tools and mechanisms for scaling applications and provisioning resources in Kubernetes. Kubernetes’s native horizontal and vertical pod autoscaling (HPA and VPA) handle scaling at the application level. However when it comes to the infrastructure layer, Kubernetes doesn’t carry out infrastructure scaling itself. Instead, there are multiple tools and mechanisms for handling scaling of resources at the infrastructure level. </span></p>
+<p><span style="font-weight: 400;">In this article, we’ll explore two solutions that address infrastructure scaling automation for Kubernetes —</span><a href="https://spot.io/products/ocean/"><span style="font-weight: 400;"> Ocean by Spot</span></a><span style="font-weight: 400;"> and the open source Cluster Autoscaler. We’ll cover:</span></p>
+<ul>
+<li><a href="#Cluster_Autoscaler_overview"><span style="font-weight: 400;">Cluster Autoscaler overview and considerations</span></a></li>
+<li><a href="#What_is_Ocean"><span style="font-weight: 400;">What Ocean is and how it works</span></a></li>
+<li><a href="#Ocean_vs_Cluster_Autoscaler"><span style="font-weight: 400;">How Ocean and Cluster Autoscaler compares</span></a></li>
+<li><a href="#Getting_started_with_Ocean"><span style="font-weight: 400;">Getting started with Ocean</span></a></li>
+</ul>
+<h2><b><a id="Cluster_Autoscaler_overview"></a>Cluster Autoscaler overview and considerations</b></h2>
+<p><a href="https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler"><span style="font-weight: 400;">Cluster Autoscaler</span></a><span style="font-weight: 400;"> is an open-source project that automatically scales a Kubernetes cluster  based on the scheduling status of pods and resource utilization of nodes. If you have several pods that are unscheduled because of insufficient resources, Cluster Autoscaler will automatically add more nodes to the cluster using your cloud provider’s auto scaling capabilities&#8211;for example, Auto Scaling Groups (ASGs) and Spot Fleet within AWS or similar services in the case of Microsoft Azure or Google Cloud </span></p>
+<p><span style="font-weight: 400;">Despite this simple approach to auto scaling, configuring Cluster Autoscaler for optimal use is complex. As a DIY solution, users need to have a good understanding of their pods and container needs, and need to be aware of the limitations (and related consequences) of Cluster Autoscaler:</span></p>
+<ul>
+<li style="font-weight: 400;"><span style="font-weight: 400;">Overprovisioning is common as Cluster Autoscaler looks at defined resource requests and limits, not at actual resource usage </span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">Limited flexibility because although mixed instance types can be used in a node group, instances need to have the same capacity (CPU and memory) </span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">For customers that want to leverage different kinds of compute, managing multiple node pools is complex</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">With no fallback to on-demand instances, cannot be used with spot instances without creating performance and availability risks </span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">Auto Scaling Groups need to be managed independently by the user</span></li>
+</ul>
+<h3><b>Default Solution vs Hands-off approach</b></h3>
+<p><span style="font-weight: 400;">These limitations of Cluster Autoscaler mean that, while it’s a good initial solution, it’s not always the best fit, especially when users are looking for strategies to take a more hands-off approach to infrastructure and reduce the cost of their cloud operations. </span></p>
+<h2><b><a id="What_is_Ocean"></a>What is Ocean and how does it work?</b></h2>
+<p><span style="font-weight: 400;">To help simplify and further automate infrastructure scaling for Kubernetes users, Spot offers Ocean, a fully managed data plane service that provides a serverless infrastructure engine for running containers.</span></p>
+<p><a href="https://blog-assets.spot.io/app/uploads/2020/07/29153054/HOW-IT-WORKS_STATIC_Website_Products_Ocean_12_29jul20.png"><img loading="lazy" class="alignnone size-medium wp-image-7072" src="https://blog-assets.spot.io/app/uploads/2020/07/29153054/HOW-IT-WORKS_STATIC_Website_Products_Ocean_12_29jul20-600x465.png" alt="Kubernetes cluster autoscaling" width="600" height="465" srcset="https://blog-assets.spot.io/app/uploads/2020/07/29153054/HOW-IT-WORKS_STATIC_Website_Products_Ocean_12_29jul20-600x465.png 600w, https://blog-assets.spot.io/app/uploads/2020/07/29153054/HOW-IT-WORKS_STATIC_Website_Products_Ocean_12_29jul20-1200x931.png 1200w, https://blog-assets.spot.io/app/uploads/2020/07/29153054/HOW-IT-WORKS_STATIC_Website_Products_Ocean_12_29jul20-1536x1191.png 1536w, https://blog-assets.spot.io/app/uploads/2020/07/29153054/HOW-IT-WORKS_STATIC_Website_Products_Ocean_12_29jul20-2048x1589.png 2048w, https://blog-assets.spot.io/app/uploads/2020/07/29153054/HOW-IT-WORKS_STATIC_Website_Products_Ocean_12_29jul20-800x621.png 800w" sizes="(max-width: 600px) 100vw, 600px" /></a></p>
+<h3><b>Pod-driven infrastructure auto scaling </b></h3>
+<p><span style="font-weight: 400;">Leveraging pod-driven auto scaling, Ocean dynamically allocates compute infrastructure based on container requirements (documented  in their YML config files), such as memory, CPU, disks and networking limitations. It’s designed to work in such a way that pods and workloads can take advantage of the underlying capabilities of cloud compute infrastructure such as pricing model, lifecycle, performance, and availability without having to know anything about them. </span></p>
+<p><span style="font-weight: 400;">Ocean does this by automating and optimizing three infrastructure at three layers:</span></p>
+<p><a href="https://blog-assets.spot.io/app/uploads/2020/07/20183323/Blog_Diagram_Ocean_Comparing-K8s-Cluster-AutoscalerAWS-ASG-with-Ocean-_5_13aug20.png"><img loading="lazy" class="alignnone wp-image-7148" src="https://blog-assets.spot.io/app/uploads/2020/07/20183323/Blog_Diagram_Ocean_Comparing-K8s-Cluster-AutoscalerAWS-ASG-with-Ocean-_5_13aug20-600x333.png" alt="kubernetes, kubernetes cluster autoscaler" width="764" height="424" srcset="https://blog-assets.spot.io/app/uploads/2020/07/20183323/Blog_Diagram_Ocean_Comparing-K8s-Cluster-AutoscalerAWS-ASG-with-Ocean-_5_13aug20-600x333.png 600w, https://blog-assets.spot.io/app/uploads/2020/07/20183323/Blog_Diagram_Ocean_Comparing-K8s-Cluster-AutoscalerAWS-ASG-with-Ocean-_5_13aug20-1200x667.png 1200w, https://blog-assets.spot.io/app/uploads/2020/07/20183323/Blog_Diagram_Ocean_Comparing-K8s-Cluster-AutoscalerAWS-ASG-with-Ocean-_5_13aug20-800x444.png 800w, https://blog-assets.spot.io/app/uploads/2020/07/20183323/Blog_Diagram_Ocean_Comparing-K8s-Cluster-AutoscalerAWS-ASG-with-Ocean-_5_13aug20.png 1440w" sizes="(max-width: 764px) 100vw, 764px" /></a></p>
+<p><span style="font-weight: 400;">Ocean provides users with a number of features that enhance their ability to effectively and efficiently manage their container cluster resources, including the following:</span></p>
+<ul>
+<li style="font-weight: 400;"><span style="font-weight: 400;">With out-of-the-box nodes of varying types and sizes, users don’t have to configure or maintain individual scaling groups</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">Ocean dynamically scales infrastructure and allocates the best fit of instances based on scale, shape of pods and any labels, taints or tolerations</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">Events are monitored at the Kubernetes API server, affording levels of visibility and flexibility that can’t otherwise be achieved, ensuring dependable performance and fast scalability</span></li>
+<li><span style="font-weight: 400;">Ocean maintains a scoring model for compute capacity markets to significantly reduce interruptions and efficiently leverage cloud pricing models (spot instance, on-demand, and reserved instances) for up to a 90% cost reduction</span></li>
+<li><span style="font-weight: 400;">Reduce waste by more efficiently packing containers with Ocean, significantly improving bin packing by 30-40%</span></li>
+</ul>
+<h2><b><a id="Ocean_vs_Cluster_Autoscaler"></a>Comparing Ocean and Cluster Autoscaler</b></h2>
+<p><span style="font-weight: 400;">In order to help make an informed decision between Ocean and Cluster Autoscaler, we have cataloged some architectural differences between the two, focusing on the common use case of Cluster Autoscaler with AWS ASGs. </span></p>
+<table style="height: 397px; width: 89%; border-collapse: collapse; border-style: dashed; border-color: #ebebeb;" border="4">
+<thead>
+<tr style="909px; width: 70%; border-collapse: collapse; border-style: dashed; border-color: #ebebeb;">
+<th style="width: 14.4882%; height: 10px; vertical-align: middle; border-style: dashed; border-color: #e6e6e6; background-color: #ebebeb;" scope="row">
+<h3><span style="font-size: 14pt;">Feature</span></h3>
+</th>
+<th style="width: 44.892%; height: 10px; vertical-align: middle; border-style: dashed; border-color: #e6e6e6; background-color: #ebebeb;" scope="row">
+<h3><span style="font-size: 14pt;">Cluster Autoscaler with AWS Auto Scaling Groups</span></h3>
+</th>
+<th style="width: 40.6197%; height: 10px; vertical-align: middle; border-style: dashed; border-color: #e6e6e6; background-color: #ebebeb;" scope="row">
+<h3><span style="font-size: 14pt;"><a href="https://spot.io/products/ocean/">Ocean by Spot</a></span></h3>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="height: 21px; border-width: 0.1rem; vertical-align: top;">
+<td style="width: 14.4882%; height: 21px; vertical-align: top; border-style: dashed; border-color: #e6e6e6;"><span style="font-size: 12pt;"><strong>Mixed Instance Types </strong></span></td>
+<td style="height: 21px; width: 44.892%; border-style: dashed; border-color: #e6e6e6; vertical-align: top;"><span style="font-size: 12pt;"><span style="font-weight: 400;">Limited support as only one ASG will be scaled per pod request and mixed instance types within each ASG must have the same capacity (CPU and memory).</span> <a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md#using-mixed-instances-policies-and-spot-instances">More information</a></span></td>
+<td style="width: 40.6197%; height: 21px; vertical-align: top; border-style: dashed; border-color: #e6e6e6;"><span style="font-size: 12pt;"><span style="font-weight: 400;"><strong>S</strong></span><span style="font-weight: 400;"><strong>upported</strong>. Ocean supports mixed instance types across all families by default.  Instead of managing multiple node-pools, you will be running a single “Ocean”. </span></span></td>
+</tr>
+<tr style="height: 21px; border-width: 0.1rem;">
+<td style="width: 14.4882%; height: 15px; border-style: dashed; border-color: #e6e6e6; vertical-align: top;"><span style="font-size: 12pt;"><strong>Availability Zone awareness </strong></span></td>
+<td style="width: 44.892%; height: 15px; border-style: dashed; border-color: #e6e6e6; vertical-align: top;"><span style="font-size: 12pt;"><span style="font-weight: 400;">A single AutoScaling group cannot span multiple availability zones without consideration for rebalancing. Alternatively, one can manage one AutoScaling Group per Availability Zone. </span><a href="https://docs.aws.amazon.com/eks/latest/userguide/cluster-autoscaler.html"><span style="font-weight: 400;">More information</span></a></span></td>
+<td style="width: 40.6197%; height: 15px; border-style: dashed; border-color: #e6e6e6; vertical-align: top;"><span style="font-size: 12pt;"><span style="font-weight: 400;"><strong>Supported</strong>. The k8s cluster can be managed with a single entity that manages all the underlying instances, across multiple configurations, irrespective of the AZ.</span></span></td>
+</tr>
+<tr style="height: 21px; border-width: 0.1rem;">
+<td style="width: 14.4882%; height: 21px; border-style: dashed; border-color: #e6e6e6; vertical-align: top;"><span style="font-size: 12pt;"><strong>Persistent Volume Claims (PVC)  awareness</strong></span></td>
+<td style="width: 44.892%; height: 21px; vertical-align: top; border-style: dashed; border-color: #e6e6e6;"><span style="font-size: 12pt;"><span style="font-weight: 400;">NodeGroups must be configured with an AutoScaling group that is tied to a single Availability Zone. </span><a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#i-have-a-couple-of-pending-pods-but-there-was-no-scale-up"><span style="font-weight: 400;"><span style="color: #333333;">More information</span></span></a></span></td>
+<td style="width: 40.6197%; height: 21px; vertical-align: top; border-style: dashed; border-color: #e6e6e6;"><span style="font-size: 12pt;"><span style="font-weight: 400;"><strong>Supported</strong>. Ocean reads requirements of pending pods in real time. If the resource should have a volume available, Ocean will launch the instance in the required AZ. No additional management is needed.</span></span></td>
+</tr>
+<tr style="height: 21px;">
+<td style="width: 14.4882%; height: 21px; vertical-align: top; border-style: dashed; border-color: #e6e6e6;"><span style="font-size: 12pt;"><strong>Fallback to<br />
+on-demand</strong></span></td>
+<td style="width: 44.892%; height: 21px; vertical-align: top; border-style: dashed; border-color: #e6e6e6;"><span style="font-weight: 400; font-size: 12pt;">CA or ASG/Spot Fleet don&#8217;t have an option to fallback to an on-demand instance.</span></td>
+<td style="width: 40.6197%; height: 21px; vertical-align: top; border-style: dashed; border-color: #e6e6e6;"><span style="font-size: 12pt;"><strong>Supported. <span style="font-weight: 400;">Ocean falls back to on-demand instances when there is a shortage in spot capacity pools. </span></strong></span></td>
+</tr>
+<tr style="height: 21px;">
+<td style="width: 14.4882%; height: 21px; vertical-align: top; border-style: dashed; border-color: #e6e6e6;"><span style="font-size: 12pt;"><strong>Scale down +<br />
+re-shuffling pods</strong></span></td>
+<td style="width: 44.892%; height: 21px; vertical-align: top; border-style: dashed; border-color: #e6e6e6;"><span style="font-size: 12pt;"><span style="font-weight: 400;">Based on the conditions that (1) running CPU and memory across the pods in a node is less than 50% allocated or (2) all running pods on a node can be moved to another node. </span><a href="https://github.com/kubernetes/autoscaler/issues/3477"><span style="font-weight: 400;">Ephemeral storage is accounted for in scale down decisions </span><span style="font-weight: 400;"><br />
+</span><span style="font-weight: 400;"><br />
+</span></a><a href="https://github.com/kubernetes/autoscaler/issues/3479"><span style="font-weight: 400;">CA does not scale down pods using Horizontal Pod Autoscaling </span></a></span></td>
+<td style="width: 40.6197%; height: 21px; border-style: dashed; border-color: #e6e6e6; vertical-align: top;">
+<p><span style="font-weight: 400; font-size: 12pt;">Ocean scale down takes all CA considerations as well as instance size for bin packing efficiency into account, resulting in ~30% reduction in cluster footprint when compared to CA.</span></p>
+<p><span style="font-weight: 400;">Ocean bases scale down decisions based on pod disruption budget, with no issues scaling down pods with HPA </span></td>
+</tr>
+<tr style="height: 21px;">
+<td style="width: 14.4882%; height: 21px; vertical-align: top; border-style: dashed; border-color: #e6e6e6;"><span style="font-size: 12pt;"><strong>Spot interruption handler</strong></span></td>
+<td style="width: 44.892%; height: 21px; vertical-align: top; border-style: dashed; border-color: #e6e6e6;"><span style="font-weight: 400; font-size: 12pt;">In order to handle spot interruptions, one needs to install aws/spot-interruption-handler daemon-set.</span></td>
+<td style="width: 40.6197%; height: 21px; vertical-align: top; border-style: dashed; border-color: #e6e6e6;"><span style="font-weight: 400; font-size: 12pt;">Available by default in Spot SaaS platform. With Spot, one does not need to install extra tools in the cluster. Interruptions are predicted and managed automatically.</span></td>
+</tr>
+<tr style="height: 21px;">
+<td style="width: 14.4882%; height: 21px; border-style: dashed; border-color: #e6e6e6; vertical-align: top;"><span style="font-size: 12pt;"><strong>Fast, high-performance auto scaling</strong></span></td>
+<td style="width: 44.892%; height: 21px; vertical-align: top; border-style: dashed; border-color: #e6e6e6;"><span style="font-weight: 400; font-size: 12pt;">Supports DIY over-provisioning to deliver workload-based headroom. </span></td>
+<td style="width: 40.6197%; height: 21px; vertical-align: top; border-style: dashed; border-color: #e6e6e6;"><span style="font-size: 12pt;"><span style="font-weight: 400;"><strong>Supported</strong>. Ocean automatically calculates a <i>cluster headroom</i> parameter, which allows clusters to always have space for incoming pods, without waiting for new nodes.</span></span></td>
+</tr>
+<tr style="height: 72px;">
+<td style="width: 14.4882%; vertical-align: top; height: 69px; border-style: dashed; border-color: #e6e6e6;"><span style="font-size: 12pt;"><strong>Infrastructure management<br />
+</strong></span></td>
+<td style="width: 44.892%; vertical-align: top; height: 69px; border-style: dashed; border-color: #e6e6e6;"><span style="font-weight: 400; font-size: 12pt;">Must manage Auto Scaling Groups independently and associate them with the cluster using labels.</span></td>
+<td style="width: 40.6197%; vertical-align: top; height: 69px; border-style: dashed; border-color: #e6e6e6;"><span style="font-weight: 400; font-size: 12pt;">Ocean automatically scales infrastructure dynamically as needed. </span></td>
+</tr>
+<tr style="height: 144px;">
+<td style="width: 14.4882%; vertical-align: top; height: 51px; border-style: dashed; border-color: #e6e6e6;"><span style="font-size: 12pt;"><strong>GPU support<br />
+</strong></span></td>
+<td style="width: 44.892%; vertical-align: top; height: 51px; border-style: dashed; border-color: #e6e6e6;"><span style="font-weight: 400; font-size: 12pt;">Requires the set up and labelling of additional GPU based node-pools to support different types and sizes.</span></td>
+<td style="width: 40.6197%; vertical-align: top; height: 51px; border-style: dashed; border-color: #e6e6e6;"><span style="font-size: 12pt;"><strong>Supported out of the box. </strong></span></td>
+</tr>
+<tr style="height: 192px;">
+<td style="width: 14.4882%; vertical-align: top; height: 102px; border-style: dashed; border-color: #e6e6e6;"><span style="font-size: 12pt;"><strong>Node template generation<br />
+</strong></span></td>
+<td style="width: 44.892%; vertical-align: top; height: 102px; border-style: dashed; border-color: #e6e6e6;"><span style="font-weight: 400; font-size: 12pt;"><span style="font-weight: 400;">Upstream autoscaler always uses an existing node as a template for a node group. Only the first node for each node group is selected, which might be up-to-date or not.</span> <a href="https://github.com/kubernetes/autoscaler/issues/2246">More information.</a></span></td>
+<td style="width: 40.6197%; vertical-align: top; height: 102px; border-style: dashed; border-color: #e6e6e6;"><span style="font-weight: 400; font-size: 12pt;">Using Ocean ‘Launch Specification’, Ocean has a source of truth for the node template which is predictable. Launch specifications provide a large set of (optional) properties to configure and can be updated at will.</span></td>
+</tr>
+<tr style="height: 24px;">
+<td style="width: 14.4882%; vertical-align: top; border-style: dashed; border-color: #e6e6e6; height: 24px;"><span style="font-size: 12pt;"><strong>podAntiAffinity</strong></span></td>
+<td style="width: 44.892%; vertical-align: top; border-style: dashed; border-color: #e6e6e6; height: 24px;"><span style="font-weight: 400; font-size: 12pt;"><span style="font-weight: 400;">If podAntiAffinity is configured, <a href="https://github.com/kubernetes/autoscaler/issues/2947">Cluster Autoscaler will scale up only one node at a time</a>. </span></span></td>
+<td style="width: 40.6197%; vertical-align: top; border-style: dashed; border-color: #e6e6e6; height: 24px;"><span style="font-weight: 400; font-size: 12pt;">Ocean will continue to scale up in parallel for every constraint including podAntiAffinity and deliver immediate infrastructure scaling. </span></td>
+</tr>
+</tbody>
+</table>
+<h2><b><a id="Getting_started_with_Ocean"></a>Trying Out Ocean</b></h2>
+<p><span style="font-weight: 400;">Like Cluster Autoscaler, Ocean works with the container engine of your choice. To see how it works, the following guide will take you through the steps to set up Ocean on top of EKS using <code>eksctl</code></span></p>
+<p><span style="font-weight: 400;">For trying out Ocean on different Cloud Providers use the following links</span></p>
+<ul>
+<li style="font-weight: 400;"><span style="font-weight: 400;">Google Cloud &#8211; Ocean on GKE</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">Microsoft Azure &#8211; Ocean on AKS</span></li>
+</ul>
+<h3><b>Prerequisites</b></h3>
+<p><b>1. Configure your AWS credentials<br />
+</b><b></b><span style="font-weight: 400;">To use awscli environment variables, run the following commands:<br />
+</span></p>
+<pre class="EnlighterJSRAW" data-enlighter-language="generic">$ export AWS_ACCESS_KEY_ID=&lt;aws_access_key&gt;
+$ export AWS_SECRET_ACCESS_KEY=&lt;aws_secret_access_key&gt;</pre>
+<p><b>2. Set up Spot.io account (</b><a href="https://console.spotinst.com/spt/auth/signIn?__hstc=176627066.04fc724771bfa7f9253628dac5c828b4.1589909337925.1596550172559.1596556973018.107&amp;__hssc=176627066.7.1596556973018&amp;__hsfp=329785877"><b>sign up for free</b></a><b>) and credentials to AWS according to </b><a href="https://help.spot.io/elastigroup-for-aws/tutorials/updating-the-spotinst-policy/"><b>Spot IAM policy</b></a><br />
+<span style="font-weight: 400;">To use environment variables, run the following commands: </span></p>
+<pre class="EnlighterJSRAW" data-enlighter-language="generic">$ export SPOTINST_TOKEN=&lt;spotinst_token&gt;
+$ export SPOTINST_ACCOUNT=&lt;spotinst_account&gt;</pre>
+<p><b>3. eksctl installed with Ocean integration<br />
+</b></p>
+<pre class="EnlighterJSRAW" data-enlighter-language="generic">$ curl -sfL https://spotinst-public.s3.amazonaws.com/integrations/kubernetes/eksctl/eksctl.sh | sh 
+$ sudo mv ./bin/eksctl /usr/local/bin &amp;&amp; rm -rf ./bin</pre>
+<h3> <strong>Steps</strong></h3>
+<p><b>1.  Create a yaml file to describe the desired EKS cluster and Ocean configurations. For example, “<a href="https://blog-assets.spot.io/app/uploads/2020/07/12192718/myEKSwithOcean.rtf">myEKSwithOcean.yaml</a>”: </b></p>
+<pre class="EnlighterJSRAW" data-enlighter-language="generic">apiVersion: eksctl.io/v1alpha5 
+kind: ClusterConfig 
+metadata: 
+  name: cluster-4 
+  region: eu-north-1 
+  
+vpc: 
+  id: "vpc-0dd338ecf29863c55"  # (optional, must match VPC ID used for each subnet below) 
+  cidr: "192.168.0.0/16"   	# (optional, must match CIDR used by the given VPC) 
+  subnets: 
+  # must provide 'private' and/or 'public' subnets by availability zone as shown 
+  private: 
+  	 eu-north-1a: 
+    	  id: "subnet-0b2512f8c6ae9bf30" 
+         cidr: "192.168.128.0/19" # (optional, must match CIDR used by the given subnet) 
+  
+  	 eu-north-1b: 
+    	 id: "subnet-08cb9a2ed60394ce3" 
+         cidr: "192.168.64.0/19"  # (optional, must match CIDR used by the given subnet) 
+  
+  	eu-north-1c: 
+    	 id: "subnet-00f71956cdec8f1dc" 
+         cidr: "192.168.0.0/19"   # (optional, must match CIDR used by the given subnet) 
+  
+nodeGroups: 
+  - name: ng-1 
+    spotOcean: 
+  	strategy: 
+    	# Percentage of Spot instances that would spin up from the desired  
+    	# capacity. 
+        spotPercentage: 100 
+
+    	# Allow Ocean to utilize any available reserved instances first before  
+    	# purchasing Spot instances. 
+        utilizeReservedInstances: true 
+
+    	# Launch On-Demand instances in case of no Spot instances available. 
+        fallbackToOnDemand: true 
+
+    autoScaler: 
+    	# Enable the Ocean autoscaler.  
+    	enabled: true 
+    	# Cooldown period between scaling actions. 
+    	cooldown: 300 
+
+    	# Spare resource capacity management enabling fast assignment of Pods  
+    	# without waiting for new resources to launch. 
+        headrooms: 
+        	# Number of CPUs to allocate. CPUs are denoted in millicores, where  
+        	# 1000 millicores = 1 vCPU. 
+      	- cpuPerUnit: 2 
+ 
+        	# Number of GPUs to allocate. 
+            gpuPerUnit: 0 
+
+        	# Amount of memory (MB) to allocate. 
+            memoryPerUnit: 64 
+
+        	# Number of units to retain as headroom, where each unit has the  
+        	# defined CPU and memory. 
+            numOfUnits: 1 
+
+  	compute: 
+        instanceTypes: 
+      	# Instance types allowed in the Ocean cluster. Cannot be configured  
+      	# if the blacklist is configured. 
+      	whitelist: # OR blacklist 
+        	- t2.large</pre>
+<p><strong>2. Create the cluster and Ocean<br />
+</strong></p>
+<pre class="EnlighterJSRAW" data-enlighter-language="generic">$ eksctl create cluster --name prod --nodegroup-name standard-workers --spot-ocean</pre>
+<p>Alternatively, use yaml config: predefined default values<b><br />
+</b></p>
+<pre class="EnlighterJSRAW" data-enlighter-language="generic">$ eksctl create cluster -f MyEKSwithOcean.yaml</pre>
+<p><span style="font-weight: 400;">Provisioning the cluster takes about 10-15 minutes, and once it’s complete, you can migrate existing worker nodes and create new Ocean-managed node groups. </span></p>
+<h2><b>Next Steps</b></h2>
+<p><span style="font-weight: 400;">With Ocean, container infrastructure management is simplified, and you can be up and running with your Kubernetes cluster in just a few minutes. Explore the </span><a href="https://help.spot.io/ocean/concepts/ocean-cloud/introduction/"><span style="font-weight: 400;">Ocean documentation library</span></a><span style="font-weight: 400;"> to learn more about what you can do with Ocean, or get started today with a free trial. </span></p>
+<section class="section product-get-started" style="margin-top: 4rem; padding: 3rem 0; background-image: url('https://assets.spot.io/app/uploads/2020/07/17135023/bg-get-started-ocean.png');">
+<div class="text-center" style="max-width: 100%;">
+<div></div>
+<p class="product-get-started__logo" style="text-align: center; box-shadow: none;"><img class="alignnone" style="box-shadow: none;" src="https://assets.spot.io/app/uploads/2020/07/17135334/logo-ocean-white.png" alt="" /></p>
+<h1 class="product-get-started__logo" style="text-align: center; color: white;"><span style="font-size: 18pt;">Get Started</span></h1>
+<div style="text-align: center;"></div>
+<div class="product-get-started__logo" style="text-align: center; color: white; margin: 2rem auto;">Sign up for our free trial to quickly and easily get started with Ocean for your containerized workloads.</div>
+<div></div>
+<div class="product-get-started__logo" style="text-align: center;"><a class="btn btn-white" href="https://console.spotinst.com/auth/signUp">Start Free Trial</a></div>
+</div>
+<div></div>
+</section>
+<p><!-- get started section --></p>
+<!-- AddThis Advanced Settings above via filter on the_content --><!-- AddThis Advanced Settings below via filter on the_content --><!-- AddThis Advanced Settings generic via filter on the_content --><!-- AddThis Share Buttons above via filter on the_content --><!-- AddThis Share Buttons below via filter on the_content --><div class="at-below-post addthis_tool" data-url="https://spot.io/blog/kubernetes-cluster-autoscaler-features-limitations-and-comparisons-to-ocean-by-spot/"></div><!-- AddThis Share Buttons generic via filter on the_content --></div>
+            </article>
+        </div>
+
+        <div class="col-single-sidebar">
+            <div class="sticky">
+                    <h3>Related posts</h3>
+        <div class="row-related">
+        
+<div class="col-12">
+    <div class="post-card">
+        
+        <a href="https://spot.io/blog/thats-a-wrap-reinvent-2020/" class="post-card-thumbnail-container">
+            <span class="post-card-thumbnail" style="background-image: url(https://blog-assets.spot.io/app/uploads/2020/12/17103250/Reinvent_wrap_up_Dec2020-360x240.png)">
+            </span>
+        </a>
+
+        <h4 class="post-card-title">
+            <a href="https://spot.io/blog/thats-a-wrap-reinvent-2020/" title="That’s a wrap! re:Invent 2020">
+                That’s a wrap! re:Invent 2020                <span class="read-more">
+                    Read More >>
+                </span>
+            </a>
+        </h4>
+
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="post-card">
+        
+        <a href="https://spot.io/blog/aws-control-tower-and-cloud-cost-management/" class="post-card-thumbnail-container">
+            <span class="post-card-thumbnail" style="background-image: url(https://blog-assets.spot.io/app/uploads/2020/12/03172320/Blog_AWS-control-tower-integration_1_26nov20-360x240.png)">
+            </span>
+        </a>
+
+        <h4 class="post-card-title">
+            <a href="https://spot.io/blog/aws-control-tower-and-cloud-cost-management/" title="AWS Control Tower and Cloud Cost Management">
+                AWS Control Tower and Cloud Cost Management                <span class="read-more">
+                    Read More >>
+                </span>
+            </a>
+        </h4>
+
+    </div>
+</div>
+        </div>
+                    </div>
+        </div>
+    </div>
+</div>
+
+
+
+</div><!-- /#wrap -->
+
+
+<div id="site-footer">
+
+  <div class="bubble"></div>
+
+  <div class="branding">
+    <a href="/">
+     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 416.1 147.4" style="enable-background:new 0 0 416.1 147.4;" xml:space="preserve">
+        <g>
+          <g>
+            <path fill="#fff" d="M108.3,34.9c-0.3,0-0.6,0-0.8,0c0.5,2.7,0.8,5.4,0.8,8.2c0,14-7,26.3-17.6,33.7c4.5,4.6,10.7,7.4,17.6,7.4
+              c13.6,0,24.7-11.1,24.7-24.7S122,34.9,108.3,34.9z"/>
+            <path fill="#fff" d="M107.5,34.9C103.7,16.1,87.1,2,67.2,2C53.7,2,41.8,8.5,34.3,18.5c-18.2,0-32.9,14.7-32.9,32.9
+              s14.7,32.9,32.9,32.9c5.6,0,26.7,0,32.9,0c8.8,0,16.9-2.7,23.5-7.4c-4.4-4.5-7.1-10.5-7.1-17.3C83.7,46.2,94.3,35.4,107.5,34.9z"
+              />
+          </g>
+          <g>
+            <g>
+              <path fill="#fff" d="M165,72.4l10.5-12.6c7.4,6,14.9,9.9,24.2,9.9c7.4,0,11.7-2.9,11.7-7.6v-0.2c0-4.5-2.8-7-16.3-10.3
+                c-16.5-4.1-26.9-8.8-26.9-24.8v-0.2c0-14.7,11.7-24.5,28.4-24.5c11.9,0,21.8,3.7,30.1,10.3l-9.3,13.4c-7.3-5-14.1-8-21.1-8
+                s-10.4,3-10.4,7.1v0.2c0,5.4,3.5,7,17.5,10.7c16.5,4.4,25.7,10.2,25.7,24.3v0.2c0,16.1-12.3,25.1-29.8,25.1
+                C187,85.4,174.7,81.3,165,72.4z"/>
+              <path fill="#fff" d="M235.5,22.2h17.6v8.9c4.3-5.9,10.1-10.1,19.4-10.1c14.5,0,28.3,11.4,28.3,32.1v0.2
+                c0,20.7-13.6,32.1-28.3,32.1c-9.4,0-15.2-4.3-19.4-9.3v26.7h-17.6V22.2z M283.1,53.3v-0.2c0-10.3-7-17.2-15.2-17.2
+                s-15.1,6.8-15.1,17.2v0.2c0,10.3,6.8,17.2,15.1,17.2S283.1,63.8,283.1,53.3z"/>
+              <path fill="#fff" d="M305.6,53.6v-0.2c0-17.8,14.4-32.3,33.7-32.3c19.1,0,33.5,14.1,33.5,32.1v0.2c0,17.8-14.4,32.3-33.7,32.3
+                C319.9,85.7,305.6,71.5,305.6,53.6z M355.4,53.6v-0.2c0-9.2-6.6-17.2-16.3-17.2c-10.1,0-16.1,7.6-16.1,16.9v0.2
+                c0,9.2,6.6,17.2,16.3,17.2C349.4,70.5,355.4,62.8,355.4,53.6z"/>
+              <path fill="#fff" d="M381.5,66.7V37.2h-7.4v-15h7.4V6.3h17.6v15.9h14.6v15.1h-14.6v26.5c0,4.1,1.9,6,5.7,6c3.1,0,6-0.7,8.7-2.2
+                v14.1c-3.7,2.2-8,3.6-13.9,3.6C388.9,85.3,381.5,81,381.5,66.7z"/>
+            </g>
+            <path fill="#fff" d="M253.9,130c0,1.5-0.2,2.9-0.6,4.1c-0.4,1.2-1,2.2-1.7,3s-1.6,1.4-2.6,1.8c-1,0.4-2,0.6-3.1,0.6
+              c-1.5,0-2.8-0.4-3.9-1.1c-1.1-0.7-1.9-1.7-2.5-3v3.8h-3.9v-26.1h4v11.7c0.6-1.4,1.5-2.4,2.7-3.1c1.2-0.7,2.5-1,3.9-1
+              c1,0,2,0.2,3,0.6c0.9,0.4,1.8,0.9,2.5,1.7s1.3,1.7,1.7,2.9C253.6,127,253.9,128.4,253.9,130z M244.6,136.2c1.8,0,3.1-0.6,3.9-1.7
+              c0.9-1.1,1.3-2.6,1.3-4.5s-0.5-3.4-1.4-4.5s-2.2-1.7-4-1.7c-0.9,0-1.7,0.2-2.4,0.5c-0.7,0.3-1.2,0.8-1.7,1.3c-0.4,0.6-0.8,1.2-1,2
+              s-0.3,1.6-0.3,2.5c0,1.8,0.4,3.2,1.3,4.4C241.3,135.7,242.7,136.2,244.6,136.2z"/>
+            <path fill="#fff" d="M274.2,120.9l-10.8,25.5h-4.1l3.2-7.4l-7.7-18.1h4.1l4.9,11.8l0.8,2.4l0.8-2.4l4.8-11.8H274.2z"/>
+            <path fill="#fff" d="M292.4,121.4v17.9h-3.9v-24h4.8l10.4,17.5l1,2.2l-0.1-2.4v-17.3h3.9v24H304l-10.8-18.2l-1.1-2L292.4,121.4z"
+              />
+            <path fill="#fff" d="M329.9,135.2c-0.8,1.2-1.8,2.3-3.2,3.1c-1.3,0.8-3,1.3-5.1,1.3c-1.6,0-3-0.2-4.2-0.7s-2.2-1.1-3-2
+              c-0.8-0.8-1.4-1.8-1.8-3s-0.6-2.4-0.6-3.7s0.2-2.5,0.7-3.7c0.4-1.2,1.1-2.2,1.9-3.1c0.8-0.9,1.8-1.6,3-2.1s2.5-0.8,4-0.8
+              s2.8,0.3,3.9,0.8s2,1.2,2.7,2s1.3,1.8,1.6,2.9c0.4,1.1,0.5,2.3,0.5,3.6v1.4H316c0.2,1.6,0.7,2.8,1.6,3.7s2.3,1.4,4,1.4
+              c1.2,0,2.2-0.3,3-0.8s1.4-1.2,2-2.2L329.9,135.2z M321.6,123.8c-1.6,0-2.8,0.4-3.7,1.3c-0.9,0.9-1.5,2.1-1.7,3.6h10.4
+              c-0.1-1.4-0.5-2.6-1.3-3.5C324.4,124.3,323.2,123.8,321.6,123.8z"/>
+            <path fill="#fff" d="M345,135.7v3.2c-0.5,0.2-1,0.4-1.5,0.5s-1.1,0.2-1.8,0.2c-2,0-3.4-0.5-4.3-1.6c-0.9-1-1.3-2.6-1.3-4.6v-9.3
+              h-4.2v-3.3h4.2v-4.7l3.7-2.2v6.9h5.2v3.3h-5.2v8.8c0,1.2,0.2,2,0.7,2.5s1.2,0.7,2.1,0.7c0.5,0,0.9,0,1.3-0.1
+              C344.2,136,344.6,135.9,345,135.7z"/>
+            <path fill="#fff" d="M347.4,139.3l9.3-24h4.6l9.3,24h-4.2l-1.9-5h-11.1l-1.8,5H347.4z M358.2,121.6l-3.6,9.7h8.9l-3.6-9.7L359,119
+              L358.2,121.6z"/>
+            <path fill="#fff" d="M391.7,130c0,1.5-0.2,2.9-0.6,4.1c-0.4,1.2-1,2.2-1.7,3s-1.6,1.4-2.6,1.8c-1,0.4-2,0.6-3.2,0.6
+              c-1.5,0-2.8-0.4-3.9-1.1c-1.1-0.7-1.9-1.7-2.5-3v10.9h-4v-25.5h4v4c0.6-1.4,1.5-2.5,2.7-3.2s2.5-1.1,4-1.1c1,0,2,0.2,3,0.6
+              c0.9,0.4,1.8,0.9,2.5,1.7s1.3,1.7,1.7,2.9C391.5,127,391.7,128.4,391.7,130z M382.3,136.2c1.8,0,3.1-0.6,3.9-1.7
+              c0.9-1.1,1.3-2.6,1.3-4.5s-0.5-3.4-1.4-4.5s-2.2-1.7-4-1.7c-0.9,0-1.7,0.2-2.4,0.5c-0.7,0.3-1.2,0.8-1.7,1.3c-0.4,0.6-0.8,1.2-1,2
+              s-0.3,1.6-0.3,2.5c0,1.8,0.4,3.2,1.3,4.4C379.1,135.7,380.4,136.2,382.3,136.2z"/>
+            <path fill="#fff" d="M413.7,130c0,1.5-0.2,2.9-0.6,4.1c-0.4,1.2-1,2.2-1.7,3s-1.6,1.4-2.6,1.8c-1,0.4-2,0.6-3.2,0.6
+              c-1.5,0-2.8-0.4-3.9-1.1c-1.1-0.7-1.9-1.7-2.5-3v10.9h-4v-25.5h4v4c0.6-1.4,1.5-2.5,2.7-3.2s2.5-1.1,4-1.1c1,0,2,0.2,3,0.6
+              c0.9,0.4,1.8,0.9,2.5,1.7s1.3,1.7,1.7,2.9C413.5,127,413.7,128.4,413.7,130z M404.4,136.2c1.8,0,3.1-0.6,3.9-1.7
+              c0.9-1.1,1.3-2.6,1.3-4.5s-0.5-3.4-1.4-4.5s-2.2-1.7-4-1.7c-0.9,0-1.7,0.2-2.4,0.5c-0.7,0.3-1.2,0.8-1.7,1.3s-0.8,1.2-1,2
+              s-0.3,1.6-0.3,2.5c0,1.8,0.4,3.2,1.3,4.4C401.1,135.7,402.5,136.2,404.4,136.2z"/>
+          </g>
+        </g>
+      </svg>
+    </a>
+  </div>
+
+  <div class="contacts">
+    <div class="widget">
+      <p class="title">Call us</p>
+      <p class="contact"><a href="tel:+14158572672">+1 415 857 2672</a></p>
+    </div>
+    <div class="widget">
+      <p class="title">Email us</p>
+      <p class="contact"><a href="mailto:info@spot.io">info@spot.io</a></p>
+    </div>
+    <div class="widget bottom social-networks">
+      <ul>
+                  <li class="network">
+            <a href="https://www.facebook.com/spothq" target="new" title="Facebook">
+                              <svg aria-hidden="true" focusable="false" class="svg-inline--fa fa-facebook-f fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"></path></svg>                          </a>
+          </li>
+                  <li class="network">
+            <a href="https://www.linkedin.com/company/spothq/" target="new" title="LinkedIn">
+                              <svg aria-hidden="true" focusable="false" class="svg-inline--fa fa-linkedin-in fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"></path></svg>                          </a>
+          </li>
+                  <li class="network">
+            <a href="https://twitter.com/spot_hq" target="new" title="Twitter">
+                              <svg aria-hidden="true" focusable="false" class="svg-inline--fa fa-twitter fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path></svg>                          </a>
+          </li>
+                  <li class="network">
+            <a href="https://www.youtube.com/c/Spotinstances" target="new" title="YouTube">
+                              <svg aria-hidden="true" focusable="false" class="svg-inline--fa fa-youtube fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"></path></svg>                          </a>
+          </li>
+              </ul>
+    </div>
+  </div>
+  <div class="navigation">
+        <ul class="menu">
+      <li>
+        <a href="">Company</a>
+        <ul>
+          <li><a href="https://spot.io/company/">About Us</a></li>
+          <li><a href="https://spot.io/company/values/">Values</a></li>
+          <li><a href="https://spot.io/careers/">Careers</a></li>
+          <li><a href="https://spot.io/partners/">Partners</a></li>
+          <li><a href="https://spot.io/contact/">Contact Us</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="">Solutions</a>
+        <ul>
+          <li><a href="https://spot.io/solutions/cloud-cost-visibility/">Cloud Visibility</a></li>
+          <li><a href="https://spot.io/solutions/containers-infrastructure/">Container Infrastructure</a>
+          </li>
+          <li><a href="https://spot.io/solutions/reserved-capacity/">Reserved Instances</a></li>
+          <li><a href="https://spot.io/solutions/stateful-applications/">Stateful Applications</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="">Products</a>
+        <ul>
+          <li><a href="https://spot.io/products/cloud-analyzer/">Cloud Analyzer</a></li>
+          <li><a href="https://spot.io/products/elastigroup">Elastigroup</a></li>
+          <li><a href="https://spot.io/products/eco/">Eco</a></li>
+          <li><a href="https://spot.io/products/ocean/">Ocean</a></li>
+          <li><a href="https://spot.io/pricing/">Pricing</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="">Resources</a>
+        <ul>
+          <li><a href="https://spot.io/support/">Support</a></li>
+          <li><a href="https://help.spot.io/">Documentation</a></li>
+          <li><a href="https://spot.io/news/">Product News</a></li>
+          <li><a href="https://spot.io/case-studies/">Case Studies</a></li>
+          <li><a href="https://spot.io/blog">Blog</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="legal">
+    <p>© 2020 Spot. All Rights Reserved.<span class="tab"></span><a href="https://spot.io/privacy-policy/">Privacy policy</a> | <a href="https://spot.io/cookies_policy/">Cookies Policy</a></p>
+  </div>
+</div> <!-- /#site-footer -->
+
+</div> <!-- /#site -->
+
+<div id="site-overlay">
+  <a href="#" class="overlay-close">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="butt" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </a>
+
+  <div class="popup-container">
+  </div>
+
+  <div id="popup-whitepaper" class="popup-external popup-hidden">
+    <h4 class="h3 color-blue-dark text-center">Best practices for EC2 spot instances</h4>
+    <div id="popup-whitepaper-container">
+      <script>
+        if (typeof hbspt != 'undefined') {
+          hbspt.forms.create({
+            portalId: "3418389",
+            formId: "bb5ebdd1-97fe-41c7-ba37-2249b023854d",
+            target: "#popup-whitepaper-container",
+            submitButtonClass: "btn btn-primary",
+            css: ''
+          });
+        }
+      </script>
+    </div>
+  </div>
+
+  <div id="demo-call" class="popup-external popup-hidden">
+    <h4 class="h2 color-blue-dark text-center">Schedule demo with a solution consultant</h4>
+    <div id="demo-call-container">
+      <script>
+        if (typeof hbspt != 'undefined') {
+          hbspt.forms.create({
+            portalId: "3418389",
+            formId: "5e3b02b8-5315-4aa4-9b97-9d905cd71b90",
+            target: "#demo-call-container",
+            css: '',
+            submitButtonClass: "btn btn-primary"
+          });
+        }
+      </script>
+    </div>
+  </div>
+
+</div> <!-- /#site-overlay -->
+
+<!-- Free trial popup -->
+<div id="free-trial" class="lity-hide">
+  <div class="popup">
+    <div class="popup-content">
+      <div class="popup-header">
+        <h2 class="title">Create your free Spot<br />account today</h2>
+      </div>
+      <div class="popup-body">
+        <p class="subTitle">Complete access<br />for up to 20 instances</p>
+        <p class="metaBefore meta"></p>
+
+        <div class="step3">
+          <fieldset class="form-columns-2">
+            <div class="hs-form-field hs-pass">
+              <div class="input">
+                <input type="password" class="password" placeholder="Password*" id="reg-password">
+              </div>
+              <label for="" class="hs-error-msgs error"></label>
+            </div>
+            <div class="hs-form-field hs-pass-confirm">
+              <div class="input">
+                <input type="password" class="password-confirm" placeholder="Confirm Password*" id="reg-password-confirm">
+              </div>
+              <label for="" class="hs-error-msgs error"></label>
+            </div>
+          </fieldset>
+        </div>
+        <div id="preRegForm" class="step1"></div>
+        <div id="regForm" class="step2"></div>
+
+        <div class="step1">
+          <div class="features-row row">
+            <div class="col-12 col-md-4 feature">
+              <div class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32.992" height="33.942" viewBox="0 0 32.992 33.942">
+                  <g transform="translate(-746.02 -631.76)">
+                    <path d="M759.412,636.445a4.685,4.685,0,1,1-4.685-4.685,4.685,4.685,0,0,1,4.685,4.685" fill="#ff00ce" />
+                    <path d="M754.34,648.692a5.612,5.612,0,1,0-2.229,10.762h21.261a5.16,5.16,0,1,0-3.216-9.2m-16.032-.275a3.978,3.978,0,0,1,4.791-3.893m-.323,2.141a7.2,7.2,0,0,1,14.39,0,7.353,7.353,0,0,1-.059.921" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.96" />
+                    <path d="M754.1,649.733v12.019a3.469,3.469,0,1,0,6.938,0v-1.976m3.859-9.922v-8.946a4.364,4.364,0,0,0-4.364-4.364H754.5" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.96" />
+                  </g>
+                </svg>
+              </div>
+              <h4>Automate cloud infrastructure</h4>
+            </div>
+            <div class="col-12 col-md-4 feature">
+              <div class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="35" height="29.719" viewBox="0 0 35 29.719">
+                  <g transform="translate(-940 -635)">
+                    <image width="35" height="21" transform="translate(940 635)" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAVCAYAAADM+lfpAAAAAXNSR0IArs4c6QAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAI6ADAAQAAAABAAAAFQAAAAC1FSy7AAAA6klEQVRIDe1VQRLCIAwUx5OPaF/np/R1/YRXNB13JqYJJGDFg8x0gEA2y5KGlHM+9LZ5vpkgy3JJbnwi0/NN0/XpbmPQem0P/JuJRIJQMA+ho1tCZWPoChT/jQkSRXrPKTW8mt9pw84wlJLUcAmbXWSICL+SvYipOUPBEFASCR834JDobtFAgFTAmNa4Ktjb2gNXxSQypd+0lnRaokqbhq/Z1jrziYCSAJ+X8Pmaqxhx4D3GIKQmcGs+9Pr9yVgK/pYysqZYrL9hH64Mr/ArmVHqoBpDdfU5wOKrP4t57/QOAPkkvJHBplH9AyIonPusX75JAAAAAElFTkSuQmCC" />
+                    <circle cx="7.913" cy="7.913" r="7.913" transform="translate(950.38 647.102)" fill="#ff00ce" />
+                    <circle cx="9.224" cy="9.224" r="9.224" transform="translate(949.069 645.791)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.96" />
+                    <path d="M958.293,658.384v1.836m0-8.572V649.81m-1.837,7.349a1.225,1.225,0,0,0,1.224,1.225h1.226a1.225,1.225,0,0,0,1.224-1.225v-.613a1.307,1.307,0,0,0-.837-1.225l-2-.666a1.235,1.235,0,0,1-.837-1.17v-.613a1.224,1.224,0,0,1,1.224-1.224h1.226a1.224,1.224,0,0,1,1.224,1.224" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.96" />
+                  </g>
+                </svg>
+              </div>
+              <h4>Cut cloud compute costs by 70%</h4>
+            </div>
+            <div class="col-12 col-md-4 feature">
+              <div class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="34.976" height="18.707" viewBox="0 0 34.976 18.707">
+                  <g transform="translate(-1134.117 -638.824)">
+                    <circle cx="7.031" cy="7.031" r="7.031" transform="translate(1144.267 654.894) rotate(-87.908)" fill="#ff00ce" />
+                    <circle cx="3.69" cy="3.69" r="3.69" transform="translate(1147.86 644.435)" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.96" />
+                    <path d="M1151.6,639.3a8.874,8.874,0,1,1-8.874,8.874A8.873,8.873,0,0,1,1151.6,639.3Z" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.96" />
+                    <path d="M1151.6,639.3c9.452,0,17.008,8.874,17.008,8.874s-7.556,8.873-17.008,8.873-17.008-8.873-17.008-8.873S1142.153,639.3,1151.6,639.3Z" fill="none" stroke="#1e1e9a" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.96" />
+                  </g>
+                </svg>
+              </div>
+              <h4>Get deep visibility into cloud spend</h4>
+            </div>
+          </div>
+          <div class="cloud-services">
+            <img src="/assets/images/popup/cloud-services.svg" alt="Cloud Services">
+          </div>
+        </div>
+
+        <div class="stepSuccess">
+          <div class="message">
+            <p class="email-container"></p>
+            <p class="successMessage">
+            </p>
+          </div>
+        </div>
+
+        <div class="stepError">
+          <ul class="errors-list"></ul>
+        </div>
+
+        <p class="metaAfter meta"></p>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function($) {
+    $('a[href^="https://console.spotinst.com/auth/signUp"]').attr('data-lity', '').attr('data-lity-target', '#free-trial');
+  })(jQuery);
+</script>
+<!-- Free trial popup end -->
+
+  <script>
+    var freeTrialRegistrationMessages = {"step1":{"title":"Create your free Spot<br \/>account today","subTitle":"Complete access<br \/>for up to 20 instances","metaBefore":"","metaAfter":""},"step2":{"title":"Welcome to Spot","subTitle":"Tell us a little about yourself","metaBefore":"","metaAfter":""},"step3":{"title":"You're almost there!","subTitle":"Create a password for your Spot account","metaBefore":"Your password must have at least 8 characters which contain: 1 number, 1 symbol, 1 upper case, 1 lower case","metaAfter":""},"stepLoading":{"title":"Please wait","subTitle":"We're creating your account","metaBefore":"","metaAfter":""},"stepSuccess":{"title":"Check your inbox","subTitle":"We've sent you a verification email to:","metaBefore":"","metaAfter":"Can't find email? <a href=\"\/contact\">Contact us<\/a>","successMessage":"in the email you'll find instructions to complete<br \/>your Spot account registration"},"stepError":{"title":"Ooops","subTitle":"Something went wrong","metaBefore":"","metaAfter":"If you can't sort it out, please <a href=\"\/contact\">contact us<\/a>"}};
+      </script>
+
+  
+<!-- Section: popup banner start -->
+
+<div class="pp-overlay">
+
+    <div class="pp-container">
+        <div class="pp-close">
+            &times;
+        </div>
+        <div class="pp-popup-media-wide">
+            <img src="https://spot.io/blog/wp-content/themes/v10/assets/images/popup-media.svg" alt="">
+        </div>
+        <div class="pp-popup-content">
+            <p class="lead">$100M saved in 2019</p>
+            <hr>
+            <h2>Optimize up to 90% of your cloud-compute costs by leveraging both Spot & Reserved Instances</h2>
+            <div class="pp-popup-media-narrow">
+                <img src="https://spot.io/blog/wp-content/themes/v10/assets/images/popup-media.svg" alt="">
+            </div>
+            <div class="pp-actions">
+                <a href="https://console.spotinst.com/#/auth/signUp" class="pp-btn ga-get-started" target="_blank">Start a Free Trial</a>
+                <a href="https://app.hubspot.com/meetings/larissa-tendler/meet-with-spotinst-blog-registration" class="pp-btn pp-btn-primary ga-book-demo" target="_blank">Book a Demo Call</a>
+            </div>
+            <div class="logo-line">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 1458 53"><path fill="#fff" d="M170.108 36.34c5.057 0 6.625-3.49 7.687-7.689h-2.378c-3.286 0-8.748.558-8.748 4.956 0 1.822 1.719 2.732 3.439 2.732zm6.625.354h-.101c-2.327 2.933-4.653 4.603-8.395 4.603-4.702 0-8.038-2.632-8.038-7.434 0-8.598 9.605-9.256 15.978-9.256h2.376c.202-.709.202-1.466.202-2.226 0-2.627-2.831-3.387-5.207-3.387-2.985 0-5.867.76-8.548 2.023l.961-5.411c2.883-1.01 5.816-1.568 8.85-1.568 5.209 0 10.113 1.921 10.113 8.04 0 3.49-2.577 13.705-3.184 18.612h-5.716l.709-3.996M1.061 14.62h4.907l1.163-5.36 7.282-2.377-1.669 7.737h6.068l-1.061 4.958h-6.07L9.204 30.955a10.762 10.762 0 00-.304 2.528c0 1.568 1.063 2.53 2.58 2.53 1.215 0 2.427-.254 3.287-.607l-1.163 5.258c-1.164.254-2.479.607-3.641.607-4.602 0-7.839-1.82-7.839-6.827 0-2.02.405-3.994.86-6.066l1.921-8.8H0l1.061-4.957zM24.073 3.394h6.776l-1.415 6.473h-6.777l1.416-6.473zm-2.477 11.227h6.776l-5.563 26.044h-6.776l5.563-26.044zM48.836 20.59c-1.316-.862-3.085-1.315-4.956-1.315-5.412 0-8.447 5.057-8.447 9.962 0 3.386 1.114 6.775 5.766 6.775 1.669 0 3.744-.455 5.512-1.315l-.758 5.363c-2.073 1.01-4.298 1.212-6.524 1.212-6.726 0-11.076-4.499-11.076-11.225 0-9.103 6.019-16.032 15.375-16.032 2.528 0 4.956.456 6.777 1.01l-1.67 5.564zM56.268 2.738h6.777l-4.501 21.341h.101l9.456-9.459h8.8L64.409 26.506l7.839 14.158h-7.636L57.885 26.86h-.101l-2.932 13.804h-6.626l8.042-37.926zM101.328 14.62h4.906l1.162-5.36 7.283-2.377-1.669 7.737h6.069l-1.061 4.958h-6.071l-2.477 11.377a10.762 10.762 0 00-.304 2.528c0 1.568 1.062 2.53 2.58 2.53 1.214 0 2.428-.254 3.286-.607l-1.164 5.258c-1.161.254-2.477.607-3.64.607-4.601 0-7.838-1.82-7.838-6.827 0-2.02.405-3.994.86-6.066l1.921-8.8h-4.905l1.062-4.957z"/><path fill="#fff" d="M99.061 23.927c0-6.626-4.248-9.912-10.67-9.912-8.547 0-14.818 7.789-14.818 15.88 0 7.737 5.058 11.377 12.543 11.377 2.78 0 5.664-.656 8.292-1.465l.861-5.362c-2.53 1.164-5.21 1.87-7.99 1.87-4.335 0-6.867-1.538-7.194-5.634h-.005c-.012-.237-.035-.47-.035-.72 0-.046.004-.096.004-.144l-.001-.076h.004c.03-1.782.423-3.543 1.101-5.166 1.302-3.314 3.144-5.604 7.136-5.604 2.832 0 4.3 1.567 4.3 4.349 0 .607-.052 1.163-.152 1.77h-9.273c-.601 2.046-.707 3.42-.719 4.651h15.959c.404-1.921.657-3.843.657-5.814zM122.002 17.505c.201-1.012.404-2.075.556-2.884h6.321l-.606 3.49h.101c1.821-2.681 4.803-4.096 7.989-4.096 3.086 0 6.271 1.82 6.626 4.956h.1c1.72-3.388 5.513-4.956 9.153-4.956 3.895 0 7.232 3.186 7.232 7.131 0 2.327-.607 4.956-1.163 7.079l-2.73 12.44h-6.778l2.732-12.694c.354-1.566.859-3.994.859-5.561 0-1.923-1.465-3.136-3.185-3.136-4.704 0-5.867 5.461-6.727 9.003l-2.68 12.388h-6.775l2.73-12.694c.354-1.566.86-3.994.86-5.561 0-1.923-1.467-3.136-3.187-3.136-4.601 0-5.867 5.512-6.725 9.003l-2.68 12.388h-6.776l4.753-23.16zM205.055 19.924c-.728-.396-2.599-.953-4.522-.953-2.021 0-4.55.557-4.55 2.629 0 3.287 8.8 4.502 8.8 10.873 0 6.776-5.918 8.799-11.734 8.799-2.73 0-5.462-.404-7.94-1.567l1.468-5.412c1.922 1.062 3.842 2.023 6.472 2.023 2.276 0 4.654-.759 4.654-2.882 0-4.197-8.799-4.603-8.799-11.125 0-6.12 5.915-8.295 11.277-8.295 2.478 0 5.007.457 6.342.802l-1.468 5.108zM209.383 14.62h4.906l1.163-5.36 7.283-2.377-1.67 7.737h6.068l-1.061 4.958h-6.069l-2.479 11.377a10.836 10.836 0 00-.301 2.528c0 1.568 1.062 2.53 2.577 2.53 1.215 0 2.428-.254 3.287-.607l-1.162 5.258c-1.164.254-2.477.607-3.64.607-4.602 0-7.84-1.82-7.84-6.827 0-2.02.406-3.994.859-6.066l1.924-8.8h-4.905l1.06-4.957zM255.327 18.111c.201-1.113.405-2.276.606-3.49h6.475l-.912 4.906h.103c1.213-2.832 4.55-5.512 7.686-5.512.859 0 1.771.05 2.578.252l-1.415 6.626a8.596 8.596 0 00-2.579-.405c-4.804 0-7.13 4.298-7.99 8.495l-2.427 11.682h-6.777l4.652-22.553zM250.625 23.927c0-6.626-4.249-9.912-10.672-9.912-8.545 0-14.816 7.789-14.816 15.88 0 7.737 5.056 11.377 12.542 11.377 2.781 0 5.664-.656 8.293-1.465l.86-5.362c-2.529 1.164-5.209 1.87-7.989 1.87-4.336 0-6.868-1.538-7.195-5.634h-.004c-.012-.237-.036-.47-.036-.72 0-.046.003-.096.004-.144l-.001-.076h.004c.03-1.782.422-3.543 1.101-5.166 1.301-3.314 3.144-5.604 7.137-5.604 2.831 0 4.299 1.567 4.299 4.349 0 .607-.052 1.163-.152 1.77h-9.273c-.6 2.046-.707 3.42-.719 4.651h15.96c.404-1.921.657-3.843.657-5.814zM280.332 18.437h1.327c.861 0 1.417-.179 1.417-1.07 0-.778-.699-1.007-1.417-1.007h-1.327v2.077zm-1.119-2.953h2.626c1.577 0 2.353.636 2.353 1.933 0 1.103-.697 1.896-1.772 1.896l1.953 3.036h-1.188l-1.917-3.036h-.936v3.036h-1.119v-6.865zm2.256 8.42c2.688 0 4.72-2.174 4.72-4.98 0-2.804-2.032-4.98-4.72-4.98-2.725 0-4.758 2.176-4.758 4.98 0 2.806 2.033 4.98 4.758 4.98zm-.018-10.836a5.866 5.866 0 015.857 5.857c0 3.225-2.633 5.85-5.857 5.85-3.227 0-5.86-2.625-5.86-5.85a5.867 5.867 0 015.86-5.857M771.8 38.253h-4.184v-15.75c0-2.816-2.351-5.14-5.223-5.14-2.871 0-5.223 2.297-5.223 5.14v15.75h-4.182v-15.75c0-5.14 4.21-9.296 9.378-9.296s9.379 4.184 9.379 9.296v15.75h.055z"/><path fill="#fff" d="M753.042 13.207h4.184v25.047h-4.184V13.207zM786.428 38.253h-4.184v-15.75c0-2.816-2.35-5.14-5.222-5.14-2.871 0-5.223 2.297-5.223 5.14v15.75h-4.183v-15.75c0-5.14 4.211-9.296 9.379-9.296 5.168 0 9.379 4.184 9.379 9.296v15.75h.054zM801.03 17.39c-4.32 0-7.82 3.856-7.82 8.613 0 4.758 3.5 8.614 7.82 8.614s7.82-3.856 7.82-8.614c0-4.757-3.5-8.613-7.82-8.613zm0 21.383c-6.617 0-12.004-5.743-12.004-12.798 0-7.054 5.387-12.796 12.004-12.796s12.004 5.742 12.004 12.796c0 7.055-5.387 12.798-12.004 12.798zM827.362 17.39c-4.32 0-7.82 3.856-7.82 8.613 0 4.758 3.5 8.614 7.82 8.614s7.82-3.856 7.82-8.614c0-4.757-3.5-8.613-7.82-8.613zm0 21.383c-6.617 0-12.004-5.743-12.004-12.798 0-7.054 5.387-12.796 12.004-12.796s12.004 5.742 12.004 12.796c0 7.055-5.36 12.798-12.004 12.798zM866.792 13.726h4.184v24.528h-4.184V13.726zM875.925 13.726h9.925v4.184h-9.925v-4.184z"/><path fill="#fff" d="M885.823 38.253h-2.079c-4.593 0-8.338-3.746-8.338-8.34V7.464h4.182v22.45a4.184 4.184 0 004.184 4.183h2.079l-.028 4.156zM859.218 13.726l-8.122 17.965-8.066-17.965h-4.566l11.047 24.528h3.227l11.073-24.528h-4.593zM868.87 6.945a2.352 2.352 0 110 4.702 2.352 2.352 0 010-4.702zM738.96 15.585a1.4 1.4 0 01-1.395-1.394 1.4 1.4 0 011.395-1.395 1.4 1.4 0 011.394 1.395c0 .765-.601 1.394-1.394 1.394zm-1.531 2.844c-.109.055-1.887 1.64-4.785 1.64-2.872 0-4.95-1.694-5.032-1.777a.705.705 0 01-.082-1.012.705.705 0 011.012-.081c.027.026 1.778 1.449 4.128 1.449 2.352 0 3.774-1.257 3.802-1.285a.703.703 0 011.012.054.704.704 0 01-.055 1.012zm-11.403-2.844a1.4 1.4 0 01-1.394-1.394 1.4 1.4 0 011.394-1.395 1.4 1.4 0 011.395 1.395 1.4 1.4 0 01-1.395 1.394zM732.452 0c-8.614 0-15.614 7-15.614 15.613 0 11.703 15.614 23.434 15.614 23.434s15.613-11.704 15.613-23.434C748.038 7 741.065 0 732.452 0M354.617 11.015h-11.421v5.047h10.837c3.932 0 4.995 1.648 4.995 4.57v11.422c0 2.922-1.01 4.464-4.995 4.464h-4.995V20.844l-5.842 3.347v17.48h11.421c7.544 0 10.2-3.879 10.2-8.236V19.303c0-4.516-2.656-8.288-10.2-8.288zM528.35 11.015h-11.422v5.047H527.712c3.878 0 4.994 1.648 4.994 4.57v11.422c0 2.922-1.116 4.464-4.994 4.464h-5.047V20.844l-5.737 3.347v17.48h11.422c7.491 0 10.147-3.879 10.147-8.236V19.303c-.053-4.516-2.709-8.288-10.147-8.288zM414.707 3.046l5.259 12.484 5.208-12.484h-10.467z"/><path fill="#fff" d="M427.83 11.015l-7.863 19.976-7.917-19.976h-6.482l-1.38 30.603h5.896l.532-19.818 5.686 14.132h7.332l5.682-14.132.532 19.818h5.898l-1.382-30.603h-6.534zM375.391 11.015h18.754v5.047h-12.962v7.492h11.953V28.6h-11.953v7.864h12.962v5.154h-18.754V11.015zM453.65 30.195h8.501l-4.197-14.399-4.304 14.399zm9.935 5.047h-11.316l-1.966 6.376h-6.004l9.616-30.603h8.076l9.723 30.602h-6.109l-2.02-6.375zM486.484 18.4v23.218h-5.633V11.015h7.705l11.635 23.218V11.015h5.685v30.603h-7.704L486.484 18.4zM564.53 31.523c0-2.072-.956-3.081-3.241-3.081h-6.428v8.393h5.897c2.657 0 3.772-.796 3.772-3.027v-2.285zm-1.115-13.23c0-1.7-.85-2.497-3.028-2.497h-5.58v7.97h5.58c2.231 0 3.028-1.008 3.028-2.816v-2.656zM549.07 41.619V11.015h12.007c5.845 0 8.129 2.39 8.129 6.536v3.187c0 2.497-1.009 3.93-3.453 4.994 2.814.584 4.462 2.656 4.462 5.686v3.24c0 4.304-2.762 7.013-8.341 7.013H549.07v-.053zM587.216 30.195h8.395l-4.091-14.399-4.304 14.399zm9.936 5.047h-11.423l-1.86 6.376h-6.11l9.67-30.603h8.076l9.616 30.602h-5.95l-2.019-6.375zM622.281 42.042c-3.506 0-7.544-.85-9.509-1.805l.956-4.516c2.921.85 5.685 1.38 8.66 1.38 4.199 0 4.888-.85 4.888-3.772 0-3.453-.107-3.665-5.577-4.887-7.44-1.648-8.502-3.082-8.502-9.617 0-5.473 2.551-8.341 10.36-8.341 2.656 0 5.844.318 8.819 1.01l-.584 4.887c-2.497-.532-5.473-.956-8.129-.956-3.931 0-4.623.85-4.623 3.507 0 3.506.107 3.612 5.42 4.888 8.236 1.965 8.555 3.241 8.555 9.457 0 5.79-1.648 8.765-10.734 8.765zM643.215 11.015h18.753v5.047h-13.014v7.492h12.006V28.6h-12.006v7.864h13.014v5.154h-18.753V11.015z"/><path fill="#fff" fill-rule="evenodd" d="M1316.43 15.745c-.02 2.133-1.71 3.809-3.84 3.791a3.806 3.806 0 01-3.8-3.856c.01-2.13 1.73-3.785 3.88-3.766a3.764 3.764 0 013.76 3.832zm-6.69-.055c-.01 1.691 1.22 3.045 2.88 3.058 1.61.035 2.84-1.319 2.85-2.99.02-1.69-1.19-3.066-2.85-3.08-1.61-.017-2.86 1.342-2.88 3.011zm2.27 1.986l-.86-.008.03-3.8c.34-.04.82-.107 1.43-.1.71.005 1.02.121 1.27.308.23.165.38.445.38.817-.01.462-.35.762-.78.895v.05c.36.116.54.42.65.932.11.58.2.789.27.928l-.91-.01c-.11-.137-.18-.464-.29-.926-.07-.394-.29-.585-.77-.587l-.4-.004-.02 1.505zm.05-2.132l.4.007c.48.001.86-.158.87-.55 0-.349-.25-.58-.79-.586-.23-.001-.39.021-.48.041v1.088zM1197.23 40.101c-5.64 2.23-13.4 1.97-18.1-2.359-4.96-4.577-5.94-11.962-4.27-18.524.96-3.748 3.64-7.478 7.17-9.346 4.57-2.415 10.94-2.428 16.03.149 2.02 1.023 4 3.26 5.09 5.45.61 1.215 1.29 3.4.13 4.338-2.08 1.68-6.1 1.26-7.32.168-2.28-2.056-4.38-5.45-7.92-3.79-2.72 1.273-3.96 4.587-3.99 7.662-.03 3.55.01 7.425 3.35 9.263 1.65.908 4.42.88 5.84-.547 1.28-1.29 2.37-3.575 3.99-3.79.7-.093 7.01-.833 6.89 1.642-.21 4.125-3.35 7.957-6.89 9.684zM1227.73 39.975c-1.72.548-3.6.669-5.08-.211-2-1.195-1.54-3.884-1.49-5.98.09-3.453 1.01-7.83-2.3-9.641-1.04-.463-2.42.034-2.94.506-.51.47-1.16 1.532-1.37 2.568-.52 3.956.37 9.77-1.25 11.959-.97 1.3-4.71 1.203-5.89.532-2.15-1.232-1.78-4.584-1.8-6.892-.07-5.879-.26-14.772.39-22.153.22-2.543 5.75-3.659 7.82-.622.45.658.45 3.318.5 4.082.19 3.381 1.59 3.56 2.25 3.409 3.57-1.239 8.39-2.112 10.92 1.39 3.18 4.41 2.1 17.413 1.93 18.3-.31 1.674-1.07 2.557-1.69 2.753zM1281.6 40.942c-.31 2.47-1.98 5.183-4.39 5.979-4.87 1.604-11.64 1.856-15.76-1.39-.4-.313-.62-.492-.88-.84-.6-.798-.61-1.914 0-2.4 1.53-1.252 4.69-1.508 7.36-.337 2.36 1.036 4.28.386 4.97-1.012.51-1.053-.09-2.565-2.46-2.194-2.69.418-6.88 1.128-10.2-3.026-1.56-1.959-2.26-4.259-2.37-6.736-.19-3.96.66-7.5 3.38-10.19 3.32-3.275 8.74-2.104 12.45-.8 2.18-.672 7.42-2.231 8.26 1.686.06.255.49 14.467-.36 21.26zm-9.43-16.63c-1.09-1.186-3.1-1.17-4.15-.17-.99.947-1.44 2.176-1.47 3.55-.03 1.732.45 3.249 1.63 4.114.93.686 2.21.81 3.23.212 1.33-.79 2.04-2.483 2.13-4.001.08-1.39-.45-2.695-1.37-3.704zM1307.34 40.942c-.31 2.47-1.98 5.183-4.39 5.979-4.87 1.604-11.64 1.856-15.76-1.39-.4-.313-.63-.492-.89-.84-.59-.798-.6-1.914 0-2.4 1.54-1.252 4.7-1.508 7.37-.337 2.36 1.036 4.28.386 4.97-1.012.51-1.053-.09-2.565-2.46-2.194-2.69.418-6.88 1.128-10.2-3.026-1.56-1.959-2.26-4.259-2.38-6.736-.18-3.96.67-7.5 3.39-10.19 3.32-3.275 8.74-2.104 12.45-.8 2.18-.672 7.42-2.231 8.26 1.686.06.255.49 14.467-.36 21.26zm-9.43-16.63c-1.09-1.186-3.1-1.17-4.15-.17-.99.947-1.44 2.176-1.47 3.55-.03 1.732.45 3.249 1.63 4.114.93.686 2.21.81 3.22.212 1.34-.79 2.05-2.483 2.14-4.001.08-1.39-.45-2.695-1.37-3.704M1242.39 30.88c-1.05.29-1.6 1.64-1 2.61.85 1.39 2.65 1.85 4.23 1.306 2.52-.876 4.67-3.091 8.02-1.474 1.05.51 1.28 1.976.72 2.82-3.34 5.039-10.11 5.258-15.43 3.916-3.71-.932-6.75-4.738-7.38-8.63-.78-4.864.51-9.584 4.44-12.506 5.25-3.898 13.98-3.272 18.21 2.4 1.56 2.092 3 7.016 1.57 8.588-2.88 3.188-8.77-.298-13.38.97zm-.68-7.494c-.34.532-.25 1.686.51 2.115 1.33.745 3.06.539 3.96-.377.54-.546.21-1.407-.06-1.834-.8-1.268-3.53-1.297-4.41.096z" clip-rule="evenodd"/><path fill="#fff" d="M956.878 26.576a7.338 7.338 0 00-7.336-7.334 7.337 7.337 0 00-7.334 7.336 7.334 7.334 0 1014.67-.002zm6.245-.233V26.576c.004 7.503-6.075 13.588-13.577 13.592-7.504.004-13.588-6.074-13.592-13.577-.006-7.503 6.073-13.59 13.576-13.593 2.374-.002 4.708.62 6.765 1.8V1.347h6.828v24.997zM990.466 13.102V28.35c0 6.723-4.724 11.805-11.913 11.805-7.391 0-11.755-4.874-11.755-11.805V13.102h6.776v15.452c0 1.488.511 5.031 4.978 5.031a4.907 4.907 0 005.134-5.03V13.101h6.78zM1015.04 26.295a7.628 7.628 0 00-6.29-7.492 5.7 5.7 0 00-1.35-.159c-.48.002-.95.06-1.41.174a7.61 7.61 0 00-.04 14.946 6.025 6.025 0 002.83.016 7.627 7.627 0 006.26-7.484zm6.24 0c0 7.655-6.2 13.86-13.86 13.86h-.01c-7.656-.003-13.858-6.212-13.854-13.864.003-7.256 5.603-13.283 12.844-13.815.33-.024.67-.042 1.01-.042h.01c7.65-.002 13.86 6.2 13.86 13.85v.011zM1024.2 1.345h6.77V39.54h-6.77V1.345zM1035.96 13.103h6.78V39.54h-6.78V13.104zm-.86-7.532a4.223 4.223 0 014.22-4.226 4.23 4.23 0 014.23 4.224 4.227 4.227 0 01-4.23 4.227 4.223 4.223 0 01-4.22-4.224v-.001zM1070.3 24.242v15.3h-6.77V24.09c0-1.488-.51-5.032-4.98-5.032a4.881 4.881 0 00-5.13 4.616c-.01.138-.01.277-.01.416v15.452h-6.77v-15.3c0-6.724 4.72-11.807 11.91-11.807 7.39 0 11.75 4.877 11.75 11.807zM1094.32 26.012c0-4.05-3.29-7.336-7.34-7.336a7.328 7.328 0 00-7.33 7.332c-.01 4.051 3.28 7.335 7.33 7.336a7.348 7.348 0 007.34-7.332zm6.23.156c0 .06.01.118.01.175v11.86c0 8.779-5.24 14.272-13.71 14.272-6.36 0-11.81-3.647-12.83-9.241h7.39c.87 2.105 3.59 2.925 5.44 2.925 4.77 0 6.93-3.13 6.93-7.852v-.544c-6.49 3.755-14.79 1.539-18.55-4.95-3.75-6.491-1.54-14.797 4.95-18.551 6.49-3.758 14.8-1.542 18.55 4.948a13.552 13.552 0 011.83 6.802c0 .054 0 .107-.01.156zM1125.19 26.295a7.609 7.609 0 00-6.29-7.492 5.64 5.64 0 00-1.35-.159c-.47.002-.95.06-1.41.174-4.13.782-6.84 4.766-6.06 8.896a7.615 7.615 0 006.03 6.05 6.055 6.055 0 002.83.016 7.634 7.634 0 006.26-7.484h-.01zm6.25 0c0 7.655-6.21 13.86-13.86 13.86h-.02c-7.65-.005-13.85-6.215-13.85-13.868.01-7.255 5.61-13.279 12.84-13.81.34-.025.68-.043 1.02-.043h.01c7.65 0 13.85 6.202 13.86 13.853v.008zM1420.79 11.907c-1.71.896-2.35 2.408-2.35 6.583 0 0 .87-.836 2.15-1.302.94-.34 1.73-.854 2.2-1.193 1.44-1.057 1.66-2.42 1.66-4.71 0 0-2.35-.065-3.66.622zM1446.46 28.097l11.21-16.665s-4.73-.807-7.07 1.325c-1.5 1.365-3.17 3.817-3.17 3.817l-4.13 5.944c-.2.31-.46.646-.88.646s-.68-.336-.88-.646l-4.12-5.944s-1.68-2.452-3.18-3.817c-2.34-2.132-7.07-1.325-7.07-1.325l11.21 16.666-11.18 16.616s4.93.622 7.27-1.51c1.5-1.364 2.95-3.582 2.95-3.582l4.12-5.944c.2-.309.46-.645.88-.645s.68.336.88.645l4.13 5.944s1.53 2.22 3.03 3.582c2.34 2.132 7.18 1.51 7.18 1.51l-11.17-16.617h-.01zm-22.01-11.324s-.55.853-1.81 1.559c-.81.453-1.59.758-2.42 1.158-1.4.671-1.78 1.416-1.78 2.556v22.667s2.23.283 3.69-.461c1.88-.956 2.31-1.878 2.32-6.03V16.772zm-13.79-3.887c-1.4 1.228-1.8 3.184-1.8 3.184l-4.62 17.87-3.83-14.624c-.37-1.555-1.05-3.476-2.11-4.776-1.36-1.658-4.12-1.76-4.41-1.76-.3 0-3.06.102-4.41 1.76-1.07 1.3-1.74 3.221-2.12 4.776l-3.83 14.624-4.61-17.87s-.41-1.956-1.8-3.184c-2.26-1.992-5.65-1.565-5.65-1.565l8.83 33.393s2.91.208 4.37-.533c1.92-.977 2.83-1.73 3.99-6.273 1.03-4.052 3.92-15.95 4.19-16.795.13-.42.3-1.42 1.04-1.42.75 0 .9 1 1.03 1.42.27.847 3.16 12.743 4.19 16.795 1.16 4.544 2.07 5.296 3.99 6.273 1.46.741 4.37.533 4.37.533l8.83-33.393s-3.38-.427-5.64 1.565"/></svg>
+            </div>
+        </div>
+        <div class="pp-book-container">
+                    </div>
+    </div>
+
+</div>
+
+<!-- Section: popup banner end -->
+
+
+<script data-cfasync="false" type="text/javascript">if (window.addthis_product === undefined) { window.addthis_product = "wpp"; } if (window.wp_product_version === undefined) { window.wp_product_version = "wpp-6.2.6"; } if (window.addthis_share === undefined) { window.addthis_share = {}; } if (window.addthis_config === undefined) { window.addthis_config = {"data_track_clickback":true,"ui_atversion":"300"}; } if (window.addthis_plugin_info === undefined) { window.addthis_plugin_info = {"info_status":"enabled","cms_name":"WordPress","plugin_name":"Share Buttons by AddThis","plugin_version":"6.2.6","plugin_mode":"AddThis","anonymous_profile_id":"wp-14d98f3ec7d5726c9a7fc267383ef2c5","page_info":{"template":"posts","post_type":""},"sharing_enabled_on_post_via_metabox":false}; } 
+                    (function() {
+                      var first_load_interval_id = setInterval(function () {
+                        if (typeof window.addthis !== 'undefined') {
+                          window.clearInterval(first_load_interval_id);
+                          if (typeof window.addthis_layers !== 'undefined' && Object.getOwnPropertyNames(window.addthis_layers).length > 0) {
+                            window.addthis.layers(window.addthis_layers);
+                          }
+                          if (Array.isArray(window.addthis_layers_tools)) {
+                            for (i = 0; i < window.addthis_layers_tools.length; i++) {
+                              window.addthis.layers(window.addthis_layers_tools[i]);
+                            }
+                          }
+                        }
+                     },1000)
+                    }());
+                </script><script type='text/javascript' id='contact-form-7-js-extra'>
+/* <![CDATA[ */
+var wpcf7 = {"apiSettings":{"root":"https:\/\/spot.io\/blog\/wp-json\/contact-form-7\/v1","namespace":"contact-form-7\/v1"}};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://spot.io/blog/wp-content/plugins/contact-form-7/includes/js/scripts.js?ver=5.2.1' id='contact-form-7-js'></script>
+<script type='text/javascript' src='https://s7.addthis.com/js/300/addthis_widget.js?ver=5.5#pubid=ra-58af6c8310a54eb6' id='addthis_widget-js'></script>
+<script type='text/javascript' src='https://spot.io/blog/wp-content/plugins/enlighter/cache/enlighterjs.min.js?ver=w+nlb5mBbgLcRe3' id='enlighterjs-js'></script>
+<script type='text/javascript' id='enlighterjs-js-after'>
+!function(e,n){if("undefined"!=typeof EnlighterJS){var o={"selectors":{"block":"pre.EnlighterJSRAW","inline":"code.EnlighterJSRAW"},"options":{"indent":2,"ampersandCleanup":true,"linehover":false,"rawcodeDbclick":true,"textOverflow":"break","linenumbers":false,"theme":"enlighter","language":"generic","retainCssClasses":false,"collapse":false,"toolbarOuter":"","toolbarTop":"{BTN_RAW}{BTN_COPY}{BTN_WINDOW}{BTN_WEBSITE}","toolbarBottom":""}};(e.EnlighterJSINIT=function(){EnlighterJS.init(o.selectors.block,o.selectors.inline,o.options)})()}else{(n&&(n.error||n.log)||function(){})("Error: EnlighterJS resources not loaded yet!")}}(window,console);
+!function(n){"undefined"!=typeof jQuery&&jQuery(document.body).on("post-load",function(){"undefined"!=typeof EnlighterJSINIT&&n.setTimeout(function(){EnlighterJSINIT.apply(n)},180)})}(window);
+</script>
+<script type='text/javascript' src='https://spot.io/blog/wp-content/themes/v10/assets/js/script.js?ver=20190913' id='main-js'></script>
+<script type='text/javascript' src='https://spot.io/wp-content/themes/spot/dist/js/script.js?ver=1' id='spot/main-js'></script>
+<script type='text/javascript' src='https://spot.io/blog/wp-includes/js/wp-embed.min.js?ver=5.5' id='wp-embed-js'></script>
+<svg style="position:absolute;width:0;height:0" xmlns="http://www.w3.org/2000/svg" overflow="hidden"><defs><symbol id="icon-behance" viewBox="0 0 37 32"><path class="path1" d="M33 6.054h-9.125v2.214H33V6.054zm-4.5 7.607q-1.607 0-2.607.938t-1.107 2.545h7.286q-.321-3.482-3.571-3.482zm.286 10.446q1.125 0 2.179-.571t1.357-1.554h3.946q-1.786 5.482-7.625 5.482-3.821 0-6.08-2.357t-2.259-6.196q0-3.714 2.33-6.17t6.009-2.455q2.464 0 4.295 1.214t2.732 3.196.902 4.429q0 .304-.036.839h-11.75q0 1.982 1.027 3.063t2.973 1.08zm-23.84-.893h5.286q3.661 0 3.661-2.982 0-3.214-3.554-3.214H4.946v6.196zm0-9.589h5.018q1.393 0 2.205-.652t.813-2.027q0-2.571-3.393-2.571H4.946v5.25zM0 4.536h10.607q1.554 0 2.768.25t2.259.848 1.607 1.723.563 2.75q0 3.232-3.071 4.696 2.036.571 3.071 2.054T18.84 20.5q0 1.339-.438 2.438t-1.179 1.848-1.759 1.268-2.161.75-2.393.232H-.001v-22.5z"/></symbol><symbol id="icon-deviantart" viewBox="0 0 18 32"><path class="path1" d="M18.286 5.411l-5.411 10.393.429.554h4.982v7.411H9.232l-.786.536L5.91 29.18l-.536.536H-.001v-5.411L5.41 13.894l-.429-.536H-.001V5.947h9.054l.786-.536L12.375.536 12.911 0h5.375v5.411z"/></symbol><symbol id="icon-medium" viewBox="0 0 32 32"><path class="path1" d="M10.661 7.518v20.946q0 .446-.223.759t-.652.313q-.304 0-.589-.143L.893 25.232q-.375-.179-.634-.598T0 23.804V3.447q0-.357.179-.607t.518-.25q.25 0 .786.268l9.125 4.571q.054.054.054.089zm1.143 1.803l9.536 15.464-9.536-4.75V9.321zM32 9.643v18.821q0 .446-.25.723t-.679.277-.839-.232l-7.875-3.929zM31.946 7.5q0 .054-4.58 7.491T22 23.696l-6.964-11.321 5.786-9.411q.304-.5.929-.5.25 0 .464.107l9.661 4.821q.071.036.071.107z"/></symbol><symbol id="icon-slideshare" viewBox="0 0 32 32"><path class="path1" d="M15.589 13.214q0 1.482-1.134 2.545t-2.723 1.063-2.723-1.063-1.134-2.545q0-1.5 1.134-2.554t2.723-1.054 2.723 1.054 1.134 2.554zm8.965 0q0 1.482-1.125 2.545t-2.732 1.063q-1.589 0-2.723-1.063t-1.134-2.545q0-1.5 1.134-2.554t2.723-1.054q1.607 0 2.732 1.054t1.125 2.554zm4.017 3.215V4.518q0-1.554-.571-2.205t-1.982-.652H6.161q-1.482 0-2.009.607t-.527 2.25v12.018q.768.411 1.58.714t1.446.5 1.446.33 1.268.196 1.25.071 1.045.009 1.009-.036.795-.036q1.214-.018 1.696.482.107.107.179.161.464.446 1.089.911.125-1.625 2.107-1.554.089 0 .652.027t.768.036.813.018.946-.018.973-.08 1.089-.152 1.107-.241 1.196-.348 1.205-.482 1.286-.616zm2.911-.09q-2.161 2.661-6.643 4.5 1.5 5.089-.411 8.304-1.179 2.018-3.268 2.643-1.857.571-3.25-.268-1.536-.911-1.464-2.929l-.018-5.821v-.018q-.143-.036-.438-.107t-.42-.089l-.018 6.036q.071 2.036-1.482 2.929-1.411.839-3.268.268-2.089-.643-3.25-2.679-1.875-3.214-.393-8.268-4.482-1.839-6.643-4.5-.446-.661-.071-1.125t1.071.018q.054.036.196.125t.196.143V3.108q0-1.286.839-2.196T4.783.001h22.446q1.196 0 2.036.911t.839 2.196v12.393l.375-.268q.696-.482 1.071-.018t-.071 1.125z"/></symbol><symbol id="icon-snapchat-ghost" viewBox="0 0 30 32"><path class="path1" d="M15.143 2.286q2.393-.018 4.295 1.223t2.92 3.438q.482 1.036.482 3.196 0 .839-.161 3.411.25.125.5.125.321 0 .911-.241t.911-.241q.518 0 1 .321t.482.821q0 .571-.563.964t-1.232.563-1.232.518-.563.848q0 .268.214.768.661 1.464 1.83 2.679t2.58 1.804q.5.214 1.429.411.5.107.5.625 0 1.25-3.911 1.839-.125.196-.196.696t-.25.83-.589.33q-.357 0-1.107-.116t-1.143-.116q-.661 0-1.107.089-.571.089-1.125.402t-1.036.679-1.036.723-1.357.598-1.768.241q-.929 0-1.723-.241t-1.339-.598-1.027-.723-1.036-.679-1.107-.402q-.464-.089-1.125-.089-.429 0-1.17.134t-1.045.134q-.446 0-.625-.33t-.25-.848-.196-.714Q.267 24.769.267 23.519q0-.518.5-.625.929-.196 1.429-.411 1.393-.571 2.58-1.804T6.606 18q.214-.5.214-.768 0-.5-.563-.848t-1.241-.527-1.241-.563-.563-.938q0-.482.464-.813t.982-.33q.268 0 .857.232t.946.232q.321 0 .571-.125-.161-2.536-.161-3.393 0-2.179.482-3.214 1.143-2.446 3.071-3.536t4.714-1.125z"/></symbol><symbol id="icon-yelp" viewBox="0 0 27 32"><path class="path1" d="M13.804 23.554v2.268q-.018 5.214-.107 5.446-.214.571-.911.714-.964.161-3.241-.679t-2.902-1.589q-.232-.268-.304-.643-.018-.214.071-.464.071-.179.607-.839t3.232-3.857q.018 0 1.071-1.25.268-.339.705-.438t.884.063q.429.179.67.518t.223.75zm-2.661-4.483q-.054.982-.929 1.25l-2.143.696q-4.911 1.571-5.214 1.571-.625-.036-.964-.643-.214-.446-.304-1.339-.143-1.357.018-2.973t.536-2.223 1-.571q.232 0 3.607 1.375 1.25.518 2.054.839l1.5.607q.411.161.634.545t.205.866zm14.75 5.304q-.125.964-1.634 2.875t-2.42 2.268q-.661.25-1.125-.125-.25-.179-3.286-5.125l-.839-1.375q-.25-.375-.205-.821t.348-.821q.625-.768 1.482-.464.018.018 2.125.714 3.625 1.179 4.321 1.42t.839.366q.5.393.393 1.089zm-12-11.286q.089 1.821-.964 2.179-1.036.304-2.036-1.268L4.143 3.321Q4 2.696 4.482 2.214q.732-.768 3.705-1.598t4.009-.563q.714.179.875.804.054.321.393 5.455t.429 6.777zm11.821 1.929q.054.696-.464 1.054-.268.179-5.875 1.536-1.196.268-1.625.411l.018-.036q-.411.107-.821-.071t-.661-.571q-.536-.839 0-1.554.018-.018 1.339-1.821 2.232-3.054 2.679-3.643t.607-.696q.5-.339 1.161-.036.857.411 2.196 2.384t1.446 2.991v.054z"/></symbol><symbol id="icon-vine" viewBox="0 0 27 32"><path class="path1" d="M26.732 14.768v3.536q-1.804.411-3.536.411-1.161 2.429-2.955 4.839T17 27.402t-2.286 1.902q-1.429.804-2.893-.054-.5-.304-1.08-.777t-1.518-1.491-1.83-2.295-1.92-3.286-1.884-4.357-1.634-5.616T.696 4.464H5.75Q6.214 8.357 7 11.58t1.866 5.661 2.17 4.205 2.5 3.482q3.018-3.018 5.125-7.25-2.536-1.286-3.982-3.929t-1.446-5.946q0-3.429 1.857-5.616t5.071-2.188q3.179 0 4.875 1.884t1.696 5.313q0 2.839-1.036 5.107-.125.018-.348.054t-.821.036-1.125-.107-1.107-.455-.902-.92q.554-1.839.554-3.286 0-1.554-.518-2.357t-1.411-.804q-.946 0-1.518.884t-.571 2.509q0 3.321 1.875 5.241t4.768 1.92q1.107 0 2.161-.25z"/></symbol><symbol id="icon-vk" viewBox="0 0 35 32"><path class="path1" d="M34.232 9.286q.411 1.143-2.679 5.25-.429.571-1.161 1.518-1.393 1.786-1.607 2.339-.304.732.25 1.446.304.375 1.446 1.464h.018l.071.071q2.518 2.339 3.411 3.946.054.089.116.223t.125.473-.009.607-.446.491-1.054.223l-4.571.071q-.429.089-1-.089t-.929-.393l-.357-.214q-.536-.375-1.25-1.143t-1.223-1.384-1.089-1.036-1.009-.277q-.054.018-.143.063t-.304.259-.384.527-.304.929-.116 1.384q0 .268-.063.491t-.134.33l-.071.089q-.321.339-.946.393h-2.054q-1.268.071-2.607-.295t-2.348-.946-1.839-1.179-1.259-1.027l-.446-.429q-.179-.179-.491-.536T6.499 21.3t-1.893-2.696-2.188-3.768-2.33-4.857q-.107-.286-.107-.482t.054-.286l.071-.107q.268-.339 1.018-.339l4.893-.036q.214.036.411.116t.286.152l.089.054q.286.196.429.571.357.893.821 1.848t.732 1.455l.286.518q.518 1.071 1 1.857t.866 1.223.741.688.607.25.482-.089q.036-.018.089-.089t.214-.393.241-.839.17-1.446 0-2.232q-.036-.714-.161-1.304t-.25-.821l-.107-.214q-.446-.607-1.518-.768-.232-.036.089-.429.304-.339.679-.536.946-.464 4.268-.429 1.464.018 2.411.232.357.089.598.241t.366.429.188.571.063.813-.018.982-.045 1.259-.027 1.473q0 .196-.018.75t-.009.857.063.723.205.696.402.438q.143.036.304.071t.464-.196.679-.616.929-1.196 1.214-1.92q1.071-1.857 1.911-4.018.071-.179.179-.313t.196-.188l.071-.054.089-.045.232-.054.357-.009 5.143-.036q.696-.089 1.143.045t.554.295z"/></symbol><symbol id="icon-search" viewBox="0 0 30 32"><path class="path1" d="M20.571 14.857q0-3.304-2.348-5.652t-5.652-2.348-5.652 2.348-2.348 5.652 2.348 5.652 5.652 2.348 5.652-2.348 2.348-5.652zm9.143 14.857q0 .929-.679 1.607T27.428 32q-.964 0-1.607-.679l-6.125-6.107q-3.196 2.214-7.125 2.214-2.554 0-4.884-.991t-4.018-2.679T.99 19.74t-.991-4.884.991-4.884 2.679-4.018 4.018-2.679 4.884-.991 4.884.991 4.018 2.679 2.679 4.018.991 4.884q0 3.929-2.214 7.125l6.125 6.125q.661.661.661 1.607z"/></symbol><symbol id="icon-envelope-o" viewBox="0 0 32 32"><path class="path1" d="M29.714 26.857V13.143q-.571.643-1.232 1.179-4.786 3.679-7.607 6.036-.911.768-1.482 1.196t-1.545.866-1.83.438h-.036q-.857 0-1.83-.438t-1.545-.866-1.482-1.196q-2.821-2.357-7.607-6.036-.661-.536-1.232-1.179v13.714q0 .232.17.402t.402.17h26.286q.232 0 .402-.17t.17-.402zm0-18.768v-.438l-.009-.232-.054-.223-.098-.161-.161-.134-.25-.045H2.856q-.232 0-.402.17t-.17.402q0 3 2.625 5.071 3.446 2.714 7.161 5.661l.625.527q.518.438.821.67t.795.563.902.491.768.161h.036q.357 0 .768-.161t.902-.491.795-.563.821-.67.625-.527q3.714-2.946 7.161-5.661.964-.768 1.795-2.063t.83-2.348zM32 7.429v19.429q0 1.179-.839 2.018t-2.018.839H2.857q-1.179 0-2.018-.839T0 26.858V7.429Q0 6.25.839 5.411t2.018-.839h26.286q1.179 0 2.018.839T32 7.429z"/></symbol><symbol id="icon-close" viewBox="0 0 25 32"><path class="path1" d="M23.179 23.607q0 .714-.5 1.214L20.25 27.25q-.5.5-1.214.5t-1.214-.5L12.572 22l-5.25 5.25q-.5.5-1.214.5t-1.214-.5l-2.429-2.429q-.5-.5-.5-1.214t.5-1.214l5.25-5.25-5.25-5.25q-.5-.5-.5-1.214t.5-1.214l2.429-2.429q.5-.5 1.214-.5t1.214.5l5.25 5.25 5.25-5.25q.5-.5 1.214-.5t1.214.5l2.429 2.429q.5.5.5 1.214t-.5 1.214l-5.25 5.25 5.25 5.25q.5.5.5 1.214z"/></symbol><symbol id="icon-angle-down" viewBox="0 0 21 32"><path class="path1" d="M19.196 13.143q0 .232-.179.411l-8.321 8.321q-.179.179-.411.179t-.411-.179l-8.321-8.321q-.179-.179-.179-.411t.179-.411l.893-.893q.179-.179.411-.179t.411.179l7.018 7.018 7.018-7.018q.179-.179.411-.179t.411.179l.893.893q.179.179.179.411z"/></symbol><symbol id="icon-folder-open" viewBox="0 0 34 32"><path class="path1" d="M33.554 17q0 .554-.554 1.179l-6 7.071q-.768.911-2.152 1.545t-2.563.634H2.856q-.607 0-1.08-.232t-.473-.768q0-.554.554-1.179l6-7.071q.768-.911 2.152-1.545T12.572 16h19.429q.607 0 1.08.232t.473.768zm-6.125-6.143v2.857H12.572q-1.679 0-3.518.848t-2.929 2.134L.018 23.875q0-.071-.009-.223T0 23.429V6.286q0-1.643 1.179-2.821T4 2.286h5.714q1.643 0 2.821 1.179t1.179 2.821v.571h9.714q1.643 0 2.821 1.179t1.179 2.821z"/></symbol><symbol id="icon-twitter" viewBox="0 0 30 32"><path class="path1" d="M28.929 7.286q-1.196 1.75-2.893 2.982.018.25.018.75 0 2.321-.679 4.634t-2.063 4.437-3.295 3.759-4.607 2.607-5.768.973q-4.839 0-8.857-2.589.625.071 1.393.071 4.018 0 7.161-2.464-1.875-.036-3.357-1.152t-2.036-2.848q.589.089 1.089.089.768 0 1.518-.196-2-.411-3.313-1.991t-1.313-3.67v-.071q1.214.679 2.607.732-1.179-.786-1.875-2.054t-.696-2.75q0-1.571.786-2.911Q4.91 8.285 8.008 9.883t6.634 1.777q-.143-.679-.143-1.321 0-2.393 1.688-4.08t4.08-1.688q2.5 0 4.214 1.821 1.946-.375 3.661-1.393-.661 2.054-2.536 3.179 1.661-.179 3.321-.893z"/></symbol><symbol id="icon-facebook" viewBox="0 0 19 32"><path class="path1" d="M17.125.214v4.714h-2.804q-1.536 0-2.071.643T11.714 7.5v3.375h5.232l-.696 5.286h-4.536v13.554H6.25V16.161H1.696v-5.286H6.25V6.982q0-3.321 1.857-5.152T13.053 0q2.625 0 4.071.214z"/></symbol><symbol id="icon-github" viewBox="0 0 27 32"><path class="path1" d="M13.714 2.286q3.732 0 6.884 1.839t4.991 4.991T27.428 16q0 4.482-2.616 8.063t-6.759 4.955q-.482.089-.714-.125t-.232-.536l.009-1.366q.009-1.312.009-2.402 0-1.732-.929-2.536 1.018-.107 1.83-.321t1.679-.696 1.446-1.188.946-1.875.366-2.688q0-2.125-1.411-3.679.661-1.625-.143-3.643-.5-.161-1.446.196t-1.643.786l-.679.429q-1.661-.464-3.429-.464t-3.429.464q-.286-.196-.759-.482t-1.491-.688-1.518-.241q-.804 2.018-.143 3.643-1.411 1.554-1.411 3.679 0 1.518.366 2.679t.938 1.875 1.438 1.196 1.679.696 1.83.321q-.696.643-.875 1.839-.375.179-.804.268t-1.018.089-1.17-.384-.991-1.116q-.339-.571-.866-.929t-.884-.429l-.357-.054q-.375 0-.518.08t-.089.205.161.25.232.214l.125.089q.393.179.777.679t.563.911l.179.411q.232.679.786 1.098t1.196.536 1.241.125.991-.063l.411-.071q0 .679.009 1.58t.009.973q0 .321-.232.536t-.714.125q-4.143-1.375-6.759-4.955t-2.616-8.063q0-3.732 1.839-6.884t4.991-4.991 6.884-1.839zM5.196 21.982q.054-.125-.125-.214-.179-.054-.232.036-.054.125.125.214.161.107.232-.036zm.554.607q.125-.089-.036-.286-.179-.161-.286-.054-.125.089.036.286.179.179.286.054zm.536.804q.161-.125 0-.339-.143-.232-.304-.107-.161.089 0 .321t.304.125zm.75.75q.143-.143-.071-.339-.214-.214-.357-.054-.161.143.071.339.214.214.357.054zm1.018.446q.054-.196-.232-.286-.268-.071-.339.125t.232.268q.268.107.339-.107zm1.125.09q0-.232-.304-.196-.286 0-.286.196 0 .232.304.196.286 0 .286-.196zm1.035-.179q-.036-.196-.321-.161-.286.054-.25.268t.321.143.25-.25z"/></symbol><symbol id="icon-bars" viewBox="0 0 27 32"><path class="path1" d="M27.429 24v2.286q0 .464-.339.804t-.804.339H1.143q-.464 0-.804-.339T0 26.286V24q0-.464.339-.804t.804-.339h25.143q.464 0 .804.339t.339.804zm0-9.143v2.286q0 .464-.339.804t-.804.339H1.143q-.464 0-.804-.339T0 17.143v-2.286q0-.464.339-.804t.804-.339h25.143q.464 0 .804.339t.339.804zm0-9.143V8q0 .464-.339.804t-.804.339H1.143q-.464 0-.804-.339T0 8V5.714q0-.464.339-.804t.804-.339h25.143q.464 0 .804.339t.339.804z"/></symbol><symbol id="icon-google-plus" viewBox="0 0 41 32"><path class="path1" d="M25.661 16.304q0 3.714-1.554 6.616t-4.429 4.536-6.589 1.634q-2.661 0-5.089-1.036t-4.179-2.786-2.786-4.179T-.001 16t1.036-5.089 2.786-4.179T8 3.946t5.089-1.036q5.107 0 8.768 3.429L18.303 9.75q-2.089-2.018-5.214-2.018-2.196 0-4.063 1.107t-2.955 3.009T4.982 16t1.089 4.152 2.955 3.009 4.063 1.107q1.482 0 2.723-.411t2.045-1.027 1.402-1.402.875-1.482.384-1.321h-7.429v-4.5h12.357q.214 1.125.214 2.179zm15.482-2.179v3.75h-3.732v3.732h-3.75v-3.732h-3.732v-3.75h3.732v-3.732h3.75v3.732h3.732z"/></symbol><symbol id="icon-linkedin" viewBox="0 0 27 32"><path class="path1" d="M6.232 11.161v17.696H.339V11.161h5.893zm.375-5.465Q6.625 7 5.705 7.875t-2.42.875h-.036q-1.464 0-2.357-.875t-.893-2.179q0-1.321.92-2.188t2.402-.866 2.375.866.911 2.188zm20.822 13.018v10.143h-5.875v-9.464q0-1.875-.723-2.938t-2.259-1.063q-1.125 0-1.884.616t-1.134 1.527q-.196.536-.196 1.446v9.875H9.483q.036-7.125.036-11.554t-.018-5.286l-.018-.857h5.875v2.571h-.036q.357-.571.732-1t1.009-.929 1.554-.777 2.045-.277q3.054 0 4.911 2.027t1.857 5.938z"/></symbol><symbol id="icon-quote-right" viewBox="0 0 30 32"><path class="path1" d="M13.714 5.714v12.571q0 1.857-.723 3.545t-1.955 2.92-2.92 1.955-3.545.723H3.428q-.464 0-.804-.339t-.339-.804v-2.286q0-.464.339-.804t.804-.339h1.143q1.893 0 3.232-1.339t1.339-3.232v-.571q0-.714-.5-1.214T7.428 16h-4q-1.429 0-2.429-1t-1-2.429V5.714q0-1.429 1-2.429t2.429-1h6.857q1.429 0 2.429 1t1 2.429zm16 0v12.571q0 1.857-.723 3.545t-1.955 2.92-2.92 1.955-3.545.723h-1.143q-.464 0-.804-.339t-.339-.804v-2.286q0-.464.339-.804t.804-.339h1.143q1.893 0 3.232-1.339t1.339-3.232v-.571q0-.714-.5-1.214t-1.214-.5h-4q-1.429 0-2.429-1t-1-2.429V5.714q0-1.429 1-2.429t2.429-1h6.857q1.429 0 2.429 1t1 2.429z"/></symbol><symbol id="icon-mail-reply" viewBox="0 0 32 32"><path class="path1" d="M32 20q0 2.964-2.268 8.054l-.188.429q-.134.304-.241.536t-.232.393q-.214.304-.5.304-.268 0-.42-.179t-.152-.446q0-.161.045-.473t.045-.42q.089-1.214.089-2.196 0-1.804-.313-3.232t-.866-2.473-1.429-1.804-1.884-1.241-2.375-.759-2.75-.384-3.134-.107h-4v4.571q0 .464-.339.804t-.804.339-.804-.339L.337 12.234q-.339-.339-.339-.804t.339-.804L9.48 1.483q.339-.339.804-.339t.804.339.339.804v4.571h4q12.732 0 15.625 7.196.946 2.393.946 5.946z"/></symbol><symbol id="icon-youtube" viewBox="0 0 27 32"><path class="path1" d="M17.339 22.214v3.768q0 1.196-.696 1.196-.411 0-.804-.393V21.41q.393-.393.804-.393.696 0 .696 1.196zm6.036.018v.821h-1.607v-.821q0-1.214.804-1.214t.804 1.214zm-17.25-3.893h1.911V16.66H2.465v1.679H4.34V28.5h1.786V18.339zM11.268 28.5h1.589v-8.821h-1.589v6.75q-.536.75-1.018.75-.321 0-.375-.375-.018-.054-.018-.625v-6.5H8.268v6.982q0 .875.143 1.304.214.661 1.036.661.857 0 1.821-1.089v.964zm7.661-2.643v-3.518q0-1.304-.161-1.768-.304-1-1.268-1-.893 0-1.661.964V16.66H14.25v11.839h1.589v-.857q.804.982 1.661.982.964 0 1.268-.982.161-.482.161-1.786zm6.035-.178v-.232h-1.625q0 .911-.036 1.089-.125.643-.714.643-.821 0-.821-1.232v-1.554h3.196v-1.839q0-1.411-.482-2.071-.696-.911-1.893-.911-1.214 0-1.911.911-.5.661-.5 2.071v3.089q0 1.411.518 2.071.696.911 1.929.911 1.286 0 1.929-.946.321-.482.375-.964.036-.161.036-1.036zM14.107 9.375v-3.75q0-1.232-.768-1.232t-.768 1.232v3.75q0 1.25.768 1.25t.768-1.25zm12.839 13.411q0 4.179-.464 6.25-.25 1.054-1.036 1.768t-1.821.821Q20.339 32 13.714 32t-9.911-.375q-1.036-.107-1.83-.821T.946 29.036q-.464-2-.464-6.25 0-4.179.464-6.25.25-1.054 1.036-1.768t1.839-.839q3.268-.357 9.893-.357t9.911.357q1.036.125 1.83.839t1.027 1.768q.464 2 .464 6.25zM9.125 0h1.821L8.785 7.125v4.839H6.999V7.125q-.25-1.321-1.089-3.786Q5.249 1.5 4.749 0h1.893L7.91 4.696zm6.607 5.946v3.125q0 1.446-.5 2.107-.661.911-1.893.911-1.196 0-1.875-.911-.5-.679-.5-2.107V5.946q0-1.429.5-2.089.679-.911 1.875-.911 1.232 0 1.893.911.5.661.5 2.089zm5.982-2.892v8.911h-1.625v-.982q-.946 1.107-1.839 1.107-.821 0-1.054-.661-.143-.429-.143-1.339V3.054h1.625v6.554q0 .589.018.625.054.393.375.393.482 0 1.018-.768V3.054h1.625z"/></symbol><symbol id="icon-dropbox" viewBox="0 0 32 32"><path class="path1" d="M7.179 12.625L16 18.071 9.893 23.16l-8.75-5.696zm17.607 9.911v1.929l-8.75 5.232v.018l-.018-.018-.018.018v-.018l-8.732-5.232v-1.929l2.625 1.714L16 19.179v-.036l.018.018.018-.018v.036l6.125 5.071zM9.893 2.107L16 7.196l-8.821 5.429-6.036-4.821zm14.928 10.518l6.036 4.839-8.732 5.696L16 18.071zM22.125 2.107l8.732 5.696-6.036 4.821L16 7.195z"/></symbol><symbol id="icon-instagram" viewBox="0 0 27 32"><path class="path1" d="M18.286 16q0-1.893-1.339-3.232t-3.232-1.339-3.232 1.339T9.144 16t1.339 3.232 3.232 1.339 3.232-1.339T18.286 16zm2.464 0q0 2.929-2.054 4.982t-4.982 2.054-4.982-2.054T6.678 16t2.054-4.982 4.982-2.054 4.982 2.054T20.75 16zm1.929-7.321q0 .679-.482 1.161t-1.161.482-1.161-.482-.482-1.161.482-1.161 1.161-.482 1.161.482.482 1.161zM13.714 4.75l-1.366-.009q-1.241-.009-1.884 0t-1.723.054-1.839.179-1.277.33q-.893.357-1.571 1.036T3.018 7.911q-.196.518-.33 1.277t-.179 1.839-.054 1.723 0 1.884T2.464 16t-.009 1.366 0 1.884.054 1.723.179 1.839.33 1.277q.357.893 1.036 1.571t1.571 1.036q.518.196 1.277.33t1.839.179 1.723.054 1.884 0 1.366-.009 1.366.009 1.884 0 1.723-.054 1.839-.179 1.277-.33q.893-.357 1.571-1.036t1.036-1.571q.196-.518.33-1.277t.179-1.839.054-1.723 0-1.884T24.964 16t.009-1.366 0-1.884-.054-1.723-.179-1.839-.33-1.277q-.357-.893-1.036-1.571t-1.571-1.036q-.518-.196-1.277-.33t-1.839-.179-1.723-.054-1.884 0-1.366.009zM27.429 16q0 4.089-.089 5.661-.179 3.714-2.214 5.75t-5.75 2.214q-1.571.089-5.661.089t-5.661-.089q-3.714-.179-5.75-2.214T.09 21.661Q.001 20.09.001 16t.089-5.661q.179-3.714 2.214-5.75t5.75-2.214q1.571-.089 5.661-.089t5.661.089q3.714.179 5.75 2.214t2.214 5.75q.089 1.571.089 5.661z"/></symbol><symbol id="icon-flickr" viewBox="0 0 27 32"><path class="path1" d="M22.286 2.286q2.125 0 3.634 1.509t1.509 3.634v17.143q0 2.125-1.509 3.634t-3.634 1.509H5.143q-2.125 0-3.634-1.509T0 24.572V7.429q0-2.125 1.509-3.634t3.634-1.509h17.143zM12.464 16q0-1.571-1.107-2.679t-2.679-1.107-2.679 1.107T4.892 16t1.107 2.679 2.679 1.107 2.679-1.107T12.464 16zm10.072 0q0-1.571-1.107-2.679t-2.679-1.107-2.679 1.107T14.964 16t1.107 2.679 2.679 1.107 2.679-1.107T22.536 16z"/></symbol><symbol id="icon-tumblr" viewBox="0 0 19 32"><path class="path1" d="M16.857 23.732l1.429 4.232q-.411.625-1.982 1.179t-3.161.571q-1.857.036-3.402-.464t-2.545-1.321T5.5 26.036t-.991-2.143-.295-2.107v-9.714h-3V8.233Q2.5 7.769 3.518 6.992t1.625-1.607 1.036-1.821.607-1.768.268-1.58q.018-.089.08-.152t.134-.063h4.357v7.571h5.946v4.5h-5.964v9.25q0 .536.116 1t.402.938.884.741 1.455.25q1.393-.036 2.393-.518z"/></symbol><symbol id="icon-dockerhub" viewBox="0 0 24 28"><path class="path1" d="M1.597 10.257h2.911v2.83H1.597v-2.83zm3.573 0h2.91v2.83H5.17v-2.83zm0-3.627h2.91v2.829H5.17V6.63zm3.57 3.627h2.912v2.83H8.74v-2.83zm0-3.627h2.912v2.829H8.74V6.63zm3.573 3.627h2.911v2.83h-2.911v-2.83zm0-3.627h2.911v2.829h-2.911V6.63zm3.572 3.627h2.911v2.83h-2.911v-2.83zM12.313 3h2.911v2.83h-2.911V3zm-6.65 14.173a.8.8 0 0 0-.812.788.8.8 0 0 0 .812.788.8.8 0 0 0 .811-.788.8.8 0 0 0-.811-.788"/><path class="path2" d="M28.172 11.721c-.978-.549-2.278-.624-3.388-.306-.136-1.146-.91-2.149-1.83-2.869l-.366-.286-.307.345c-.618.692-.8 1.845-.718 2.73.063.651.273 1.312.685 1.834a5.37 5.37 0 0 1-.985.434 6.59 6.59 0 0 1-2.028.33H.083l-.042.429c-.137 1.432.065 2.866.674 4.173l.262.519.03.048c1.8 2.973 4.963 4.225 8.41 4.225 6.672 0 12.174-2.896 14.702-9.015 1.689.085 3.417-.4 4.243-1.968l.211-.4-.401-.223zM5.664 19.458c-.85 0-1.542-.671-1.542-1.497 0-.825.691-1.498 1.541-1.498.849 0 1.54.672 1.54 1.497s-.69 1.498-1.539 1.498z"/></symbol><symbol id="icon-dribbble" viewBox="0 0 27 32"><path class="path1" d="M18.286 26.786q-.75-4.304-2.5-8.893h-.036l-.036.018q-.286.107-.768.295t-1.804.875-2.446 1.464-2.339 2.045-1.839 2.643l-.268-.196q3.286 2.679 7.464 2.679 2.357 0 4.571-.929zm-3.304-10.84q-.375-.875-.946-1.982-5.554 1.661-12.018 1.661Q2 15.75 2 16q0 2.214.786 4.223T5 23.821q.893-1.589 2.205-2.973t2.545-2.223 2.33-1.446 1.777-.857l.661-.232q.071-.018.232-.063t.232-.08zm-1.911-3.785q-2.143-3.804-4.357-6.75Q6.25 6.572 4.535 8.732t-2.286 4.857q5.393 0 10.821-1.429zm12.215 5.696q-3.75-1.071-7.304-.518 1.554 4.268 2.286 8.375 1.982-1.339 3.304-3.384t1.714-4.473zM10.911 4.625q-.018 0-.036.018.018-.018.036-.018zm10.535 2.589q-3.304-2.929-7.732-2.929-1.357 0-2.768.339 2.339 3.036 4.393 6.821 1.232-.464 2.321-1.08t1.723-1.098 1.17-1.018.67-.723zm3.983 8.661q-.054-4.143-2.661-7.321l-.018.018q-.161.214-.339.438t-.777.795-1.268 1.08-1.786 1.161-2.348 1.152q.446.946.786 1.696.036.107.116.313t.134.295q.643-.089 1.33-.125t1.313-.036 1.232.027 1.143.071 1.009.098.857.116.652.107.446.08zm2 .125q0 3.732-1.839 6.884t-4.991 4.991-6.884 1.839-6.884-1.839-4.991-4.991T.001 16 1.84 9.116t4.991-4.991 6.884-1.839 6.884 1.839 4.991 4.991T27.429 16z"/></symbol><symbol id="icon-skype" viewBox="0 0 27 32"><path class="path1" d="M20.946 18.982q0-.893-.348-1.634t-.866-1.223-1.304-.875-1.473-.607-1.563-.411l-1.857-.429q-.536-.125-.786-.188t-.625-.205-.536-.286-.295-.375-.134-.536q0-1.375 2.571-1.375.768 0 1.375.214t.964.509.679.598.714.518.857.214q.839 0 1.348-.571t.509-1.375q0-.982-1-1.777T16.64 7.963t-3.25-.411q-1.214 0-2.357.277t-2.134.839-1.589 1.554-.598 2.295q0 1.089.339 1.902t1 1.348 1.429.866 1.839.58l2.607.643q1.607.393 2 .643.571.357.571 1.071 0 .696-.714 1.152t-1.875.455q-.911 0-1.634-.286t-1.161-.688-.813-.804-.821-.688-.964-.286q-.893 0-1.348.536T6.712 20.3q0 1.643 2.179 2.813t5.196 1.17q1.304 0 2.5-.33t2.188-.955 1.58-1.67.589-2.348zm6.483 3.875q0 2.839-2.009 4.848t-4.848 2.009q-2.321 0-4.179-1.429-1.375.286-2.679.286-2.554 0-4.884-.991t-4.018-2.679-2.679-4.018-.991-4.884q0-1.304.286-2.679-1.429-1.857-1.429-4.179 0-2.839 2.009-4.848t4.848-2.009q2.321 0 4.179 1.429 1.375-.286 2.679-.286 2.554 0 4.884.991t4.018 2.679 2.679 4.018.991 4.884q0 1.304-.286 2.679 1.429 1.857 1.429 4.179z"/></symbol><symbol id="icon-foursquare" viewBox="0 0 23 32"><path class="path1" d="M17.857 7.75l.661-3.464q.089-.411-.161-.714t-.625-.304H5.018q-.411 0-.688.304t-.277.661v19.661q0 .125.107.018l5.196-6.286q.411-.464.679-.598t.857-.134h4.268q.393 0 .661-.259t.321-.527q.429-2.321.661-3.411.071-.375-.205-.714t-.652-.339h-5.25q-.518 0-.857-.339t-.339-.857v-.75q0-.518.339-.848t.857-.33h6.179q.321 0 .625-.241t.357-.527zm4.054-3.964q-.268 1.304-.955 4.759t-1.241 6.25-.625 3.098q-.107.393-.161.58t-.25.58-.438.589-.688.375-1.036.179h-4.839q-.232 0-.393.179-.143.161-7.607 8.821-.393.446-1.045.509t-.866-.098q-.982-.393-.982-1.75V2.678q0-.982.679-1.83T3.607 0h15.857q1.696 0 2.268.946t.179 2.839zm0 0L19.09 17.893q.071-.304.625-3.098t1.241-6.25.955-4.759z"/></symbol><symbol id="icon-wordpress" viewBox="0 0 32 32"><path class="path1" d="M2.268 16q0-2.911 1.196-5.589l6.554 17.946q-3.5-1.696-5.625-5.018T2.268 16zm23-.696q0 .339-.045.688t-.179.884-.205.786-.313 1.054-.313 1.036l-1.357 4.571-4.964-14.75q.821-.054 1.571-.143.339-.036.464-.33t-.045-.554-.509-.241l-3.661.179q-1.339-.018-3.607-.179-.214-.018-.366.089t-.205.268-.027.33.161.295.348.143l1.429.143 2.143 5.857-3 9-5-14.857q.821-.054 1.571-.143.339-.036.464-.33t-.045-.554-.509-.241l-3.661.179q-.125 0-.411-.009t-.464-.009q1.875-2.857 4.902-4.527t6.563-1.67q2.625 0 5.009.946t4.259 2.661h-.179q-.982 0-1.643.723t-.661 1.705q0 .214.036.429t.071.384.143.411.161.375.214.402.223.375.259.429.25.411q1.125 1.911 1.125 3.786zm-9.036 1.892l4.232 11.554q.018.107.089.196-2.25.786-4.554.786-2 0-3.875-.571zm11.804-7.785q1.696 3.107 1.696 6.589 0 3.732-1.857 6.884t-4.982 4.973l4.196-12.107q1.054-3.018 1.054-4.929 0-.75-.107-1.411zM16 0q3.25 0 6.214 1.268t5.107 3.411 3.411 5.107T32 16t-1.268 6.214-3.411 5.107-5.107 3.411T16 32t-6.214-1.268-5.107-3.411-3.411-5.107T0 16t1.268-6.214 3.411-5.107 5.107-3.411T16 0zm0 31.268q3.089 0 5.92-1.214t4.875-3.259 3.259-4.875T31.268 16t-1.214-5.92-3.259-4.875-4.875-3.259T16 .732t-5.92 1.214-4.875 3.259-3.259 4.875T.732 16t1.214 5.92 3.259 4.875 4.875 3.259T16 31.268z"/></symbol><symbol id="icon-stumbleupon" viewBox="0 0 34 32"><path class="path1" d="M18.964 12.714v-2.107q0-.75-.536-1.286t-1.286-.536-1.286.536-.536 1.286v10.929q0 3.125-2.25 5.339t-5.411 2.214q-3.179 0-5.42-2.241t-2.241-5.42v-4.75h5.857v4.679q0 .768.536 1.295t1.286.527 1.286-.527.536-1.295V10.286q0-3.054 2.259-5.214t5.384-2.161q3.143 0 5.393 2.179t2.25 5.25v2.429l-3.482 1.036zm9.465 3.965h5.857v4.75q0 3.179-2.241 5.42t-5.42 2.241q-3.161 0-5.411-2.223t-2.25-5.366v-4.786l2.339 1.089 3.482-1.036v4.821q0 .75.536 1.277t1.286.527 1.286-.527.536-1.277v-4.911z"/></symbol><symbol id="icon-digg" viewBox="0 0 37 32"><path class="path1" d="M5.857 5.036H9.5V22.59H0V10.144h5.857V5.037zm0 14.625v-6.589H3.661v6.589h2.196zm5.107-9.518v12.446h3.661V10.143h-3.661zm0-5.107v3.643h3.661V5.036h-3.661zm5.125 5.107h9.518v16.821h-9.518v-2.911h5.857v-1.464h-5.857V10.143zm5.857 9.518v-6.589H19.75v6.589h2.196zm5.125-9.518h9.5v16.821h-9.5v-2.911h5.839v-1.464h-5.839V10.143zm5.84 9.518v-6.589h-2.196v6.589h2.196z"/></symbol><symbol id="icon-spotify" viewBox="0 0 27 32"><path class="path1" d="M20.125 21.607q0-.571-.536-.911-3.446-2.054-7.982-2.054-2.375 0-5.125.607-.75.161-.75.929 0 .357.241.616t.634.259q.089 0 .661-.143 2.357-.482 4.339-.482 4.036 0 7.089 1.839.339.196.589.196.339 0 .589-.241t.25-.616zm1.714-3.839q0-.714-.625-1.089-4.232-2.518-9.786-2.518-2.732 0-5.411.75-.857.232-.857 1.143 0 .446.313.759t.759.313q.125 0 .661-.143 2.179-.589 4.482-.589 4.982 0 8.714 2.214.429.232.679.232.446 0 .759-.313t.313-.759zm1.929-4.429q0-.839-.714-1.25-2.25-1.304-5.232-1.973t-6.125-.67q-3.643 0-6.5.839-.411.125-.688.455t-.277.866q0 .554.366.929t.92.375q.196 0 .714-.143 2.375-.661 5.482-.661 2.839 0 5.527.607t4.527 1.696q.375.214.714.214.518 0 .902-.366t.384-.92zM27.429 16q0 3.732-1.839 6.884t-4.991 4.991-6.884 1.839-6.884-1.839-4.991-4.991T.001 16 1.84 9.116t4.991-4.991 6.884-1.839 6.884 1.839 4.991 4.991T27.429 16z"/></symbol><symbol id="icon-soundcloud" viewBox="0 0 41 32"><path class="path1" d="M14 24.5l.286-4.304L14 10.857q-.018-.179-.134-.304t-.295-.125q-.161 0-.286.125t-.125.304l-.25 9.339.25 4.304q.018.179.134.295t.277.116q.393 0 .429-.411zm5.286-.518l.196-3.768-.214-10.464q0-.286-.232-.429-.143-.089-.286-.089t-.286.089q-.232.143-.232.429l-.018.107-.179 10.339.196 4.214v.018q0 .179.107.304.161.196.411.196.196 0 .357-.161.161-.125.161-.357zM.625 17.911l.357 2.286-.357 2.25q-.036.161-.161.161t-.161-.161l-.304-2.25.304-2.286q.036-.161.161-.161t.161.161zM2.161 16.5l.464 3.696-.464 3.625q-.036.161-.179.161-.161 0-.161-.179l-.411-3.607.411-3.696q0-.161.161-.161.143 0 .179.161zm1.643-.679l.446 4.375-.446 4.232q0 .196-.196.196-.179 0-.214-.196l-.375-4.232.375-4.375q.036-.214.214-.214.196 0 .196.214zm1.678-.125l.411 4.5-.411 4.357q-.036.232-.25.232-.232 0-.232-.232l-.375-4.357.375-4.5q0-.232.232-.232.214 0 .25.232zm1.679.322l.375 4.179-.375 4.393q-.036.286-.286.286-.107 0-.188-.08t-.08-.205l-.357-4.393.357-4.179q0-.107.08-.188t.188-.08q.25 0 .286.268zm1.678-2.607l.375 6.786-.375 4.393q0 .125-.089.223t-.214.098q-.286 0-.321-.321l-.321-4.393.321-6.786q.036-.321.321-.321.125 0 .214.098t.089.223zm1.679-1.536l.339 8.357-.339 4.357q0 .143-.098.241t-.241.098q-.321 0-.357-.339l-.286-4.357.286-8.357q.036-.339.357-.339.143 0 .241.098t.098.241zm1.75-.714l.321 9.036-.321 4.321q-.036.375-.393.375-.339 0-.375-.375l-.286-4.321.286-9.036q0-.161.116-.277t.259-.116q.161 0 .268.116t.125.277zm7 13.25zm-3.536-13.322L16 20.196l-.268 4.268q0 .179-.134.313t-.313.134-.304-.125-.143-.321l-.25-4.268.25-9.107q0-.196.134-.321t.313-.125.313.125.134.321zm1.768.34l.25 8.786-.25 4.214q0 .196-.143.339t-.339.143-.339-.143-.161-.339l-.214-4.214.214-8.786q.018-.214.161-.357t.339-.143.33.143.152.357zm3.786 8.785l-.25 4.125q0 .232-.161.393t-.393.161-.393-.161-.179-.393l-.107-2.036-.107-2.089.214-11.357v-.054q.036-.268.214-.429.161-.125.357-.125.143 0 .268.089.25.143.286.464zm19.857-.339q0 2.089-1.482 3.563t-3.571 1.473H22.054q-.232-.036-.393-.196t-.161-.393V8.268q0-.411.5-.589 1.518-.607 3.232-.607 3.482 0 6.036 2.348t2.857 5.777q.946-.393 1.964-.393 2.089 0 3.571 1.482t1.482 3.589z"/></symbol><symbol id="icon-codepen" viewBox="0 0 32 32"><path class="path1" d="M3.857 20.875l10.768 7.179v-6.411l-5.964-3.982zM2.75 18.304L6.196 16 2.75 13.696v4.607zm14.625 9.75l10.768-7.179-4.804-3.214-5.964 3.982v6.411zM16 19.25L20.857 16 16 12.75 11.143 16zm-7.339-4.911l5.964-3.982V3.946L3.857 11.125zM25.804 16l3.446 2.304v-4.607zm-2.465-1.661l4.804-3.214-10.768-7.179v6.411zM32 11.125v9.75q0 .732-.607 1.143l-14.625 9.75Q16.393 32 16 32t-.768-.232L.607 22.018Q0 21.607 0 20.875v-9.75q0-.732.607-1.143L15.232.232Q15.607 0 16 0t.768.232l14.625 9.75q.607.411.607 1.143z"/></symbol><symbol id="icon-twitch" viewBox="0 0 32 32"><path class="path1" d="M16 7.75v7.75h-2.589V7.75H16zm7.107 0v7.75h-2.589V7.75h2.589zm0 13.571l4.518-4.536V2.589H6.304v18.732h5.821v3.875L16 21.321h7.107zM30.214 0v18.089l-7.75 7.75h-5.821l-3.875 3.875H8.893v-3.875H1.786V5.16L3.732-.001h26.482z"/></symbol><symbol id="icon-meanpath" viewBox="0 0 27 32"><path class="path1" d="M23.411 15.036v2.036q0 .429-.241.679t-.67.25h-3.607q-.429 0-.679-.25t-.25-.679v-2.036q0-.429.25-.679t.679-.25H22.5q.429 0 .67.25t.241.679zm-8.75 4.107v-4.464q0-.946-.58-1.527t-1.527-.58h-2.375q-1.214 0-1.714.929-.5-.929-1.714-.929H4.43q-.946 0-1.527.58t-.58 1.527v4.464q0 .393.375.393h.982q.393 0 .393-.393v-4.107q0-.429.241-.679t.688-.25h1.679q.429 0 .679.25t.25.679v4.107q0 .393.375.393h.964q.393 0 .393-.393v-4.107q0-.429.25-.679t.679-.25h1.732q.429 0 .67.25t.241.679v4.107q0 .393.393.393h.982q.375 0 .375-.393zm10.518-1.714v-2.75q0-.946-.589-1.527t-1.536-.58H18.34q-.946 0-1.536.58t-.589 1.527V22q0 .375.393.375h.982q.375 0 .375-.375v-3.214q.554.75 1.679.75h3.411q.946 0 1.536-.58t.589-1.527zm2.25-11v19.143q0 1.714-1.214 2.929t-2.929 1.214H4.143q-1.714 0-2.929-1.214T0 25.572V6.429Q0 4.715 1.214 3.5t2.929-1.214h19.143q1.714 0 2.929 1.214t1.214 2.929z"/></symbol><symbol id="icon-pinterest-p" viewBox="0 0 23 32"><path class="path1" d="M0 10.661q0-1.929.67-3.634t1.848-2.973 2.714-2.196T8.536.465t3.607-.464q2.821 0 5.25 1.188t3.946 3.455 1.518 5.125q0 1.714-.339 3.357t-1.071 3.161-1.786 2.67-2.589 1.839-3.375.688q-1.214 0-2.411-.571t-1.714-1.571q-.179.696-.5 2.009t-.42 1.696-.366 1.268-.464 1.268-.571 1.116-.821 1.384-1.107 1.545l-.25.089-.161-.179q-.268-2.804-.268-3.357 0-1.643.384-3.688t1.188-5.134.929-3.625q-.571-1.161-.571-3.018 0-1.482.929-2.786T9.86 6.626q1.089 0 1.696.723t.607 1.83q0 1.179-.786 3.411t-.786 3.339q0 1.125.804 1.866t1.946.741q.982 0 1.821-.446t1.402-1.214 1-1.696.679-1.973.357-1.982.116-1.777q0-3.089-1.955-4.813t-5.098-1.723q-3.571 0-5.964 2.313t-2.393 5.866q0 .786.223 1.518t.482 1.161.482.813.223.545q0 .5-.268 1.304t-.661.804q-.036 0-.304-.054-.911-.268-1.616-1T.778 14.494t-.58-1.929-.196-1.902z"/></symbol><symbol id="icon-periscope" viewBox="0 0 24 28"><path class="path1" d="M12.285 1C6.696 1 2.277 5.643 2.277 11.243c0 5.851 7.77 14.578 10.007 14.578 1.959 0 9.729-8.728 9.729-14.578C22.015 5.643 17.596 1 12.285 1zm.032 15.551c-3.473 0-6.152-2.611-6.152-5.664 0-1.292.39-2.472 1.065-3.438.206 1.084 1.18 1.906 2.352 1.906 1.322 0 2.393-1.043 2.393-2.333a2.32 2.32 0 0 0-1.119-1.975 6.646 6.646 0 0 1 1.46-.161c3.133 0 5.81 2.611 5.81 5.998 0 3.056-2.677 5.667-5.809 5.667z"/></symbol><symbol id="icon-get-pocket" viewBox="0 0 31 32"><path class="path1" d="M27.946 2.286q1.161 0 1.964.813t.804 1.973v9.268q0 3.143-1.214 6t-3.259 4.911-4.893 3.259-5.973 1.205q-3.143 0-5.991-1.205t-4.902-3.259-3.268-4.911-1.214-6V5.072q0-1.143.821-1.964t1.964-.821h25.161zm-12.571 19q.839 0 1.464-.589l7.214-6.929q.661-.625.661-1.518 0-.875-.616-1.491t-1.491-.616q-.839 0-1.464.589l-5.768 5.536-5.768-5.536q-.625-.589-1.446-.589-.875 0-1.491.616t-.616 1.491q0 .911.643 1.518l7.232 6.929q.589.589 1.446.589z"/></symbol><symbol id="icon-vimeo" viewBox="0 0 32 32"><path class="path1" d="M30.518 9.25q-.179 4.214-5.929 11.625-5.946 7.696-10.036 7.696-2.536 0-4.286-4.696-.786-2.857-2.357-8.607-1.286-4.679-2.804-4.679-.321 0-2.268 1.357l-1.375-1.75q.429-.375 1.929-1.723T5.713 6.41q2.786-2.464 4.304-2.607 1.696-.161 2.732.991t1.446 3.634q.786 5.125 1.179 6.661.982 4.446 2.143 4.446.911 0 2.75-2.875 1.804-2.875 1.946-4.393.232-2.482-1.946-2.482-1.018 0-2.161.464 2.143-7.018 8.196-6.821 4.482.143 4.214 5.821z"/></symbol><symbol id="icon-reddit-alien" viewBox="0 0 32 32"><path class="path1" d="M32 15.107q0 1.036-.527 1.884t-1.42 1.295q.214.821.214 1.714 0 2.768-1.902 5.125t-5.188 3.723-7.143 1.366T8.9 28.848t-5.179-3.723T1.819 20q0-.839.196-1.679-.911-.446-1.464-1.313t-.554-1.902q0-1.464 1.036-2.509t2.518-1.045q1.518 0 2.589 1.125 3.893-2.714 9.196-2.893L17.407.48q.054-.232.268-.375t.464-.089l6.589 1.446q.321-.661.964-1.063t1.411-.402q1.107 0 1.893.777t.786 1.884-.786 1.893-1.893.786-1.884-.777-.777-1.884l-5.964-1.321-1.857 8.429q5.357.161 9.268 2.857 1.036-1.089 2.554-1.089 1.482 0 2.518 1.045t1.036 2.509zM7.464 18.661q0 1.107.777 1.893t1.884.786 1.893-.786.786-1.893-.786-1.884T10.125 16q-1.089 0-1.875.786t-.786 1.875zM21.929 25q.196-.196.196-.464t-.196-.464q-.179-.179-.446-.179t-.464.179q-.732.75-2.161 1.107t-2.857.357-2.857-.357-2.161-1.107q-.196-.179-.464-.179t-.446.179q-.196.179-.196.455t.196.473q.768.768 2.116 1.214t2.188.527 1.625.08 1.625-.08 2.188-.527T21.931 25zm-.054-3.661q1.107 0 1.884-.786t.777-1.893q0-1.089-.786-1.875t-1.875-.786q-1.107 0-1.893.777t-.786 1.884.786 1.893 1.893.786z"/></symbol><symbol id="icon-hashtag" viewBox="0 0 32 32"><path class="path1" d="M17.696 18.286l1.143-4.571h-4.536l-1.143 4.571h4.536zm13.715-9l-1 4q-.125.429-.554.429h-5.839l-1.143 4.571h5.554q.268 0 .446.214.179.25.107.5l-1 4q-.089.429-.554.429h-5.839l-1.446 5.857q-.125.429-.554.429h-4q-.286 0-.464-.214-.161-.214-.107-.5l1.393-5.571h-4.536l-1.446 5.857q-.125.429-.554.429H5.857q-.268 0-.446-.214-.161-.214-.107-.5l1.393-5.571H1.143q-.268 0-.446-.214-.161-.214-.107-.5l1-4q.125-.429.554-.429h5.839l1.143-4.571H3.572q-.268 0-.446-.214-.179-.25-.107-.5l1-4q.089-.429.554-.429h5.839l1.446-5.857q.125-.429.571-.429h4q.268 0 .446.214.161.214.107.5l-1.393 5.571h4.536l1.446-5.857q.125-.429.571-.429h4q.268 0 .446.214.161.214.107.5l-1.393 5.571h5.554q.268 0 .446.214.161.214.107.5z"/></symbol><symbol id="icon-chain" viewBox="0 0 30 32"><path class="path1" d="M26 21.714q0-.714-.5-1.214l-3.714-3.714q-.5-.5-1.214-.5-.75 0-1.286.571.054.054.339.33t.384.384.268.339.232.455.063.491q0 .714-.5 1.214t-1.214.5q-.268 0-.491-.063t-.455-.232-.339-.268-.384-.384-.33-.339q-.589.554-.589 1.304 0 .714.5 1.214l3.679 3.696q.482.482 1.214.482.714 0 1.214-.464l2.625-2.607q.5-.5.5-1.196zM13.446 9.125q0-.714-.5-1.214L9.267 4.215q-.5-.5-1.214-.5-.696 0-1.214.482L4.214 6.804q-.5.5-.5 1.196 0 .714.5 1.214l3.714 3.714q.482.482 1.214.482.75 0 1.286-.554-.054-.054-.339-.33t-.384-.384-.268-.339-.232-.455-.063-.491q0-.714.5-1.214t1.214-.5q.268 0 .491.063t.455.232.339.268.384.384.33.339q.589-.554.589-1.304zm15.983 12.589q0 2.143-1.518 3.625l-2.625 2.607q-1.482 1.482-3.625 1.482-2.161 0-3.643-1.518l-3.679-3.696q-1.482-1.482-1.482-3.625 0-2.196 1.571-3.732l-1.571-1.571q-1.536 1.571-3.714 1.571-2.143 0-3.643-1.5l-3.714-3.714Q.286 10.143.286 8t1.518-3.625l2.625-2.607Q5.911.286 8.054.286q2.161 0 3.643 1.518L15.376 5.5q1.482 1.482 1.482 3.625 0 2.196-1.571 3.732l1.571 1.571q1.536-1.571 3.714-1.571 2.143 0 3.643 1.5l3.714 3.714q1.5 1.5 1.5 3.643z"/></symbol><symbol id="icon-thumb-tack" viewBox="0 0 21 32"><path class="path1" d="M8.571 15.429v-8q0-.25-.161-.411t-.411-.161-.411.161-.161.411v8q0 .25.161.411t.411.161.411-.161.161-.411zm12 6.285q0 .464-.339.804t-.804.339h-7.661l-.911 8.625q-.036.214-.188.366t-.366.152h-.018q-.482 0-.571-.482l-1.357-8.661H1.142q-.464 0-.804-.339t-.339-.804q0-2.196 1.402-3.955T4.571 16V6.857q-.929 0-1.607-.679t-.679-1.607.679-1.607 1.607-.679H16q.929 0 1.607.679t.679 1.607-.679 1.607T16 6.857V16q1.768 0 3.17 1.759t1.402 3.955z"/></symbol><symbol id="icon-arrow-left" viewBox="0 0 43 32"><path class="path1" d="M42.311 14.044c-.178-.178-.533-.356-.711-.356H7.822L18.133 3.199c.178-.178.356-.533.356-.711 0-.356-.178-.533-.356-.711l-1.6-1.422c-.356-.178-.533-.356-.889-.356s-.533.178-.711.356L.355 15.288c-.178.178-.356.533-.356.711s.178.533.356.711l14.756 14.933c0 .178.356.356.533.356s.533-.178.711-.356l1.6-1.6c.178-.178.356-.533.356-.711s-.178-.533-.356-.711L7.644 18.132h33.778c.178 0 .533-.178.711-.356.356-.178.533-.356.533-.711v-2.133c0-.356-.178-.711-.356-.889z"/></symbol><symbol id="icon-arrow-right" viewBox="0 0 43 32"><path class="path1" d="M.356 17.956c.178.178.533.356.711.356h33.778L24.534 28.801c-.178.178-.356.533-.356.711 0 .356.178.533.356.711l1.6 1.6c.178.178.533.356.711.356s.533-.178.711-.356L42.312 16.89c.178-.356.356-.711.356-.889s-.178-.533-.356-.711L27.556.357c0-.178-.356-.356-.533-.356s-.533.178-.711.356l-1.6 1.6c-.178.178-.356.533-.356.711s.178.533.356.711l10.311 10.489H1.245c-.178 0-.533.178-.711.356-.356.178-.533.356-.533.711v2.311c0 .178.178.533.356.711z"/></symbol><symbol id="icon-play" viewBox="0 0 22 28"><path d="M21.625 14.484L.875 26.015c-.484.266-.875.031-.875-.516v-23c0-.547.391-.781.875-.516l20.75 11.531c.484.266.484.703 0 .969z"/></symbol><symbol id="icon-pause" viewBox="0 0 24 28"><path d="M24 3v22c0 .547-.453 1-1 1h-8c-.547 0-1-.453-1-1V3c0-.547.453-1 1-1h8c.547 0 1 .453 1 1zM10 3v22c0 .547-.453 1-1 1H1c-.547 0-1-.453-1-1V3c0-.547.453-1 1-1h8c.547 0 1 .453 1 1z"/></symbol></defs></svg>	<script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            //$( document ).ajaxStart(function() {
+            //});
+
+			
+            for (var i = 0; i < document.forms.length; ++i) {
+                var form = document.forms[i];
+				if ($(form).attr("method") != "get") { $(form).append('<input type="hidden" name="KwrTXA" value="Uq]6M9" />'); }
+if ($(form).attr("method") != "get") { $(form).append('<input type="hidden" name="ExFWHRrah" value="Ke9Nqsuij" />'); }
+            }
+
+			
+            $(document).on('submit', 'form', function () {
+				if ($(this).attr("method") != "get") { $(this).append('<input type="hidden" name="KwrTXA" value="Uq]6M9" />'); }
+if ($(this).attr("method") != "get") { $(this).append('<input type="hidden" name="ExFWHRrah" value="Ke9Nqsuij" />'); }
+                return true;
+            });
+
+			
+            jQuery.ajaxSetup({
+                beforeSend: function (e, data) {
+
+                    //console.log(Object.getOwnPropertyNames(data).sort());
+                    //console.log(data.type);
+
+                    if (data.type !== 'POST') return;
+
+                    if (typeof data.data === 'object' && data.data !== null) {
+						data.data.append("KwrTXA", "Uq]6M9");
+data.data.append("ExFWHRrah", "Ke9Nqsuij");
+                    }
+                    else {
+                        data.data =  data.data + '&KwrTXA=Uq]6M9&ExFWHRrah=Ke9Nqsuij';
+                    }
+                }
+            });
+
+        });
+	</script>
+	
+<!-- footer scripts start -->
+<!-- footer scripts end -->
+
+</body>
+
+</html>
