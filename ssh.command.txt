@@ -1,0 +1,1 @@
+working-copy://x-callback-url/ssh-command?​key=86GULTYSN&​remote=allycat6973%40icloud.com&​repo=welcome%20to%20working%20copy&​server=allynscottcharpentier%40gmail.com&​local=icloud.com&​cmd=run%20on%20server%20
